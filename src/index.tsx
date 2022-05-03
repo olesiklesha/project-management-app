@@ -5,13 +5,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@emotion/react';
 import { theme } from './theme';
+import { Provider } from 'react-redux';
+import { setupStore } from './store';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+const store = setupStore();
 
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </ThemeProvider>
   </React.StrictMode>
 );

@@ -1,30 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 import { Button } from '@mui/material';
+import { useAppDispatch, useAppSelector } from './hooks/redux';
+import { counterSlice } from './store/reducers/testSlice';
 
 function App() {
+  const { count } = useAppSelector((state) => state.testSlice);
+  const dispatch = useAppDispatch();
+
+  const handleIncrement = () => {
+    dispatch(counterSlice.actions.increment());
+  };
+
+  const handleDecrement = () => {
+    dispatch(counterSlice.actions.decrement());
+  };
+
   return (
     <div className="App">
       <h1>The quick brown fox jumps over the lazy dog.</h1>
       <h2>The quick brown fox jumps over the lazy dog.</h2>
-      <Button variant="contained" color="secondary">
-        check
+      <div>{count}</div>
+      <Button variant="contained" color="secondary" onClick={handleIncrement}>
+        +
       </Button>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Button variant="contained" color="secondary" onClick={handleDecrement}>
+        -
+      </Button>
     </div>
   );
 }
