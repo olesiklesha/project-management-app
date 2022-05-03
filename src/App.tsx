@@ -1,32 +1,21 @@
 import React from 'react';
-import { Button } from '@mui/material';
-import { useAppDispatch, useAppSelector } from './hooks/redux';
-import { counterSlice } from './store/reducers/testSlice';
+import { Header } from './components';
+import { Route, Routes } from 'react-router-dom';
+import { AppRoutes } from './constants';
+import { BoardPage, ErrorPage, LoginPage, MainPage, WelcomePage } from './pages';
 
 function App() {
-  const { count } = useAppSelector((state) => state.testSlice);
-  const dispatch = useAppDispatch();
-
-  const handleIncrement = () => {
-    dispatch(counterSlice.actions.increment());
-  };
-
-  const handleDecrement = () => {
-    dispatch(counterSlice.actions.decrement());
-  };
-
   return (
-    <div className="App">
-      <h1>The quick brown fox jumps over the lazy dog.</h1>
-      <h2>The quick brown fox jumps over the lazy dog.</h2>
-      <div>{count}</div>
-      <Button variant="contained" color="secondary" onClick={handleIncrement}>
-        +
-      </Button>
-      <Button variant="contained" color="secondary" onClick={handleDecrement}>
-        -
-      </Button>
-    </div>
+    <>
+      <Header />
+      <Routes>
+        <Route path={AppRoutes.WELCOME} element={<WelcomePage />} />
+        <Route path={AppRoutes.MAIN} element={<MainPage />} />
+        <Route path={AppRoutes.LOGIN} element={<LoginPage />} />
+        <Route path={AppRoutes.BOARD} element={<BoardPage />} />
+        <Route path={AppRoutes.ERROR} element={<ErrorPage />} />
+      </Routes>
+    </>
   );
 }
 

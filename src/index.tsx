@@ -7,6 +7,7 @@ import { ThemeProvider } from '@emotion/react';
 import { theme } from './theme';
 import { Provider } from 'react-redux';
 import { setupStore } from './store';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 const store = setupStore();
@@ -15,7 +16,9 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <Provider store={store}>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </Provider>
     </ThemeProvider>
   </React.StrictMode>
