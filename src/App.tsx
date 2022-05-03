@@ -1,12 +1,16 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Button } from '@mui/material';
 
 function App() {
   return (
     <div className="App">
       <h1>The quick brown fox jumps over the lazy dog.</h1>
       <h2>The quick brown fox jumps over the lazy dog.</h2>
+      <Button variant="contained" color="secondary">
+        check
+      </Button>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
