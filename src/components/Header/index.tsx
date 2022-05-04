@@ -1,19 +1,31 @@
 import React from 'react';
 import { Button } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AppRoutes } from '../../constants';
 
+// test implementation of header
+
 function Header() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    window.localStorage.clear();
+    navigate(AppRoutes.WELCOME);
+  };
+
   return (
     <header>
-      <Button component={RouterLink} to={AppRoutes.MAIN} variant="text" color="secondary">
-        main
-      </Button>
-      <Button component={RouterLink} to={AppRoutes.LOGIN} variant="text">
-        login
+      <Button component={RouterLink} to={AppRoutes.MAIN} variant="text">
+        this is logo
       </Button>
       <Button component={RouterLink} to={AppRoutes.BOARD} variant="text">
         board
+      </Button>
+      <Button component={RouterLink} to={AppRoutes.EDIT} variant="text">
+        Edit profile
+      </Button>
+      <Button onClick={handleLogout} variant="text">
+        log out
       </Button>
     </header>
   );
