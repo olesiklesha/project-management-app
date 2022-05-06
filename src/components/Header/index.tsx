@@ -45,7 +45,7 @@ function Header() {
         console.log(isStickied);
       }, 10);
     };
-  }, []);
+  });
 
   const handleLogout = () => {
     window.localStorage.clear();
