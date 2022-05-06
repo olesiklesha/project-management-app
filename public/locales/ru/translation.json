@@ -1,0 +1,14 @@
+{
+  "pages": {
+    "page404": {
+      "message": "Вы на странице ошибки"
+    }
+  },
+  "components": {
+    "header": {
+      "board": "Доска",
+      "editProfile": "Редактировать профиль",
+      "logOut": "Выйти"
+    }
+  }
+}

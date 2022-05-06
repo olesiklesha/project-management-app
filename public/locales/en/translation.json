@@ -1,0 +1,14 @@
+{
+  "pages": {
+    "page404": {
+      "message": "This is an error page"
+    }
+  },
+  "components": {
+    "header": {
+      "board": "Board",
+      "editProfile": "Edit profile",
+      "logOut": "Log out"
+    }
+  }
+}

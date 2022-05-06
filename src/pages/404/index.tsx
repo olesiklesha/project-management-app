@@ -1,7 +1,9 @@
-import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 function ErrorPage() {
-  return <div>this is error page</div>;
+  const { t } = useTranslation();
+
+  return <div>{t('pages.page404.message')}</div>;
 }
 
 export default ErrorPage;

@@ -1,11 +1,14 @@
 import React from 'react';
 import { Button } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AppRoutes } from '../../constants';
+import { LocaleSelector } from '../';
 
 // test implementation of header
 
 function Header() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -19,13 +22,14 @@ function Header() {
         this is logo
       </Button>
       <Button component={RouterLink} to={AppRoutes.BOARD} variant="text">
-        board
+        {t('components.header.board')}
       </Button>
       <Button component={RouterLink} to={AppRoutes.EDIT} variant="text">
-        Edit profile
+        {t('components.header.editProfile')}
       </Button>
+      <LocaleSelector />
       <Button onClick={handleLogout} variant="text">
-        log out
+        {t('components.header.logOut')}
       </Button>
     </header>
   );
