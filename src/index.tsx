@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ThemeProvider } from '@emotion/react';
-import { theme } from './theme';
+import ThemeLocalesProvider from './theme';
 import { Provider } from 'react-redux';
 import { setupStore } from './store';
 import { BrowserRouter } from 'react-router-dom';
@@ -15,13 +14,13 @@ const store = setupStore();
 
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
+    <ThemeLocalesProvider>
       <Provider store={store}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </Provider>
-    </ThemeProvider>
+    </ThemeLocalesProvider>
   </React.StrictMode>
 );
 
