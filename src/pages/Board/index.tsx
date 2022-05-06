@@ -1,7 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 function Board() {
-  return <h1>this is board page</h1>;
+  const { t } = useTranslation();
+
+  return <h1>{t('pages.boardPage.title')}</h1>;
 }
 
 export default Board;

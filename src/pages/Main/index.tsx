@@ -1,9 +1,11 @@
 import React from 'react';
 import { Button } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { counterSlice } from '../../store/reducers/testSlice';
 
 function Main() {
+  const { t } = useTranslation();
   const { count } = useAppSelector((state) => state.testSlice);
   const dispatch = useAppDispatch();
 
@@ -17,7 +19,7 @@ function Main() {
 
   return (
     <div className="App">
-      <h1>The quick brown fox jumps over the lazy dog.</h1>
+      <h1>{t('pages.mainPage.title')}</h1>
       <h2>The quick brown fox jumps over the lazy dog.</h2>
       <div>{count}</div>
       <Button variant="contained" color="secondary" onClick={handleIncrement}>

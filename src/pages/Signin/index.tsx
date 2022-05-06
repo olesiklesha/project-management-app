@@ -1,8 +1,10 @@
 import React, { ChangeEvent, useState } from 'react';
 import { AppRoutes, LS_LOGIN } from '../../constants';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function SigninPage() {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const navigate = useNavigate();
 
@@ -18,13 +20,13 @@ function SigninPage() {
 
   return (
     <>
-      <h1>This is sign in page</h1>
+      <h1>{t('pages.signInPage.title')}</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          Name:
+          {t('pages.signInPage.name')}:
           <input type="text" value={name} onChange={handleNameChange} />
         </label>
-        <button type="submit">Log In</button>
+        <button type="submit">{t('pages.signInPage.signInButton')}</button>
       </form>
     </>
   );
