@@ -14,6 +14,7 @@ import {
   ClickAwayListener,
   Stack,
   Typography,
+  Tooltip,
 } from '@mui/material';
 import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 import PersonIcon from '@mui/icons-material/Person';
@@ -77,18 +78,22 @@ function Header() {
         }}
       >
         <Toolbar disableGutters sx={{ minHeight: { xs: '100%' }, display: 'flex', flexGrow: 1 }}>
-          <IconButton component={RouterLink} to={AppRoutes.MAIN} aria-label="home-icon">
-            <HomeIcon />
-          </IconButton>
+          <Tooltip title={'boards'}>
+            <IconButton component={RouterLink} to={AppRoutes.MAIN} aria-label="home-icon">
+              <HomeIcon />
+            </IconButton>
+          </Tooltip>
           <Box sx={{ flexGrow: 1 }} />
           <Stack direction="row" spacing={0.5} alignItems="center" sx={{ marginRight: '5px' }}>
             <Typography sx={{ fontWeight: 'bold', fontSize: '14px' }}>En</Typography>
             <LangSwitch />
             <Typography sx={{ fontWeight: 'bold', fontSize: '14px' }}>Ru</Typography>
           </Stack>
-          <IconButton component={RouterLink} to={AppRoutes.BOARD} aria-label="create new board">
-            <NoteAddOutlinedIcon color="secondary" />
-          </IconButton>
+          <Tooltip title={'create board'}>
+            <IconButton component={RouterLink} to={AppRoutes.BOARD} aria-label="create new board">
+              <NoteAddOutlinedIcon color="secondary" />
+            </IconButton>
+          </Tooltip>
           <Button
             ref={anchorAuthRef}
             id="composition-button"
