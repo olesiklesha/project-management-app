@@ -1,10 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from '@mui/material';
-
-const locales = [
-  { name: 'en-EN', nativeName: 'English' },
-  { name: 'ru-RU', nativeName: 'Русский' },
-];
+import { FormControl, Select, MenuItem, SelectChangeEvent } from '@mui/material';
+import { locales } from '../../constants';
 
 function LocaleSelector() {
   const { i18n } = useTranslation();
@@ -14,15 +10,8 @@ function LocaleSelector() {
   };
 
   return (
-    <FormControl>
-      <InputLabel id="locale-select-label">Language</InputLabel>
-      <Select
-        labelId="locale-select-label"
-        id="locale-select"
-        value={i18n.language}
-        label="Language"
-        onChange={handleChange}
-      >
+    <FormControl size="small">
+      <Select id="locale-select" value={i18n.language} onChange={handleChange}>
         {locales.map((lng) => (
           <MenuItem key={lng.name} value={lng.name}>
             {lng.nativeName}
