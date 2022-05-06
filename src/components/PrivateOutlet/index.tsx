@@ -1,6 +1,7 @@
 import { isAuth } from '../../utils';
 import Header from '../Header';
 import { Navigate, Outlet } from 'react-router-dom';
+import Footer from '../Footer';
 
 export default function PrivateOutlet() {
   const auth = isAuth();
@@ -9,6 +10,7 @@ export default function PrivateOutlet() {
     <>
       <Header />
       <Outlet />
+      <Footer />
     </>
   ) : (
     <Navigate to="/" />
