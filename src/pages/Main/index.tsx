@@ -16,7 +16,7 @@ function Main() {
   };
 
   return (
-    <div className="App">
+    <div className="App" style={{ height: '110vh' }}>
       <h1>The quick brown fox jumps over the lazy dog.</h1>
       <h2>The quick brown fox jumps over the lazy dog.</h2>
       <div>{count}</div>
