@@ -12,8 +12,6 @@ import {
   Grow,
   Paper,
   ClickAwayListener,
-  Stack,
-  Typography,
   Tooltip,
 } from '@mui/material';
 import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
@@ -22,14 +20,16 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { AppRoutes, LS_LOGIN } from '../../constants';
 import HomeIcon from './home-icon.styled';
 import { TimeoutId } from '@reduxjs/toolkit/dist/query/core/buildMiddleware/types';
-import LangSwitch from './switch.styled';
+import { LocaleSwitcher } from '../';
 
 let timeout: TimeoutId;
 
 function Header() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [isStickied, setStickied] = useState(false);
   const [openAuthMenu, setOpenAuthMenu] = React.useState<boolean>(false);
@@ -84,11 +84,7 @@ function Header() {
             </IconButton>
           </Tooltip>
           <Box sx={{ flexGrow: 1 }} />
-          <Stack direction="row" spacing={0.5} alignItems="center" sx={{ marginRight: '5px' }}>
-            <Typography sx={{ fontWeight: 'bold', fontSize: '14px' }}>En</Typography>
-            <LangSwitch />
-            <Typography sx={{ fontWeight: 'bold', fontSize: '14px' }}>Ru</Typography>
-          </Stack>
+          <LocaleSwitcher />
           <Tooltip title={'create board'}>
             <IconButton component={RouterLink} to={AppRoutes.BOARD} aria-label="create new board">
               <NoteAddOutlinedIcon color="secondary" />
@@ -144,7 +140,7 @@ function Header() {
                           to={AppRoutes.EDIT}
                           sx={{ textTransform: 'none', color: 'inherit' }}
                         >
-                          Edit profile
+                          {t('components.header.editProfile')}
                         </Button>
                       </MenuItem>
                       <MenuItem onClick={handleLogout}>
@@ -152,7 +148,7 @@ function Header() {
                           startIcon={<LogoutIcon color="error" />}
                           sx={{ textTransform: 'none', color: 'inherit' }}
                         >
-                          Log out
+                          {t('components.header.logOut')}
                         </Button>
                       </MenuItem>
                     </MenuList>

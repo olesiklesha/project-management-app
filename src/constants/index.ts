@@ -11,3 +11,8 @@ export enum AppRoutes {
 }
 
 export const LS_LOGIN = 'rss-cream-login-value';
+
+export const locales = [
+  { name: 'en-EN', nativeName: 'Eng', MUIname: 'enUs' },
+  { name: 'ru-RU', nativeName: 'Руc', MUIname: 'ruRU' },
+];
