@@ -1,0 +1,41 @@
+{
+  "pages": {
+    "page404": {
+      "message": "This is an error page"
+    },
+    "boardPage": {
+      "title": "Board page"
+    },
+    "editPage": {
+      "title": "Edit page"
+    },
+    "loginPage": {
+      "title": "Login page",
+      "name": "Name",
+      "logInButton": "Log in"
+    },
+    "signInPage": {
+      "title": "Sign in page",
+      "name": "Name",
+      "signInButton": "Sign in"
+    },
+    "mainPage": {
+      "title": "Main page"
+    },
+    "welcomePage": {
+      "title": "Welcome page",
+      "signInButton": "Sign in",
+      "logInButton": "Log in"
+    }
+  },
+  "components": {
+    "header": {
+      "board": "Board",
+      "editProfile": "Edit profile",
+      "logOut": "Log out"
+    },
+    "footer": {
+      "title": "Footer"
+    }
+  }
+}

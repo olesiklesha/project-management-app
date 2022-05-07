@@ -11,11 +11,14 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { AppRoutes, TEAM_INFO } from '../../constants';
-import { theme } from '../../theme';
+import { useTranslation } from 'react-i18next';
+import theme from "../../theme"
 import YoutubeIframe from '../../components/YoutubeIframe';
 import Profile from '../../components/Profile';
 
 function Welcome() {
+  const { t } = useTranslation();
+
   const CustomizedBox = styled(Box)`
     background: linear-gradient(0deg, #fff, ${theme.palette.background.paper} 100%);
     min-height: 80vh;
@@ -55,10 +58,10 @@ function Welcome() {
           </Box>
           <Box>
             <Button component={Link} to={AppRoutes.LOG_IN} color="secondary">
-              Log in
+            {t('pages.welcomePage.logInButton')}
             </Button>
             <Button component={Link} to={AppRoutes.SIGN_IN} color="secondary" variant="contained">
-              Sign in
+            {t('pages.welcomePage.signInButton')}
             </Button>
           </Box>
         </BottomNavigation>
