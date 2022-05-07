@@ -8,7 +8,6 @@ import {
   Container,
   styled,
   Grid,
-  Avatar,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { AppRoutes, TEAM_INFO } from '../../constants';
@@ -20,6 +19,18 @@ function Welcome() {
   const CustomizedBox = styled(Box)`
     background: linear-gradient(0deg, #fff, ${theme.palette.background.paper} 100%);
     min-height: 80vh;
+  `;
+
+  const CustomizedTypography = styled(Typography)`
+    font-family: Ubuntu;
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    font-weight: bold;
+  `;
+
+  const CustomizedImg = styled('img')`
+    min-height: calc(80vh - 64px);
   `;
 
   return (
@@ -53,10 +64,14 @@ function Welcome() {
         </BottomNavigation>
       </AppBar>
       <CustomizedBox color="secondary" component="section">
-        <Container sx={{ display: 'flex', alignItems: 'center' }}>
+        <Container
+          sx={{ display: 'flex', alignItems: 'center', flexDirection: { xs: 'column', md: 'row' } }}
+        >
           <Box>
-            {' '}
-            <Typography component="h3" sx={{ fontFamily: 'Ubuntu', fontSize: '2.5rem' }}>
+            <Typography
+              component="h3"
+              sx={{ fontFamily: 'Ubuntu', fontSize: '2.5rem', mt: '2rem' }}
+            >
               Lorem ipsum, dolor sit amet consectetur adipisicing elit.
             </Typography>
             <Typography sx={{ fontSize: '1.5rem' }}>
@@ -64,34 +79,31 @@ function Welcome() {
               saepe aliquam magni est ex ut quos temporibus reiciendis quia facilis molestiae.
             </Typography>
           </Box>
-          <img src="./pixlr-bg-result.png" style={{ minHeight: 'calc(80vh - 64px)' }} />
+          <CustomizedImg
+            sx={{
+              minHeight: {
+                xs: 'auto',
+                sm: 'calc(70vh - 64px)',
+                md: 'calc(80vh - 64px)',
+              },
+              width: {
+                xs: 'calc(80vw - 10px)',
+              },
+            }}
+            src="./pixlr-bg-result.png"
+            alt=""
+          />
         </Container>
       </CustomizedBox>
-
       <Container
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: '3rem' }}
       >
-        <Typography
-          variant="h4"
-          gutterBottom
-          component="h2"
-          sx={{ fontFamily: 'Ubuntu', fontSize: '2.5rem', textAlign: 'center', mb: '3rem' }}
-        >
-          How to use app
-        </Typography>
+        <CustomizedTypography>How to use app</CustomizedTypography>
         <YoutubeIframe />
       </Container>
-
       <Container sx={{ display: 'flex', justifyContent: 'center' }} component="section">
         <Grid item xs={12} sm={8} md={6}>
-          <Typography
-            variant="h4"
-            gutterBottom
-            component="h2"
-            sx={{ fontFamily: 'Ubuntu', fontSize: '2.5rem', textAlign: 'center', mb: '3rem' }}
-          >
-            Team
-          </Typography>
+          <CustomizedTypography>Team</CustomizedTypography>
           {TEAM_INFO.map((el, index) => (
             <Profile
               name={el.name}
