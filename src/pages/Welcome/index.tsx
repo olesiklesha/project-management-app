@@ -11,9 +11,10 @@ import {
   Avatar,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { AppRoutes } from '../../constants';
+import { AppRoutes, TEAM_INFO } from '../../constants';
 import { theme } from '../../theme';
 import YoutubeIframe from '../../components/YoutubeIframe';
+import Profile from '../../components/Profile';
 
 function Welcome() {
   const CustomizedBox = styled(Box)`
@@ -91,52 +92,15 @@ function Welcome() {
           >
             Team
           </Typography>
-          <Box sx={{ p: 2, mb: 2 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Avatar src="./alex.jpg" alt="" sx={{ width: 100, height: 100 }} />
-              <Box sx={{ ml: 2, width: '70%' }}>
-                <Typography component="h3" sx={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-                  Alex
-                </Typography>
-                <Typography variant="body2" sx={{ fontSize: '1.25rem' }}>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam dolorum eum
-                  excepturi consectetur, molestias ut velit itaque autem aliquid minima laboriosam
-                  voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
-          <Box sx={{ p: 2, mb: 2 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Box sx={{ ml: 2, width: '70%' }}>
-                <Typography component="h3" sx={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-                  Artyom
-                </Typography>
-                <Typography variant="body2" sx={{ fontSize: '1.25rem' }}>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam dolorum eum
-                  excepturi consectetur, molestias ut velit itaque autem aliquid minima laboriosam
-                  voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?
-                </Typography>
-              </Box>
-              <Avatar src="./tyoma.jpg" alt="" sx={{ width: 100, height: 100 }} />
-            </Box>
-          </Box>
-
-          <Box sx={{ p: 2, mb: 2 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Avatar src="./roma.jpg" alt="" sx={{ width: 100, height: 100 }} />
-              <Box sx={{ ml: 2, width: '70%' }}>
-                <Typography component="h3" sx={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-                  Roma
-                </Typography>
-                <Typography variant="body2" sx={{ fontSize: '1.25rem' }}>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam dolorum eum
-                  excepturi consectetur, molestias ut velit itaque autem aliquid minima laboriosam
-                  voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
+          {TEAM_INFO.map((el, index) => (
+            <Profile
+              name={el.name}
+              avatar={el.avatar}
+              description={el.description}
+              key={el.name}
+              index={index}
+            />
+          ))}
         </Grid>
       </Container>
     </>
