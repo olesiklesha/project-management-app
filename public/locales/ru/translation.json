@@ -31,7 +31,7 @@
   "components": {
     "header": {
       "board": "Доска",
-      "editProfile": "Редактировать профиль",
+      "editProfile": "Редактировать",
       "logOut": "Выйти"
     },
     "footer": {

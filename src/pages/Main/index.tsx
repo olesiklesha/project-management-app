@@ -18,8 +18,8 @@ function Main() {
   };
 
   return (
-    <div className="App">
-      <h1>{t('pages.mainPage.title')}</h1>
+    <div className="App" style={{ height: '110vh' }}>
+      <h1>{t('pages.mainPage.title')}.</h1>
       <h2>The quick brown fox jumps over the lazy dog.</h2>
       <div>{count}</div>
       <Button variant="contained" color="secondary" onClick={handleIncrement}>
