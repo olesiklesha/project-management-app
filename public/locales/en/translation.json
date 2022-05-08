@@ -14,17 +14,18 @@
       "name": "Name",
       "logInButton": "Log in"
     },
-    "signInPage": {
-      "title": "Sign in page",
-      "name": "Name",
-      "signInButton": "Sign in"
+    "signUpPage": {
+      "action": "Sign up for your account",
+      "signUpButton": "Sign in",
+      "or": "or",
+      "loginLink": "Already have an account? Log In"
     },
     "mainPage": {
       "title": "Main page"
     },
     "welcomePage": {
       "title": "Welcome page",
-      "signInButton": "Sign in",
+      "signUpButton": "Sign up",
       "logInButton": "Log in"
     }
   },
@@ -36,6 +37,18 @@
     },
     "footer": {
       "title": "Footer"
+    }
+  },
+  "form": {
+    "fields": {
+      "name": "Name",
+      "login": "Login",
+      "password": "Password"
+    },
+    "errors": {
+      "noName": "⚠Name is required",
+      "noLogin": "⚠Login is required",
+      "noPassword": "⚠Password is required"
     }
   }
 }

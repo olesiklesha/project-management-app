@@ -14,18 +14,19 @@
       "name": "Имя",
       "logInButton": "Войти"
     },
-    "signInPage": {
-      "title": "Страница регистрации",
-      "name": "Имя",
-      "signInButton": "Зарегистрироваться"
+    "signUpPage": {
+      "action": "Зарегистрировать аккаунт",
+      "signUpButton": "Зарегистрироваться",
+      "or": "или",
+      "loginLink": "Уже есть аккаунт? Войти"
     },
     "mainPage": {
       "title": "Главная"
     },
     "welcomePage": {
       "title": "Приветсвенная страница",
-      "signInButton": "Войти",
-      "logInButton": "Зарегистрироваться"
+      "signUpButton": "Зарегистрироваться",
+      "logInButton": "Войти"
     }
   },
   "components": {
@@ -36,6 +37,18 @@
     },
     "footer": {
       "title": "Футер"
+    }
+  },
+  "form": {
+    "fields": {
+      "name": "Имя",
+      "login": "Логин",
+      "password": "Пароль"
+    },
+    "errors": {
+      "noName": "⚠Имя обязательно",
+      "noLogin": "⚠Логин обязателен",
+      "noPassword": "⚠Пароль обязателен"
     }
   }
 }
