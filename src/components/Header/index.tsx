@@ -22,8 +22,8 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AppRoutes, LS_LOGIN } from '../../constants';
-import HomeIcon from './home-icon.styled';
 import { TimeoutId } from '@reduxjs/toolkit/dist/query/core/buildMiddleware/types';
+import { AppIcon } from '../';
 import { LocaleSwitcher } from '../';
 
 let timeout: TimeoutId;
@@ -80,7 +80,7 @@ function Header() {
         <Toolbar disableGutters sx={{ minHeight: { xs: '100%' }, display: 'flex', flexGrow: 1 }}>
           <Tooltip title={'boards'}>
             <IconButton component={RouterLink} to={AppRoutes.MAIN} aria-label="home-icon">
-              <HomeIcon />
+              <AppIcon />
             </IconButton>
           </Tooltip>
           <Box sx={{ flexGrow: 1 }} />
