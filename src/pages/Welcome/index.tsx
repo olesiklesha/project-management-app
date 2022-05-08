@@ -13,8 +13,8 @@ function Welcome() {
       <Button component={Link} to={AppRoutes.LOG_IN}>
         {t('pages.welcomePage.logInButton')}
       </Button>
-      <Button component={Link} to={AppRoutes.SIGN_IN}>
-        {t('pages.welcomePage.signInButton')}
+      <Button component={Link} to={AppRoutes.SIGN_UP}>
+        {t('pages.welcomePage.signUpButton')}
       </Button>
     </>
   );
