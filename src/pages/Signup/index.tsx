@@ -1,4 +1,3 @@
-import React, { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as BrowserLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -15,14 +14,10 @@ import {
 } from '@mui/material';
 import { AppRoutes, LS_LOGIN } from '../../constants';
 import { AppIcon } from '../../components';
+import { ISignUpRequest } from '../../models/apiModels';
+import { useSignUpMutation, useSignInMutation } from '../../services';
 
-interface ILoginForm {
-  name: string;
-  login: string;
-  password: string;
-}
-
-const loginFormInitialState = {
+const loginFormInitialState: ISignUpRequest = {
   name: '',
   login: '',
   password: '',
@@ -31,19 +26,21 @@ const loginFormInitialState = {
 function SignUpPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [signUp] = useSignUpMutation();
+  const [signIn] = useSignInMutation();
 
   const {
     register,
     formState: { errors },
-    control,
     handleSubmit,
-    watch,
-  } = useForm<typeof loginFormInitialState>({
+  } = useForm<ISignUpRequest>({
     defaultValues: loginFormInitialState,
   });
 
-  const onSubmit = (data: typeof loginFormInitialState) => {
-    window.localStorage.setItem(LS_LOGIN, data.name);
+  const onSubmit = async (request: ISignUpRequest) => {
+    await signUp(request);
+    await signIn({ login: request.login, password: request.password });
+    window.localStorage.setItem(LS_LOGIN, request.name);
     navigate(AppRoutes.MAIN);
   };
 
