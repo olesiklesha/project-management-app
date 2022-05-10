@@ -21,8 +21,9 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { AppRoutes, LS_LOGIN } from '../../constants';
 import { TimeoutId } from '@reduxjs/toolkit/dist/query/core/buildMiddleware/types';
+import { useAppSelector } from '../../hooks/redux';
+import { AppRoutes } from '../../constants';
 import { AppIcon } from '../';
 import { LocaleSwitcher } from '../';
 
@@ -34,6 +35,7 @@ function Header() {
   const [isStickied, setStickied] = useState(false);
   const [openAuthMenu, setOpenAuthMenu] = React.useState<boolean>(false);
   const anchorAuthRef = React.useRef<HTMLButtonElement>(null);
+  const { login } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     window.onscroll = () => {
@@ -107,7 +109,7 @@ function Header() {
               />
             }
           >
-            {window.localStorage.getItem(LS_LOGIN)}
+            {login}
           </Button>
           <Popper
             open={openAuthMenu}
