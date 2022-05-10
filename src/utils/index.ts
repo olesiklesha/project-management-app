@@ -1,9 +1,15 @@
-import { LS_LOGIN } from '../constants';
-import { useAppSelector } from '../hooks/redux';
+import { AUTH, TOKEN_LIFETIME } from '../constants';
 
-function IsAuth() {
-  const { token } = useAppSelector((state) => state.auth);
-  return Boolean(token);
+export function getLocalAuth() {
+  const localStorageAuth = window.localStorage.getItem(AUTH);
+  return localStorageAuth ? JSON.parse(localStorageAuth) : null;
 }
 
-export const isAuth = () => Boolean(window.localStorage.getItem(LS_LOGIN));
+export function isAuth() {
+  const auth = getLocalAuth();
+  if (auth) {
+    const hours = Math.floor((Date.now() - auth.tokenDate) / (3600 * 1000));
+    console.log(hours);
+    return hours < TOKEN_LIFETIME;
+  } else return false;
+}
