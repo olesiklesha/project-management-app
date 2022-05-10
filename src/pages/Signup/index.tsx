@@ -11,13 +11,15 @@ import {
   Typography,
   Divider,
   Link,
+  CircularProgress,
 } from '@mui/material';
-import { AppRoutes, LS_LOGIN } from '../../constants';
+import { AppRoutes } from '../../constants';
 import { AppIcon } from '../../components';
 import { ISignUpRequest } from '../../models/apiModels';
 import { useSignUpMutation, useSignInMutation } from '../../services';
+import { isAuth } from '../../utils';
 
-const loginFormInitialState: ISignUpRequest = {
+const signUpFormInitialState: ISignUpRequest = {
   name: '',
   login: '',
   password: '',
@@ -26,22 +28,21 @@ const loginFormInitialState: ISignUpRequest = {
 function SignUpPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [signUp] = useSignUpMutation();
-  const [signIn] = useSignInMutation();
+  const [signUp, { isLoading: isSignUpLoading }] = useSignUpMutation();
+  const [signIn, { isLoading: isSignInLoading }] = useSignInMutation();
 
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<ISignUpRequest>({
-    defaultValues: loginFormInitialState,
+    defaultValues: signUpFormInitialState,
   });
 
   const onSubmit = async (request: ISignUpRequest) => {
     await signUp(request);
     await signIn({ login: request.login, password: request.password });
-    window.localStorage.setItem(LS_LOGIN, request.name);
-    navigate(AppRoutes.MAIN);
+    if (isAuth()) navigate(AppRoutes.MAIN);
   };
 
   return (
@@ -83,7 +84,10 @@ function SignUpPage() {
               variant="standard"
               sx={{ mb: 1 }}
               fullWidth
-              {...register('login', { required: t('form.errors.noLogin') })}
+              {...register('login', {
+                required: t('form.errors.noLogin'),
+                minLength: { value: 4, message: t('form.errors.minLengthLogin') },
+              })}
               error={!!errors.login}
               helperText={errors.login?.message}
             />
@@ -92,11 +96,25 @@ function SignUpPage() {
               label={t('form.fields.password')}
               variant="standard"
               fullWidth
-              {...register('password', { required: t('form.errors.noPassword') })}
+              {...register('password', {
+                required: t('form.errors.noPassword'),
+                minLength: { value: 6, message: t('form.errors.minLengthPassword') },
+              })}
               error={!!errors.password}
               helperText={errors.password?.message}
             />
-            <Button type="submit" variant="contained" fullWidth sx={{ mt: 3, mb: 2 }}>
+            <Button
+              type="submit"
+              variant="contained"
+              startIcon={
+                (isSignUpLoading || isSignInLoading) && (
+                  <CircularProgress color="secondary" size={20} />
+                )
+              }
+              fullWidth
+              sx={{ mt: 3, mb: 2 }}
+              disabled={isSignUpLoading || isSignInLoading}
+            >
               {t('pages.signUpPage.signUpButton')}
             </Button>
             <Divider>{t('pages.signUpPage.or')}</Divider>
