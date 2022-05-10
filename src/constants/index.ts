@@ -40,7 +40,7 @@ voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?`,
 excepturi consectetur, molestias ut velit itaque autem aliquid minima laboriosam
 voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?`,
   },
-]
+];
 
 export const locales = [
   { name: 'en-EN', nativeName: 'Eng', MUIname: 'enUs' },

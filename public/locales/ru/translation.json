@@ -25,7 +25,9 @@
     "welcomePage": {
       "title": "Приветсвенная страница",
       "signInButton": "Войти",
-      "logInButton": "Зарегистрироваться"
+      "logInButton": "Зарегистрироваться",
+      "HowToUse": "Как работать с приложением",
+      "Team": "Команда"
     }
   },
   "components": {
