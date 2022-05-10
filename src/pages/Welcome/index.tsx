@@ -8,6 +8,7 @@ import Profile from '../../components/Profile';
 import HomeIcon from '../../components/Header/home-icon.styled';
 import LinkRss from '../../components/Footer/LinkRss.styled';
 import { CustomizedBox, CustomizedImg, CustomizedTypography } from './WelcomeComponent.styled';
+import { LocaleSelector } from '../../components';
 
 function Welcome() {
   const { t } = useTranslation();
@@ -48,9 +49,11 @@ function Welcome() {
             >
               Lorem ipsum, dolor sit amet consectetur adipisicing elit.
             </Typography>
-            <Typography sx={{ fontSize: '1.5rem' }}>
+            <Typography sx={{ fontSize: '1.5rem' }} component="h4">
               Cum, voluptatibus accusantium delectus ipsum laboriosam maxime nam excepturi, dolorem
-              saepe aliquam magni est ex ut quos temporibus reiciendis quia facilis molestiae.
+              saepe aliquam magni est exut &nbsp;
+              <LocaleSelector />
+              &nbsp; quos temporibus reiciendis quia facilis molestiae.
             </Typography>
           </Box>
           <CustomizedImg
@@ -72,7 +75,7 @@ function Welcome() {
       <Container
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: '3rem' }}
       >
-        <CustomizedTypography>How to use app</CustomizedTypography>
+        <CustomizedTypography>{t('pages.welcomePage.howToUse')}</CustomizedTypography>
         <YoutubeIframe />
       </Container>
       <Container
@@ -85,7 +88,7 @@ function Welcome() {
         component="section"
       >
         <Grid item xs={12} sm={8} md={6}>
-          <CustomizedTypography>Team</CustomizedTypography>
+          <CustomizedTypography>{t('pages.welcomePage.team')}</CustomizedTypography>
           {TEAM_INFO.map((el, index) => (
             <Profile
               name={el.name}

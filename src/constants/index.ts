@@ -12,13 +12,7 @@ export enum AppRoutes {
 
 export const LS_LOGIN = 'rss-cream-login-value';
 
-export interface ITEAM_INFO {
-  avatar: string;
-  name: string;
-  description: string;
-}
-
-export const TEAM_INFO: ITEAM_INFO[] = [
+export const TEAM_INFO = [
   {
     avatar: './alex.jpg',
     name: 'Alex',

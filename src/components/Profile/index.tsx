@@ -1,7 +1,7 @@
 import { Avatar, Box, Typography } from '@mui/material';
-import { ITEAM_INFO } from '../../constants';
+import { ITeammateInfo } from '../../models/models';
 
-interface IProfileProps extends ITEAM_INFO {
+interface IProfileProps extends ITeammateInfo {
   index: number;
 }
 

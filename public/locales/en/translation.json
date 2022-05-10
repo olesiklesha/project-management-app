@@ -26,8 +26,8 @@
       "title": "Welcome page",
       "signInButton": "Sign in",
       "logInButton": "Log in",
-      "HowToUse": "How to use app",
-      "Team": "Team"
+      "howToUse": "How to use app",
+      "team": "Team"
     }
   },
   "components": {
