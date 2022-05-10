@@ -10,7 +10,9 @@ export enum AppRoutes {
   BOARD = '/app/boards/:id',
 }
 
-export const LS_LOGIN = 'rss-cream-login-value';
+export const AUTH = 'AUTH';
+
+export const TOKEN_LIFETIME = 24;
 
 export const locales = [
   { name: 'en-EN', nativeName: 'Eng', MUIname: 'enUs' },
