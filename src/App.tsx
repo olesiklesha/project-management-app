@@ -1,8 +1,7 @@
 import React from 'react';
-import { PrivateOutlet, RouteSwitch } from './components';
+import { ErrorBoundary, PrivateOutlet, RouteSwitch } from './components';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoutes } from './constants';
-import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 
 import {
   BoardPage,

@@ -1,12 +1,9 @@
 import React from 'react';
 import { Box, Typography, Container, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import YoutubeIframe from '../../components/YoutubeIframe';
-import Profile from '../../components/Profile';
 import LinkRss from '../../components/Footer/LinkRss.styled';
 import { CustomizedBox, CustomizedImg, CustomizedTypography } from './WelcomeComponent.styled';
-import { LocaleSelector } from '../../components';
-import WelcomeHeader from '../../components/WelcomeHeader';
+import { LocaleSelector, WelcomeHeader, Profile, YoutubeIframe } from '../../components';
 import { TEAM_INFO } from '../../constants';
 
 function Welcome() {

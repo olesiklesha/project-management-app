@@ -4,3 +4,7 @@ export { default as RouteSwitch } from './RouteSwitcher';
 export { default as PrivateOutlet } from './PrivateOutlet';
 export { default as LocaleSelector } from './LocaleSelector';
 export { default as LocaleSwitcher } from './LocaleSwitcher';
+export { default as ErrorBoundary } from './ErrorBoundary';
+export { default as WelcomeHeader } from './WelcomeHeader';
+export { default as Profile } from './Profile';
+export { default as YoutubeIframe } from './YoutubeIframe';

@@ -1,6 +1,6 @@
 import { Container, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import WelcomeHeader from '../../components/WelcomeHeader';
+import { WelcomeHeader } from '../../components';
 import { CustomizedBox, CustomizedTypography } from '../Welcome/WelcomeComponent.styled';
 
 interface Props {
