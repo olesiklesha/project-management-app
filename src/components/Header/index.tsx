@@ -23,7 +23,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { TimeoutId } from '@reduxjs/toolkit/dist/query/core/buildMiddleware/types';
 import { useAppSelector } from '../../hooks/redux';
-import { AppRoutes } from '../../constants';
+import { AppRoutes, AUTH } from '../../constants';
 import { AppIcon } from '../';
 import { LocaleSwitcher } from '../';
 
@@ -50,7 +50,7 @@ function Header() {
   });
 
   const handleLogout = () => {
-    window.localStorage.clear();
+    window.localStorage.removeItem(AUTH);
     setOpenAuthMenu(false);
     navigate(AppRoutes.WELCOME);
   };
