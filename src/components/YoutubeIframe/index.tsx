@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactPlayer from 'react-player/youtube';
 
-export default function YoutubeIframe() {
+function YoutubeIframe() {
   return (
     <div style={{ position: 'relative', paddingTop: '56.25%', width: '100%', height: '100%' }}>
       <ReactPlayer
@@ -13,3 +13,4 @@ export default function YoutubeIframe() {
     </div>
   );
 }
+export default YoutubeIframe;
