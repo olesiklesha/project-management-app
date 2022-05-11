@@ -23,7 +23,7 @@ function Footer() {
           height: '100%',
         }}
       >
-        <LinkRss />
+        <LinkRss sx={{ fontSize: 50 }} />
         <Typography variant="body2" sx={{ flexGrow: 1, textAlign: 'right', lineHeight: '37px' }}>
           Created by:
         </Typography>

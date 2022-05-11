@@ -8,3 +8,4 @@ export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as WelcomeHeader } from './WelcomeHeader';
 export { default as Profile } from './Profile';
 export { default as YoutubeIframe } from './YoutubeIframe';
+export { default as Modal } from './Modal';
