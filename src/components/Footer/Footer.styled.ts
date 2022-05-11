@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 
-const FooterWrapper = styled('div')(({ theme }) => ({
+const FooterWrapper = styled('footer')(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   minHeight: '64px',
   display: 'flex',

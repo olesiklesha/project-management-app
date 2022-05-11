@@ -4,3 +4,4 @@ export { default as RouteSwitch } from './RouteSwitcher';
 export { default as PrivateOutlet } from './PrivateOutlet';
 export { default as LocaleSelector } from './LocaleSelector';
 export { default as LocaleSwitcher } from './LocaleSwitcher';
+export { default as Modal } from './Modal';
