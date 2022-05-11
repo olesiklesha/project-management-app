@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrivateOutlet, RouteSwitch } from './components';
+import { ErrorBoundary, PrivateOutlet, RouteSwitch } from './components';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoutes } from './constants';
 
@@ -15,7 +15,7 @@ import {
 
 function App() {
   return (
-    <>
+    <ErrorBoundary>
       <Routes>
         <Route path={AppRoutes.R_SWITCHER} element={<RouteSwitch />} />
         <Route path={AppRoutes.WELCOME} element={<WelcomePage />} />
@@ -28,7 +28,7 @@ function App() {
         </Route>
         <Route path={AppRoutes.ERROR} element={<ErrorPage />} />
       </Routes>
-    </>
+    </ErrorBoundary>
   );
 }
 

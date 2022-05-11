@@ -6,7 +6,7 @@ import { locales } from '../constants';
 
 type SupportedLocales = keyof typeof MUIlocales;
 
-const theme = createTheme({
+export const theme = createTheme({
   palette: {
     primary: {
       main: '#7ac5c5',

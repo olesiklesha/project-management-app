@@ -1,7 +1,9 @@
 {
   "pages": {
     "page404": {
-      "message": "This is an error page"
+      "message": "Malformed URL",
+      "text": "The link you entered does not look like a valid Cream link. If someone gave you this link, you may need to ask them to check that it's correct.",
+      "boundary": "Sorry.. there was an error"
     },
     "boardPage": {
       "title": "Board page"
@@ -27,7 +29,10 @@
     "welcomePage": {
       "title": "Welcome page",
       "signUpButton": "Sign up",
-      "logInButton": "Log in"
+      "logInButton": "Log in",
+      "howToUse": "How to use app",
+      "team": "Team",
+      "goToMain": "Go to Main Page"
     }
   },
   "components": {
