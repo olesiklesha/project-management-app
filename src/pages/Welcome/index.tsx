@@ -1,43 +1,20 @@
 import React from 'react';
-import { AppBar, Button, BottomNavigation, Box, Typography, Container, Grid } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { AppRoutes, TEAM_INFO } from '../../constants';
+import { Box, Typography, Container, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import YoutubeIframe from '../../components/YoutubeIframe';
 import Profile from '../../components/Profile';
-import HomeIcon from '../../components/Header/home-icon.styled';
 import LinkRss from '../../components/Footer/LinkRss.styled';
 import { CustomizedBox, CustomizedImg, CustomizedTypography } from './WelcomeComponent.styled';
 import { LocaleSelector } from '../../components';
+import WelcomeHeader from '../../components/WelcomeHeader';
+import { TEAM_INFO } from '../../constants';
 
 function Welcome() {
   const { t } = useTranslation();
 
   return (
     <>
-      <AppBar color="primary" position="relative" sx={{ boxShadow: 'none' }}>
-        <BottomNavigation component="nav" sx={{ padding: '16px', justifyContent: 'space-between' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <HomeIcon fontSize="large" />
-            <Typography
-              variant="h4"
-              gutterBottom
-              component="h1"
-              sx={{ mb: 0, ml: 1, fontFamily: 'Ubuntu', fontSize: '2rem', fontWeight: 'bold' }}
-            >
-              Cream
-            </Typography>
-          </Box>
-          <Box>
-            <Button component={Link} to={AppRoutes.LOG_IN} color="secondary">
-              {t('pages.welcomePage.logInButton')}
-            </Button>
-            <Button component={Link} to={AppRoutes.SIGN_IN} color="secondary" variant="contained">
-              {t('pages.welcomePage.signInButton')}
-            </Button>
-          </Box>
-        </BottomNavigation>
-      </AppBar>
+      <WelcomeHeader />
       <CustomizedBox color="secondary" component="section">
         <Container
           sx={{ display: 'flex', alignItems: 'center', flexDirection: { xs: 'column', md: 'row' } }}
