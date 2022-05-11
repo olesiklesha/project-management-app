@@ -1,6 +1,7 @@
 import React from 'react';
 import Portal from '../Portal';
-import { Box } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 interface IModalProps {
   isOpened: boolean;
@@ -39,9 +40,19 @@ export default function Modal({ isOpened, onCancel, children }: IModalProps) {
                 transform: 'translate(-50%, -50%)',
                 backgroundColor: 'ghostwhite',
                 borderRadius: '4px',
-                padding: '2rem',
+                padding: '3rem',
               }}
             >
+              <IconButton
+                sx={{
+                  position: 'absolute',
+                  top: '0.75rem',
+                  right: '0.75rem',
+                }}
+                onClick={handleClick}
+              >
+                <CloseRoundedIcon onClick={handleClick} />
+              </IconButton>
               {children}
             </Box>
           </Box>
