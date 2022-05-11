@@ -5,7 +5,7 @@ interface IProfileProps extends ITeammateInfo {
   index: number;
 }
 
-export default function Profile({ avatar, name, description, index }: IProfileProps) {
+function Profile({ avatar, name, description, index }: IProfileProps) {
   return (
     <Box sx={{ p: 2, mb: 2 }}>
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -23,3 +23,5 @@ export default function Profile({ avatar, name, description, index }: IProfilePr
     </Box>
   );
 }
+
+export default Profile;
