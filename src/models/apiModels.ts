@@ -1,3 +1,15 @@
+import { SerializedError } from '@reduxjs/toolkit';
+
+interface IBackendError {
+  status: number;
+  data: {
+    statusCode: number;
+    message: string;
+  };
+}
+
+type IRequestError = IBackendError | SerializedError | undefined;
+
 interface ISignUpRequest {
   name: string;
   login: string;
@@ -19,4 +31,4 @@ interface ISignInResponse {
   token: string;
 }
 
-export type { ISignUpRequest, ISignUpResponse, ISignInRequest, ISignInResponse };
+export type { IRequestError, ISignUpRequest, ISignUpResponse, ISignInRequest, ISignInResponse };

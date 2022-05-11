@@ -12,12 +12,14 @@ import {
   Divider,
   Link,
   CircularProgress,
+  Alert,
 } from '@mui/material';
 import { AppRoutes } from '../../constants';
 import { AppIcon } from '../../components';
-import { ISignUpRequest } from '../../models/apiModels';
+import { IRequestError, ISignUpRequest } from '../../models/apiModels';
 import { useSignUpMutation, useSignInMutation } from '../../services';
 import { isAuth } from '../../utils';
+import { apiErrorParser } from '../../utils';
 
 const signUpFormInitialState: ISignUpRequest = {
   name: '',
@@ -28,7 +30,7 @@ const signUpFormInitialState: ISignUpRequest = {
 function SignUpPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [signUp, { isLoading: isSignUpLoading }] = useSignUpMutation();
+  const [signUp, { isLoading: isSignUpLoading, error, isError }] = useSignUpMutation();
   const [signIn, { isLoading: isSignInLoading }] = useSignInMutation();
 
   const {
@@ -70,6 +72,7 @@ function SignUpPage() {
             >
               {t('pages.signUpPage.action')}
             </Typography>
+            {isError && <Alert severity="error">{apiErrorParser(error as IRequestError, t)}</Alert>}
             <TextField
               label={t('form.fields.name')}
               variant="standard"
