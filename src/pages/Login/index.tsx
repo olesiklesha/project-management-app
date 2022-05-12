@@ -20,6 +20,7 @@ import { ISignInRequest, IRequestError } from '../../models/apiModels';
 import { useSignInMutation } from '../../services';
 import { isAuth } from '../../utils';
 import { apiErrorParser } from '../../utils';
+import { useEffect } from 'react';
 
 const signInFormInitialState: ISignInRequest = {
   login: '',
@@ -38,6 +39,10 @@ function LoginPage() {
   } = useForm<ISignInRequest>({
     defaultValues: signInFormInitialState,
   });
+
+  useEffect(() => {
+    if (isAuth()) navigate(AppRoutes.MAIN);
+  }, [navigate]);
 
   const onSubmit = async (request: ISignInRequest) => {
     await signIn(request);

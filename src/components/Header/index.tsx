@@ -35,7 +35,7 @@ function Header() {
   const [isStickied, setStickied] = useState(false);
   const [openAuthMenu, setOpenAuthMenu] = React.useState<boolean>(false);
   const anchorAuthRef = React.useRef<HTMLButtonElement>(null);
-  const { login } = useAppSelector((state) => state.auth);
+  const { login } = useAppSelector((state) => state.authSlice);
 
   useEffect(() => {
     window.onscroll = () => {
@@ -44,7 +44,6 @@ function Header() {
       timeout = setTimeout(() => {
         const val = window.scrollY > 10;
         setStickied(val);
-        console.log(isStickied);
       }, 10);
     };
   });

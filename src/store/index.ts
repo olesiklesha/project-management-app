@@ -5,7 +5,7 @@ import { appApi } from '../services';
 
 const rootReducer = combineReducers({
   testSlice,
-  auth: authSlice,
+  authSlice,
   [appApi.reducerPath]: appApi.reducer,
 });
 
