@@ -9,7 +9,9 @@ export default function PrivateOutlet() {
   return auth ? (
     <>
       <Header />
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
       <Footer />
     </>
   ) : (
