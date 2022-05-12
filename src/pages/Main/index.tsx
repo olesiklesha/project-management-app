@@ -10,10 +10,19 @@ function Main() {
   const { count } = useAppSelector((state) => state.testSlice);
   const dispatch = useAppDispatch();
   const [isOpened, setIsOpened] = useState(false);
+  const [isConfirmOpened, setIsConfirmOpened] = useState(false);
 
   const toggleIsOpened = useCallback(() => {
     setIsOpened((isOpened) => !isOpened);
   }, []);
+
+  const toggleIsConfirmOpened = useCallback(() => {
+    setIsConfirmOpened((prev) => !prev);
+  }, []);
+
+  const testAction = () => {
+    console.log('toggle confirm');
+  };
 
   const handleIncrement = () => {
     dispatch(counterSlice.actions.increment());
@@ -40,10 +49,14 @@ function Main() {
         <Button variant="contained" color="secondary" onClick={toggleIsOpened}>
           Show modal
         </Button>
+        <Button variant="contained" color="secondary" onClick={toggleIsConfirmOpened}>
+          Show confirm modal
+        </Button>
       </Container>
       <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
         <p>this is modal</p>
       </Modal>
+      <Modal isOpened={isConfirmOpened} onCancel={toggleIsConfirmOpened} action={testAction} />
     </Box>
   );
 }
