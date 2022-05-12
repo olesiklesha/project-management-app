@@ -1,17 +1,27 @@
 import React from 'react';
 import Portal from '../Portal';
-import { Box, IconButton } from '@mui/material';
+import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import { useTranslation } from 'react-i18next';
 
 interface IModalProps {
   isOpened: boolean;
   onCancel: () => void;
-  children: JSX.Element | JSX.Element[];
+  children?: JSX.Element | JSX.Element[];
+  action?: () => void;
 }
 
-export default function Modal({ isOpened, onCancel, children }: IModalProps) {
+export default function Modal({ isOpened, onCancel, children, action }: IModalProps) {
+  const { t } = useTranslation();
   const handleClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
+      onCancel();
+    }
+  };
+
+  const handleAction = () => {
+    if (action) {
+      action();
       onCancel();
     }
   };
@@ -49,11 +59,32 @@ export default function Modal({ isOpened, onCancel, children }: IModalProps) {
                   top: '0.75rem',
                   right: '0.75rem',
                 }}
-                onClick={handleClick}
+                onClick={onCancel}
               >
-                <CloseRoundedIcon onClick={handleClick} />
+                <CloseRoundedIcon />
               </IconButton>
-              {children}
+              {children || (
+                <Box>
+                  <Typography variant="h5" component="h3" sx={{ fontFamily: 'Ubuntu' }}>
+                    {t('components.confirmModal.text')}
+                  </Typography>
+                  <Stack
+                    sx={{
+                      justifyContent: 'center',
+                      marginTop: '1.5rem',
+                    }}
+                    direction="row"
+                    spacing={1}
+                  >
+                    <Button variant="text" color="inherit" onClick={handleClick}>
+                      {t('answers.no')}
+                    </Button>
+                    <Button variant="outlined" color="error" onClick={handleAction}>
+                      {t('answers.yes')}
+                    </Button>
+                  </Stack>
+                </Box>
+              )}
             </Box>
           </Box>
         </Portal>

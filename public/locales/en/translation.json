@@ -41,6 +41,13 @@
     },
     "footer": {
       "title": "Footer"
+    },
+    "confirmModal": {
+      "text": "Do you really want to delete?"
     }
+  },
+  "answers": {
+    "yes": "Yes",
+    "no": "No"
   }
 }
