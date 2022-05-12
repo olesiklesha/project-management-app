@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from '../../constants';
 import { AppIcon } from '../';
+import { getLocalAuth } from '../../utils';
 
 interface Props {
   goBack?: () => void | null;
@@ -10,7 +11,7 @@ interface Props {
 
 function WelcomeHeader({ goBack }: Props) {
   const { t } = useTranslation();
-  const token = Boolean(window.localStorage.getItem('TOKEN'));
+  const token = getLocalAuth();
 
   return (
     <AppBar color="primary" position="relative" sx={{ boxShadow: 'none' }}>
@@ -33,7 +34,7 @@ function WelcomeHeader({ goBack }: Props) {
                 component={Link}
                 to={AppRoutes.LOG_IN}
                 color="secondary"
-                sx={{ fontWeight: 900 }}
+                sx={{ fontWeight: 900, color: 'black' }}
                 onClick={goBack}
               >
                 {t('pages.welcomePage.logInButton')}
