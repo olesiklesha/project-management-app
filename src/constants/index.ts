@@ -6,11 +6,13 @@ export enum AppRoutes {
   APP = '/app/',
   MAIN = '/app/boards',
   LOG_IN = '/log-in',
-  SIGN_IN = '/sign-in',
+  SIGN_UP = '/sign-up',
   BOARD = '/app/boards/:id',
 }
 
-export const LS_LOGIN = 'rss-cream-login-value';
+export const AUTH = 'AUTH';
+
+export const TOKEN_LIFETIME = 24;
 
 export const TEAM_INFO = [
   {

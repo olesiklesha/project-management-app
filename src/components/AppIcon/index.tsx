@@ -1,6 +1,6 @@
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 
-function HomeIcon(props: SvgIconProps) {
+function AppIcon(props: SvgIconProps) {
   return (
     <SvgIcon {...props}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -13,4 +13,4 @@ function HomeIcon(props: SvgIconProps) {
   );
 }
 
-export default HomeIcon;
+export default AppIcon;

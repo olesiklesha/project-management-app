@@ -9,7 +9,7 @@ import {
   ErrorPage,
   LoginPage,
   MainPage,
-  SigninPage,
+  SignUpPage,
   WelcomePage,
 } from './pages';
 
@@ -20,7 +20,7 @@ function App() {
         <Route path={AppRoutes.R_SWITCHER} element={<RouteSwitch />} />
         <Route path={AppRoutes.WELCOME} element={<WelcomePage />} />
         <Route path={AppRoutes.LOG_IN} element={<LoginPage />} />
-        <Route path={AppRoutes.SIGN_IN} element={<SigninPage />} />
+        <Route path={AppRoutes.SIGN_UP} element={<SignUpPage />} />
         <Route path={AppRoutes.APP} element={<PrivateOutlet />}>
           <Route path={AppRoutes.MAIN} element={<MainPage />} />
           <Route path={AppRoutes.EDIT} element={<EditPage />} />

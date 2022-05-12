@@ -16,36 +16,39 @@ import {
 } from '@mui/material';
 import { AppRoutes } from '../../constants';
 import { AppIcon } from '../../components';
-import { ISignInRequest, IRequestError } from '../../models/apiModels';
-import { useSignInMutation } from '../../services';
+import { IRequestError, ISignUpRequest } from '../../models/apiModels';
+import { useSignUpMutation, useSignInMutation } from '../../services';
 import { isAuth } from '../../utils';
 import { apiErrorParser } from '../../utils';
 import { useEffect } from 'react';
 
-const signInFormInitialState: ISignInRequest = {
+const signUpFormInitialState: ISignUpRequest = {
+  name: '',
   login: '',
   password: '',
 };
 
-function LoginPage() {
+function SignUpPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [signIn, { isLoading, error, isError }] = useSignInMutation();
+  const [signUp, { isLoading: isSignUpLoading, error, isError }] = useSignUpMutation();
+  const [signIn, { isLoading: isSignInLoading }] = useSignInMutation();
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<ISignInRequest>({
-    defaultValues: signInFormInitialState,
+  } = useForm<ISignUpRequest>({
+    defaultValues: signUpFormInitialState,
   });
 
   useEffect(() => {
     if (isAuth()) navigate(AppRoutes.MAIN);
   }, [navigate]);
 
-  const onSubmit = async (request: ISignInRequest) => {
-    await signIn(request);
+  const onSubmit = async (request: ISignUpRequest) => {
+    await signUp(request);
+    await signIn({ login: request.login, password: request.password });
     if (isAuth()) navigate(AppRoutes.MAIN);
   };
 
@@ -72,9 +75,18 @@ function LoginPage() {
               align="center"
               sx={{ marginY: 2 }}
             >
-              {t('pages.loginPage.action')}
+              {t('pages.signUpPage.action')}
             </Typography>
             {isError && <Alert severity="error">{apiErrorParser(error as IRequestError, t)}</Alert>}
+            <TextField
+              label={t('form.fields.name')}
+              variant="standard"
+              sx={{ mb: 1 }}
+              fullWidth
+              {...register('name', { required: t('form.errors.noName') })}
+              error={!!errors.name}
+              helperText={errors.name?.message}
+            />
             <TextField
               label={t('form.fields.login')}
               variant="standard"
@@ -102,22 +114,26 @@ function LoginPage() {
             <Button
               type="submit"
               variant="contained"
-              startIcon={isLoading && <CircularProgress color="secondary" size={20} />}
+              startIcon={
+                (isSignUpLoading || isSignInLoading) && (
+                  <CircularProgress color="secondary" size={20} />
+                )
+              }
               fullWidth
               sx={{ mt: 3, mb: 2 }}
-              disabled={isLoading}
+              disabled={isSignUpLoading || isSignInLoading}
             >
-              {t('pages.loginPage.loginButton')}
+              {t('pages.signUpPage.signUpButton')}
             </Button>
-            <Divider>{t('pages.loginPage.or')}</Divider>
+            <Divider>{t('pages.signUpPage.or')}</Divider>
             <Link
               component={BrowserLink}
-              to={AppRoutes.SIGN_UP}
+              to={AppRoutes.LOG_IN}
               color="text.primary"
               underline="hover"
               sx={{ display: 'block', textAlign: 'center', mt: 2 }}
             >
-              {t('pages.loginPage.signUpLink')}
+              {t('pages.signUpPage.loginLink')}
             </Link>
           </Paper>
         </Box>
@@ -126,4 +142,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default SignUpPage;

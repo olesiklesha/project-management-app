@@ -12,21 +12,23 @@
       "title": "Edit page"
     },
     "loginPage": {
-      "title": "Login page",
-      "name": "Name",
-      "logInButton": "Log in"
+      "action": "Log in to your account",
+      "or": "or",
+      "loginButton": "Log in",
+      "signUpLink": "Don't have an account? Sign Up"
     },
-    "signInPage": {
-      "title": "Sign in page",
-      "name": "Name",
-      "signInButton": "Sign in"
+    "signUpPage": {
+      "action": "Sign up for your account",
+      "signUpButton": "Sign in",
+      "or": "or",
+      "loginLink": "Already have an account? Log In"
     },
     "mainPage": {
       "title": "Main page"
     },
     "welcomePage": {
       "title": "Welcome page",
-      "signInButton": "Sign in",
+      "signUpButton": "Sign up",
       "logInButton": "Log in",
       "howToUse": "How to use app",
       "team": "Team",
@@ -44,6 +46,27 @@
     },
     "confirmModal": {
       "text": "Do you really want to delete?"
+    }
+  },
+  "form": {
+    "fields": {
+      "name": "Name",
+      "login": "Login",
+      "password": "Password"
+    },
+    "errors": {
+      "noName": "⚠Name is required",
+      "noLogin": "⚠Login is required",
+      "noPassword": "⚠Password is required",
+      "minLengthLogin": "⚠Login is too short",
+      "minLengthPassword": "⚠Password is too short"
+    }
+  },
+  "api": {
+    "errors": {
+      "message": "The following error has occurred",
+      "status": "An error has occurred with the following status",
+      "default": "Something went wrong, please retry your request"
     }
   },
   "answers": {

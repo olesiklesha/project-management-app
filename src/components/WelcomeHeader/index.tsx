@@ -2,7 +2,7 @@ import { AppBar, BottomNavigation, Box, Typography, Button } from '@mui/material
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from '../../constants';
-import HomeIcon from '../Header/home-icon.styled';
+import { AppIcon } from '../';
 
 interface Props {
   goBack?: () => void | null;
@@ -16,7 +16,7 @@ function WelcomeHeader({ goBack }: Props) {
     <AppBar color="primary" position="relative" sx={{ boxShadow: 'none' }}>
       <BottomNavigation component="nav" sx={{ padding: '16px', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <HomeIcon fontSize="large" />
+          <AppIcon fontSize="large" />
           <Typography
             variant="h4"
             gutterBottom
@@ -40,13 +40,13 @@ function WelcomeHeader({ goBack }: Props) {
               </Button>
               <Button
                 component={Link}
-                to={AppRoutes.SIGN_IN}
+                to={AppRoutes.SIGN_UP}
                 color="secondary"
                 variant="contained"
                 sx={{ fontWeight: 900 }}
                 onClick={goBack}
               >
-                {t('pages.welcomePage.signInButton')}
+                {t('pages.welcomePage.signUpButton')}
               </Button>
             </>
           ) : (

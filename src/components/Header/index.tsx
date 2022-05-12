@@ -21,9 +21,10 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { AppRoutes, LS_LOGIN } from '../../constants';
-import HomeIcon from './home-icon.styled';
 import { TimeoutId } from '@reduxjs/toolkit/dist/query/core/buildMiddleware/types';
+import { useAppSelector } from '../../hooks/redux';
+import { AppRoutes, AUTH } from '../../constants';
+import { AppIcon } from '../';
 import { LocaleSwitcher } from '../';
 
 let timeout: TimeoutId;
@@ -34,6 +35,7 @@ function Header() {
   const [isStickied, setStickied] = useState(false);
   const [openAuthMenu, setOpenAuthMenu] = React.useState<boolean>(false);
   const anchorAuthRef = React.useRef<HTMLButtonElement>(null);
+  const { login } = useAppSelector((state) => state.authSlice);
 
   useEffect(() => {
     window.onscroll = () => {
@@ -42,13 +44,12 @@ function Header() {
       timeout = setTimeout(() => {
         const val = window.scrollY > 10;
         setStickied(val);
-        console.log(isStickied);
       }, 10);
     };
   });
 
   const handleLogout = () => {
-    window.localStorage.clear();
+    window.localStorage.removeItem(AUTH);
     setOpenAuthMenu(false);
     navigate(AppRoutes.WELCOME);
   };
@@ -80,7 +81,7 @@ function Header() {
         <Toolbar disableGutters sx={{ minHeight: { xs: '100%' }, display: 'flex', flexGrow: 1 }}>
           <Tooltip title={'boards'}>
             <IconButton component={RouterLink} to={AppRoutes.MAIN} aria-label="home-icon">
-              <HomeIcon />
+              <AppIcon />
             </IconButton>
           </Tooltip>
           <Box sx={{ flexGrow: 1 }} />
@@ -107,7 +108,7 @@ function Header() {
               />
             }
           >
-            {window.localStorage.getItem(LS_LOGIN)}
+            {login}
           </Button>
           <Popper
             open={openAuthMenu}
