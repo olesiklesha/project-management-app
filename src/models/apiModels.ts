@@ -16,7 +16,7 @@ interface ISignUpRequest {
   password: string;
 }
 
-interface ISignUpResponse {
+interface IUserData {
   id: string;
   name: string;
   login: string;
@@ -31,4 +31,47 @@ interface ISignInResponse {
   token: string;
 }
 
-export type { IRequestError, ISignUpRequest, ISignUpResponse, ISignInRequest, ISignInResponse };
+interface IBoard {
+  id: string;
+  title: string;
+}
+
+type IBoardData = IBoard & { columns: IColumnData[] };
+
+interface ITask {
+  id: string;
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+  boardId: string;
+  columnId: string;
+}
+
+interface IColumn {
+  id: string;
+  title: string;
+  order: number;
+}
+
+interface IColumnFiles {
+  filename: string;
+  fileSize: number;
+}
+
+type IColumnTask = Omit<ITask, 'boardId' | 'columnId'> & { files: IColumnFiles[]; done: boolean };
+
+type IColumnData = IColumn & { tasks: IColumnTask[] };
+
+export type {
+  IRequestError,
+  ISignUpRequest,
+  IUserData,
+  ISignInRequest,
+  ISignInResponse,
+  IBoard,
+  IBoardData,
+  ITask,
+  IColumn,
+  IColumnData,
+};
