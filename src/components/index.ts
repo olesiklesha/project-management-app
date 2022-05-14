@@ -10,3 +10,6 @@ export { default as WelcomeHeader } from './WelcomeHeader';
 export { default as Profile } from './Profile';
 export { default as YoutubeIframe } from './YoutubeIframe';
 export { default as Modal } from './Modal';
+export { default as Column } from './Column';
+export { default as EditableHeader } from './ChangebleHeader';
+export { default as EditableTask } from './ChangebleTask';
