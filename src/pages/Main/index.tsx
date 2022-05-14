@@ -57,9 +57,4 @@ function Main() {
   );
 }
 
-// <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
-//   <p>this is modal</p>
-// </Modal>
-// <Modal isOpened={isConfirmOpened} onCancel={toggleIsConfirmOpened} action={testAction} />
-
 export default Main;

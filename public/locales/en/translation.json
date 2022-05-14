@@ -78,6 +78,7 @@
   },
   "actions": {
     "create": "Create",
-    "edit": "Edit"
+    "edit": "Edit",
+    "delete": "Delete"
   }
 }
