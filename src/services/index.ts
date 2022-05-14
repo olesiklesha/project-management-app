@@ -6,6 +6,10 @@ import {
   ISignInResponse,
   IBoard,
   IBoardData,
+  IColumn,
+  IColumnData,
+  ITask,
+  ITaskRequest,
 } from '../models/apiModels';
 import { authSlice } from '../store/reducers/auth';
 import { RootState } from '../store';
@@ -14,7 +18,7 @@ const BASE_URL = 'https://cream-task-app.herokuapp.com/';
 
 const appApi = createApi({
   reducerPath: 'appApi',
-  tagTypes: ['Users', 'Boards'],
+  tagTypes: ['Users', 'Boards', 'Columns', 'Tasks'],
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -27,7 +31,7 @@ const appApi = createApi({
   }),
   endpoints: (builder) => ({
     signUp: builder.mutation<IUserData, ISignUpRequest>({
-      query: (body: ISignUpRequest) => ({
+      query: (body) => ({
         url: '/signup',
         method: 'POST',
         body,
@@ -35,7 +39,7 @@ const appApi = createApi({
       invalidatesTags: ['Users'],
     }),
     signIn: builder.mutation<ISignInResponse, ISignInRequest>({
-      query: (body: ISignInRequest) => ({
+      query: (body) => ({
         url: '/signin',
         method: 'POST',
         body,
@@ -49,24 +53,21 @@ const appApi = createApi({
       providesTags: ['Users'],
     }),
     getUser: builder.query<IUserData, string>({
-      query: (id: string) => ({ url: `/users/${id}` }),
+      query: (id) => ({ url: `/users/${id}` }),
     }),
     deleteUser: builder.mutation<void, string>({
-      query: (id: string) => ({
+      query: (id) => ({
         url: `/users/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Users'],
     }),
     editUser: builder.mutation<ISignUpRequest, { id: string; body: ISignUpRequest }>({
-      query: (data) => {
-        const { id, body } = data;
-        return {
-          url: `/users/${id}`,
-          method: 'PUT',
-          body,
-        };
-      },
+      query: ({ id, body }) => ({
+        url: `/users/${id}`,
+        method: 'PUT',
+        body,
+      }),
       invalidatesTags: ['Users'],
     }),
     getAllBoards: builder.query<IBoard[], void>({
@@ -92,15 +93,97 @@ const appApi = createApi({
       invalidatesTags: ['Boards'],
     }),
     editBoard: builder.mutation<IBoard, { id: string; title: string }>({
-      query: (data) => {
-        const { id, title } = data;
-        return {
-          url: `/boards/${id}`,
-          method: 'PUT',
-          body: { title },
-        };
-      },
+      query: ({ id, title }) => ({
+        url: `/boards/${id}`,
+        method: 'PUT',
+        body: { title },
+      }),
       invalidatesTags: ['Boards'],
+    }),
+    getAllColumns: builder.query<IColumn[], string>({
+      query: (boardId) => ({ url: `/boards/${boardId}/columns` }),
+      providesTags: ['Columns'],
+    }),
+    createColumn: builder.mutation<IColumn, { id: string; body: Omit<IColumn, 'id'> }>({
+      query: ({ id, body }) => ({
+        url: `/boards/${id}/columns`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Columns'],
+    }),
+    getColumn: builder.query<IColumnData, { boardId: string; columnId: string }>({
+      query: ({ boardId, columnId }) => ({ url: `/boards/${boardId}/columns/${columnId}` }),
+    }),
+    deleteColumn: builder.mutation<void, { boardId: string; columnId: string }>({
+      query: ({ boardId, columnId }) => ({
+        url: `/boards/${boardId}/columns/${columnId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Columns'],
+    }),
+    editColumn: builder.mutation<
+      IColumn,
+      { boardId: string; columnId: string; body: Omit<IColumn, 'id'> }
+    >({
+      query: ({ boardId, columnId, body }) => ({
+        url: `/boards/${boardId}/columns/${columnId}`,
+        method: 'PUT',
+        body: body,
+      }),
+      invalidatesTags: ['Columns'],
+    }),
+    getAllTasks: builder.query<ITask[], { boardId: string; columnId: string }>({
+      query: ({ boardId, columnId }) => ({
+        url: `/boards/${boardId}/columns/${columnId}/tasks`,
+      }),
+      providesTags: ['Tasks'],
+    }),
+    createTask: builder.mutation<ITask, { boardId: string; columnId: string; body: ITaskRequest }>({
+      query: ({ boardId, columnId, body }) => ({
+        url: `/boards/${boardId}/columns/${columnId}/tasks`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Tasks'],
+    }),
+    getTask: builder.query<ITask, { boardId: string; columnId: string; taskId: string }>({
+      query: ({ boardId, columnId, taskId }) => ({
+        url: `/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+      }),
+    }),
+    deleteTask: builder.mutation<void, { boardId: string; columnId: string; taskId: string }>({
+      query: ({ boardId, columnId, taskId }) => ({
+        url: `/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Tasks'],
+    }),
+    editTask: builder.mutation<
+      ITask,
+      { boardId: string; columnId: string; taskId: string; body: Omit<ITask, 'id'> }
+    >({
+      query: ({ boardId, columnId, taskId, body }) => ({
+        url: `/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+        method: 'PUT',
+        body: body,
+      }),
+      invalidatesTags: ['Tasks'],
+    }),
+    uploadFile: builder.mutation<void, BinaryData>({
+      query: (file) => ({
+        url: `/file`,
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+        method: 'POST',
+        body: file,
+      }),
+    }),
+    getFile: builder.query<BinaryData, { taskId: string; filename: string }>({
+      query: ({ taskId, filename }) => ({
+        url: `/file/${taskId}/${filename}`,
+      }),
     }),
   }),
 });
@@ -117,6 +200,18 @@ const {
   useGetBoardQuery,
   useDeleteBoardMutation,
   useEditBoardMutation,
+  useGetAllColumnsQuery,
+  useCreateColumnMutation,
+  useGetColumnQuery,
+  useDeleteColumnMutation,
+  useEditColumnMutation,
+  useGetAllTasksQuery,
+  useCreateTaskMutation,
+  useGetTaskQuery,
+  useDeleteTaskMutation,
+  useEditTaskMutation,
+  useUploadFileMutation,
+  useGetFileQuery,
 } = appApi;
 
 export {
@@ -132,29 +227,16 @@ export {
   useGetBoardQuery,
   useDeleteBoardMutation,
   useEditBoardMutation,
+  useGetAllColumnsQuery,
+  useCreateColumnMutation,
+  useGetColumnQuery,
+  useDeleteColumnMutation,
+  useEditColumnMutation,
+  useGetAllTasksQuery,
+  useCreateTaskMutation,
+  useGetTaskQuery,
+  useDeleteTaskMutation,
+  useEditTaskMutation,
+  useUploadFileMutation,
+  useGetFileQuery,
 };
-
-// const [deleteUser, { isLoading, error, isError }] = useDeleteUserMutation();
-// deleteUser('3836f8bf-3248-4269-b351-750ae8faf9a9');
-//
-// const [editUser, { isLoading, error, isError }] = useEditUserMutation();
-// const response = editUser({
-//   id: '2222e422-95ce-490a-a198-ce8df7dccd5f',
-//   body: { name: 'Slava', login: 'Ukraine', password: '123456' },
-// });
-//
-// const { data, isLoading } = useGetAllBoardsQuery();
-//
-// const [createBoard, { isLoading, error, isError }] = useCreateBoardMutation();
-// const response = createBoard('Create backend');
-//
-// const { data, isLoading } = useGetBoardQuery('1639b95c-69a1-42bb-92a1-01d3b99f9808');
-//
-// const [deleteBoard, { isLoading, error, isError }] = useDeleteBoardMutation();
-// deleteBoard('833c58c0-af75-4c70-8790-be115914aefb');
-//
-// const [editBoard, { isLoading, error, isError }] = useEditBoardMutation();
-// const response = editBoard({
-//   id: 'a4ffa45a-cfc9-4150-b58e-4d417aefe7ec',
-//   title: 'Create frontend',
-// });

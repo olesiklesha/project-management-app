@@ -48,6 +48,8 @@ interface ITask {
   columnId: string;
 }
 
+type ITaskRequest = Omit<ITask, 'id' | 'boardId' | 'columnId'>;
+
 interface IColumn {
   id: string;
   title: string;
@@ -72,6 +74,7 @@ export type {
   IBoard,
   IBoardData,
   ITask,
+  ITaskRequest,
   IColumn,
   IColumnData,
 };
