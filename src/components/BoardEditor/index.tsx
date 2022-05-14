@@ -41,18 +41,19 @@ function BoardEditor({ onCancel }: IModalForm) {
       }}
     >
       <Typography variant="h5" sx={{ fontFamily: 'Ubuntu', fontWeight: 500 }} align="center">
-        Edit board title
+        {t('pages.mainPage.editBoardTitle')}
       </Typography>
       <TextField
-        label="name"
+        label={t('pages.mainPage.fieldTitle')}
         variant="standard"
+        fullWidth
         sx={{ mb: 2, mt: 2 }}
-        {...register('name', { required: t('form.errors.noName') })}
+        {...register('name', { required: t('form.errors.noTitle') })}
         error={!!errors.name}
         helperText={errors.name?.message}
       />
       <Button type="submit" variant="contained" sx={{ width: '45%' }}>
-        Edit
+        {t('actions.edit')}
       </Button>
     </Box>
   );

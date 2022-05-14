@@ -24,7 +24,10 @@
       "loginLink": "Already have an account? Log In"
     },
     "mainPage": {
-      "title": "Boards"
+      "title": "Boards",
+      "createBtn": "Create board",
+      "editBoardTitle": "Edit board title",
+      "fieldTitle": "title"
     },
     "welcomePage": {
       "title": "Welcome page",
@@ -72,5 +75,9 @@
   "answers": {
     "yes": "Yes",
     "no": "No"
+  },
+  "actions": {
+    "create": "Create",
+    "edit": "Edit"
   }
 }
