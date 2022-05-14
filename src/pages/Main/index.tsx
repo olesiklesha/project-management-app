@@ -4,15 +4,21 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { BoardCreator, Modal, ShortBoard } from '../../components';
 import { boardCreatorSlice } from '../../store/reducers/boardCreatorSlice';
+import { deleteModalSlice } from '../../store/reducers/deleteModalSlice';
 
 function Main() {
   const { t } = useTranslation();
   const { boards } = useAppSelector((state) => state.boardsSlice);
   const { isOpen } = useAppSelector((state) => state.boardCreatorSlice);
+  const { isDeleteModalOpened } = useAppSelector((state) => state.deleteModalSlice);
   const dispatch = useAppDispatch();
 
   const toggleIsCreatorOpened = () => {
     dispatch(boardCreatorSlice.actions.toggle());
+  };
+
+  const closeDeleteModal = () => {
+    dispatch(deleteModalSlice.actions.close());
   };
 
   return (
@@ -37,6 +43,7 @@ function Main() {
       <Modal isOpened={isOpen} onCancel={toggleIsCreatorOpened}>
         <BoardCreator onCancel={toggleIsCreatorOpened} />
       </Modal>
+      <Modal isOpened={isDeleteModalOpened} onCancel={closeDeleteModal} />
     </Box>
   );
 }

@@ -3,27 +3,37 @@ import Portal from '../Portal';
 import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { useTranslation } from 'react-i18next';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { deleteModalSlice } from '../../store/reducers/deleteModalSlice';
+import { boardsSlice } from '../../store/reducers/boardsSlice';
 
 interface IModalProps {
   isOpened: boolean;
   onCancel: () => void;
   children?: JSX.Element | JSX.Element[];
-  action?: () => void;
 }
 
-export default function Modal({ isOpened, onCancel, children, action }: IModalProps) {
+export default function Modal({ isOpened, onCancel, children }: IModalProps) {
   const { t } = useTranslation();
+  const { targetId } = useAppSelector((state) => state.deleteModalSlice);
+  const dispatch = useAppDispatch();
+
   const handleClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       onCancel();
     }
   };
+  //
+  // const handleAction = () => {
+  //   if (action) {
+  //     action();
+  //     onCancel();
+  //   }
+  // };
 
-  const handleAction = () => {
-    if (action) {
-      action();
-      onCancel();
-    }
+  const handleDelete = () => {
+    dispatch(boardsSlice.actions.deleteBoard(targetId));
+    dispatch(deleteModalSlice.actions.close());
   };
 
   return (
@@ -79,7 +89,7 @@ export default function Modal({ isOpened, onCancel, children, action }: IModalPr
                     <Button variant="text" color="inherit" onClick={handleClick}>
                       {t('answers.no')}
                     </Button>
-                    <Button variant="outlined" color="error" onClick={handleAction}>
+                    <Button variant="outlined" color="error" onClick={handleDelete}>
                       {t('answers.yes')}
                     </Button>
                   </Stack>

@@ -27,7 +27,7 @@ function BoardCreator({ onCancel }: IModalForm) {
 
   const onSubmit = (data: ICreatorState) => {
     const id = String(Date.now());
-    dispatch(boardsSlice.actions.addBoards({ title: data.name, id }));
+    dispatch(boardsSlice.actions.addBoard({ title: data.name, id }));
     onCancel();
   };
 

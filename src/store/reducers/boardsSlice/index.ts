@@ -13,11 +13,11 @@ export const boardsSlice = createSlice({
   name: 'boards',
   initialState,
   reducers: {
-    addBoards: (state, action: PayloadAction<IShortBoard>) => {
+    addBoard: (state, action: PayloadAction<IShortBoard>) => {
       state.boards.push(action.payload);
     },
-    deleteBoards: (state, action: PayloadAction<string>) => {
-      state.boards.map((el) => el.id !== action.payload);
+    deleteBoard: (state, action: PayloadAction<string>) => {
+      state.boards = state.boards.filter((el) => el.id !== action.payload);
     },
   },
 });
