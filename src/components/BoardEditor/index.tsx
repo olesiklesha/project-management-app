@@ -3,31 +3,30 @@ import { Box, TextField, Typography, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { IModalForm } from '../../models/models';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { boardsSlice } from '../../store/reducers/boardsSlice';
 
-interface ICreatorState {
+interface IEditorState {
   name: string;
 }
 
-const initialState = {
-  name: '',
-};
-
-function BoardCreator({ onCancel }: IModalForm) {
+function BoardEditor({ onCancel }: IModalForm) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { target } = useAppSelector((state) => state.editModalSlice);
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<ICreatorState>({
-    defaultValues: initialState,
+  } = useForm<IEditorState>({
+    defaultValues: {
+      name: target ? target.title : '',
+    },
   });
 
-  const onSubmit = (data: ICreatorState) => {
-    const id = String(Date.now());
-    dispatch(boardsSlice.actions.addBoard({ title: data.name, id }));
+  const onSubmit = (data: IEditorState) => {
+    if (!target) return;
+    dispatch(boardsSlice.actions.editBoard({ title: data.name, id: target.id }));
     onCancel();
   };
 
@@ -42,22 +41,21 @@ function BoardCreator({ onCancel }: IModalForm) {
       }}
     >
       <Typography variant="h5" sx={{ fontFamily: 'Ubuntu', fontWeight: 500 }} align="center">
-        Create board
+        Edit board title
       </Typography>
       <TextField
         label="name"
         variant="standard"
         sx={{ mb: 2, mt: 2 }}
-        fullWidth
         {...register('name', { required: t('form.errors.noName') })}
         error={!!errors.name}
         helperText={errors.name?.message}
       />
       <Button type="submit" variant="contained" sx={{ width: '45%' }}>
-        Create
+        Edit
       </Button>
     </Box>
   );
 }
 
-export default BoardCreator;
+export default BoardEditor;

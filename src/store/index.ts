@@ -3,6 +3,7 @@ import boardsSlice from './reducers/boardsSlice';
 import authSlice from './reducers/auth';
 import boardCreatorSlice from './reducers/boardCreatorSlice';
 import deleteModalSlice from './reducers/deleteModalSlice';
+import editModalSlice from './reducers/editModalSlice';
 import { appApi } from '../services';
 
 const rootReducer = combineReducers({
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   boardsSlice,
   boardCreatorSlice,
   deleteModalSlice,
+  editModalSlice,
   [appApi.reducerPath]: appApi.reducer,
 });
 

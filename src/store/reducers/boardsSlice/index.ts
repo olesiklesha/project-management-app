@@ -19,6 +19,9 @@ export const boardsSlice = createSlice({
     deleteBoard: (state, action: PayloadAction<string>) => {
       state.boards = state.boards.filter((el) => el.id !== action.payload);
     },
+    editBoard: (state, action: PayloadAction<IShortBoard>) => {
+      state.boards = state.boards.map((el) => (el.id === action.payload.id ? action.payload : el));
+    },
   },
 });
 

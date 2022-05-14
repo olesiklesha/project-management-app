@@ -7,18 +7,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch } from 'react-redux';
 import { deleteModalSlice } from '../../store/reducers/deleteModalSlice';
+import { editModalSlice } from '../../store/reducers/editModalSlice';
 
 function ShortBoard({ id, title }: IShortBoard) {
   const path = AppRoutes.MAIN + `/${id}`;
   const dispatch = useDispatch();
 
-  const handleDelete = (e: React.MouseEvent) => {
+  const handleBtnClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    dispatch(deleteModalSlice.actions.open(id));
-  };
-
-  const handleEdit = (e: React.MouseEvent) => {
-    e.preventDefault();
+    if (e.currentTarget.getAttribute('data-edit-board')) {
+      dispatch(editModalSlice.actions.open({ id, title }));
+    } else {
+      dispatch(deleteModalSlice.actions.open(id));
+    }
   };
 
   return (
@@ -42,10 +43,10 @@ function ShortBoard({ id, title }: IShortBoard) {
         spacing={0.5}
         sx={{ position: 'absolute', top: '0.5rem', right: '0.5rem' }}
       >
-        <IconButton size="medium" onClick={handleDelete}>
+        <IconButton size="medium" onClick={handleBtnClick} data-delete-board>
           <DeleteIcon color="warning" fontSize="small" />
         </IconButton>
-        <IconButton size="medium" onClick={handleEdit}>
+        <IconButton size="medium" onClick={handleBtnClick} data-edit-board>
           <EditIcon color="success" fontSize="small" />
         </IconButton>
       </Stack>
