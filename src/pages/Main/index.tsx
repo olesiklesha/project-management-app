@@ -1,30 +1,19 @@
-import React, { useCallback, useState } from 'react';
-import { Box, Button, Container, Typography } from '@mui/material';
+import React from 'react';
+import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-
-import { Modal } from '../../components';
-import Board from '../Board';
-import ShortBoard from '../../components/ShortBoard';
+import { BoardCreator, Modal, ShortBoard } from '../../components';
+import { boardCreatorSlice } from '../../store/reducers/boardCreatorSlice';
 
 function Main() {
   const { t } = useTranslation();
   const { boards } = useAppSelector((state) => state.boardsSlice);
+  const { isOpen } = useAppSelector((state) => state.boardCreatorSlice);
   const dispatch = useAppDispatch();
-  // const [isOpened, setIsOpened] = useState(false);
-  // const [isConfirmOpened, setIsConfirmOpened] = useState(false);
-  //
-  // const toggleIsOpened = useCallback(() => {
-  //   setIsOpened((isOpened) => !isOpened);
-  // }, []);
-  //
-  // const toggleIsConfirmOpened = useCallback(() => {
-  //   setIsConfirmOpened((prev) => !prev);
-  // }, []);
-  //
-  // const testAction = () => {
-  //   console.log('toggle confirm');
-  // };
+
+  const toggleIsCreatorOpened = () => {
+    dispatch(boardCreatorSlice.actions.toggle());
+  };
 
   return (
     <Box sx={{ minHeight: 'calc(100vh - 128px)' }}>
@@ -33,9 +22,21 @@ function Main() {
           {t('pages.mainPage.title')}.
         </Typography>
         <h2>The quick brown fox jumps over the lazy dog.</h2>
-        {boards.length > 0 &&
-          boards.map((board) => <ShortBoard id={board.id} title={board.title} key={board.id} />)}
+        <Button variant="contained" onClick={toggleIsCreatorOpened}>
+          create board
+        </Button>
+        <Grid container spacing={6} sx={{ mt: 2 }}>
+          {boards.length > 0 &&
+            boards.map((board) => (
+              <Grid item xs={12} sm={6} md={3} key={board.id}>
+                <ShortBoard id={board.id} title={board.title} />
+              </Grid>
+            ))}
+        </Grid>
       </Container>
+      <Modal isOpened={isOpen} onCancel={toggleIsCreatorOpened}>
+        <BoardCreator onCancel={toggleIsCreatorOpened} />
+      </Modal>
     </Box>
   );
 }

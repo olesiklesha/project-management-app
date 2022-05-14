@@ -3,3 +3,7 @@ export interface ITeammateInfo {
   name: string;
   description: string;
 }
+
+export interface IModalForm {
+  onCancel: () => void;
+}

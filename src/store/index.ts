@@ -1,11 +1,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import boardsSlice from './reducers/boardsSlice';
 import authSlice from './reducers/auth';
+import boardCreatorSlice from './reducers/boardCreatorSlice';
 import { appApi } from '../services';
 
 const rootReducer = combineReducers({
   authSlice,
   boardsSlice,
+  boardCreatorSlice,
   [appApi.reducerPath]: appApi.reducer,
 });
 

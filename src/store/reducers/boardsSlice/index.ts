@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IShortBoard } from '../../../models';
 
-interface CountState {
+interface IBoardState {
   boards: IShortBoard[];
 }
 
-const initialState: CountState = {
+const initialState: IBoardState = {
   boards: [],
 };
 
