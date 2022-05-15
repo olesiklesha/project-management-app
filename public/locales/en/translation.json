@@ -62,7 +62,8 @@
       "noLogin": "⚠Login is required",
       "noPassword": "⚠Password is required",
       "minLengthLogin": "⚠Login is too short",
-      "minLengthPassword": "⚠Password is too short"
+      "minLengthPassword": "⚠Password is too short",
+      "noTitle": "⚠Title is required"
     }
   },
   "api": {
