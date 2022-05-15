@@ -2,8 +2,7 @@ import React from 'react';
 import { Box, TextField, Typography, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '../../hooks/redux';
-import { boardsSlice } from '../../store/reducers/boardsSlice';
+import { useEditBoardMutation } from '../../services';
 
 interface IEditorState {
   title: string;
@@ -17,7 +16,8 @@ interface IEditorProps {
 
 function BoardEditor({ onCancel, id, title }: IEditorProps) {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
+  const [editBoard] = useEditBoardMutation();
+
   const {
     register,
     formState: { errors },
@@ -28,9 +28,9 @@ function BoardEditor({ onCancel, id, title }: IEditorProps) {
     },
   });
 
-  const onSubmit = (data: IEditorState) => {
+  const onSubmit = async (data: IEditorState) => {
     const { title } = data;
-    dispatch(boardsSlice.actions.editBoard({ title, id }));
+    await editBoard({ title, id });
     onCancel();
   };
 
