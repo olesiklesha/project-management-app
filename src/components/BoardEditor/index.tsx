@@ -2,31 +2,35 @@ import React from 'react';
 import { Box, TextField, Typography, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { IModalForm } from '../../models/models';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppDispatch } from '../../hooks/redux';
 import { boardsSlice } from '../../store/reducers/boardsSlice';
 
 interface IEditorState {
-  name: string;
+  title: string;
 }
 
-function BoardEditor({ onCancel }: IModalForm) {
+interface IEditorProps {
+  id: string;
+  title: string;
+  onCancel: () => void;
+}
+
+function BoardEditor({ onCancel, id, title }: IEditorProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { target } = useAppSelector((state) => state.editModalSlice);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<IEditorState>({
     defaultValues: {
-      name: target ? target.title : '',
+      title,
     },
   });
 
   const onSubmit = (data: IEditorState) => {
-    if (!target) return;
-    dispatch(boardsSlice.actions.editBoard({ title: data.name, id: target.id }));
+    const { title } = data;
+    dispatch(boardsSlice.actions.editBoard({ title, id }));
     onCancel();
   };
 
@@ -48,9 +52,9 @@ function BoardEditor({ onCancel }: IModalForm) {
         variant="standard"
         fullWidth
         sx={{ mb: 2, mt: 2 }}
-        {...register('name', { required: t('form.errors.noTitle') })}
-        error={!!errors.name}
-        helperText={errors.name?.message}
+        {...register('title', { required: t('form.errors.noTitle') })}
+        error={!!errors.title}
+        helperText={errors.title?.message}
       />
       <Button type="submit" variant="contained" sx={{ width: '45%' }}>
         {t('actions.edit')}
