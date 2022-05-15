@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, TextField, Typography, Button } from '@mui/material';
+import { Box, TextField, Typography, Button, CircularProgress } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useEditBoardMutation } from '../../services';
@@ -16,7 +16,7 @@ interface IEditorProps {
 
 function BoardEditor({ onCancel, id, title }: IEditorProps) {
   const { t } = useTranslation();
-  const [editBoard] = useEditBoardMutation();
+  const [editBoard, { isLoading }] = useEditBoardMutation();
 
   const {
     register,
@@ -56,7 +56,12 @@ function BoardEditor({ onCancel, id, title }: IEditorProps) {
         error={!!errors.title}
         helperText={errors.title?.message}
       />
-      <Button type="submit" variant="contained" sx={{ width: '45%' }}>
+      <Button
+        type="submit"
+        variant="contained"
+        sx={{ width: '75%' }}
+        startIcon={isLoading && <CircularProgress color="secondary" size={20} />}
+      >
         {t('actions.edit')}
       </Button>
     </Box>

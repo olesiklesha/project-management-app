@@ -12,7 +12,7 @@ import { useDeleteBoardMutation } from '../../services';
 function ShortBoard({ id, title }: IShortBoard) {
   const { t } = useTranslation();
   const path = AppRoutes.MAIN + `/${id}`;
-  const [deleteBoard] = useDeleteBoardMutation();
+  const [deleteBoard, { isLoading }] = useDeleteBoardMutation();
   const [isDeleteOpened, setDeleteOpened] = useState(false);
   const [isEditOpened, setEditOpened] = useState(false);
 
@@ -24,8 +24,8 @@ function ShortBoard({ id, title }: IShortBoard) {
     setEditOpened((prev) => !prev);
   };
 
-  const onConfirm = () => {
-    deleteBoard(id);
+  const onConfirm = async () => {
+    await deleteBoard(id);
   };
 
   const handleBtnClick = (e: React.MouseEvent) => {
@@ -72,7 +72,12 @@ function ShortBoard({ id, title }: IShortBoard) {
       <Modal isOpened={isEditOpened} onCancel={toggleEditOpened}>
         <BoardEditor id={id} title={title} onCancel={toggleEditOpened} />
       </Modal>
-      <Modal isOpened={isDeleteOpened} onCancel={toggleDeleteOpened} onConfirm={onConfirm} />
+      <Modal
+        isOpened={isDeleteOpened}
+        onCancel={toggleDeleteOpened}
+        onConfirm={onConfirm}
+        isLoading={isLoading}
+      />
     </>
   );
 }

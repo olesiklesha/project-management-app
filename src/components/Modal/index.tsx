@@ -1,6 +1,6 @@
 import React from 'react';
 import Portal from '../Portal';
-import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, IconButton, Stack, Typography } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { useTranslation } from 'react-i18next';
 
@@ -9,9 +9,10 @@ interface IModalProps {
   onCancel: () => void;
   children?: JSX.Element | JSX.Element[];
   onConfirm?: () => void;
+  isLoading?: boolean;
 }
 
-export default function Modal({ isOpened, onCancel, children, onConfirm }: IModalProps) {
+export default function Modal({ isOpened, onCancel, children, onConfirm, isLoading }: IModalProps) {
   const { t } = useTranslation();
 
   const handleClick = (e: React.MouseEvent) => {
@@ -20,10 +21,10 @@ export default function Modal({ isOpened, onCancel, children, onConfirm }: IModa
     }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (!onConfirm) return;
 
-    onConfirm();
+    await onConfirm();
     onCancel();
   };
 
@@ -87,10 +88,21 @@ export default function Modal({ isOpened, onCancel, children, onConfirm }: IModa
                     direction="row"
                     spacing={1}
                   >
-                    <Button variant="text" color="inherit" onClick={handleClick}>
+                    <Button
+                      variant="text"
+                      color="inherit"
+                      onClick={handleClick}
+                      sx={{ width: '35%' }}
+                    >
                       {t('answers.no')}
                     </Button>
-                    <Button variant="contained" color="warning" onClick={handleDelete}>
+                    <Button
+                      variant="contained"
+                      color="warning"
+                      onClick={handleDelete}
+                      sx={{ width: '35%' }}
+                      startIcon={isLoading && <CircularProgress color="inherit" size={20} />}
+                    >
                       {t('answers.yes')}
                     </Button>
                   </Stack>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, TextField, Typography, Button } from '@mui/material';
+import { Box, TextField, Typography, Button, CircularProgress } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { IModalForm } from '../../models/models';
@@ -14,7 +14,7 @@ const initialState = {
 };
 
 function BoardCreator({ onCancel }: IModalForm) {
-  const [createBoard] = useCreateBoardMutation();
+  const [createBoard, { isLoading }] = useCreateBoardMutation();
   const { t } = useTranslation();
   const {
     register,
@@ -24,8 +24,8 @@ function BoardCreator({ onCancel }: IModalForm) {
     defaultValues: initialState,
   });
 
-  const onSubmit = (data: ICreatorState) => {
-    createBoard(data.title);
+  const onSubmit = async (data: ICreatorState) => {
+    await createBoard(data.title);
 
     onCancel();
   };
@@ -52,7 +52,12 @@ function BoardCreator({ onCancel }: IModalForm) {
         error={!!errors.title}
         helperText={errors.title?.message}
       />
-      <Button type="submit" variant="contained" sx={{ width: '45%' }}>
+      <Button
+        type="submit"
+        variant="contained"
+        sx={{ width: '75%' }}
+        startIcon={isLoading && <CircularProgress color="secondary" size={20} />}
+      >
         {t('actions.create')}
       </Button>
     </Box>
