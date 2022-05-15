@@ -24,7 +24,10 @@
       "loginLink": "Уже есть аккаунт? Войти"
     },
     "mainPage": {
-      "title": "Главная"
+      "title": "Доски",
+      "createBtn": "Создать доску",
+      "editBoardTitle": "Изменить название доски",
+      "fieldTitle": "Название"
     },
     "welcomePage": {
       "title": "Приветсвенная страница",
@@ -59,7 +62,8 @@
       "noLogin": "⚠Логин обязателен",
       "noPassword": "⚠Пароль обязателен",
       "minLengthLogin": "⚠Логин слишком короткий",
-      "minLengthPassword": "⚠Пароль слишком короткий"
+      "minLengthPassword": "⚠Пароль слишком короткий",
+      "noTitle": "⚠Название обязательно"
     }
   },
   "api": {
@@ -72,5 +76,10 @@
   "answers": {
     "yes": "Да",
     "no": "Нет"
+  },
+  "actions": {
+    "create": "Создать",
+    "edit": "Изменить",
+    "delete": "Удалить"
   }
 }

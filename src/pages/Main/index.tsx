@@ -1,62 +1,42 @@
-import React, { useCallback, useState } from 'react';
-import { Box, Button, Container, Typography } from '@mui/material';
+import React from 'react';
+import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { counterSlice } from '../../store/reducers/testSlice';
-import { Modal } from '../../components';
+import { BoardCreator, Modal, ShortBoard } from '../../components';
+import { boardCreatorSlice } from '../../store/reducers/boardCreatorSlice';
 
 function Main() {
   const { t } = useTranslation();
-  const { count } = useAppSelector((state) => state.testSlice);
+  const { boards } = useAppSelector((state) => state.boardsSlice);
+  const { isOpen } = useAppSelector((state) => state.boardCreatorSlice);
   const dispatch = useAppDispatch();
-  const [isOpened, setIsOpened] = useState(false);
-  const [isConfirmOpened, setIsConfirmOpened] = useState(false);
 
-  const toggleIsOpened = useCallback(() => {
-    setIsOpened((isOpened) => !isOpened);
-  }, []);
-
-  const toggleIsConfirmOpened = useCallback(() => {
-    setIsConfirmOpened((prev) => !prev);
-  }, []);
-
-  const testAction = () => {
-    console.log('toggle confirm');
-  };
-
-  const handleIncrement = () => {
-    dispatch(counterSlice.actions.increment());
-  };
-
-  const handleDecrement = () => {
-    dispatch(counterSlice.actions.decrement());
+  const toggleIsCreatorOpened = () => {
+    dispatch(boardCreatorSlice.actions.toggle());
   };
 
   return (
     <Box sx={{ minHeight: 'calc(100vh - 128px)' }}>
       <Container maxWidth="xl">
-        <Typography variant="h2" sx={{ fontFamily: 'Ubuntu' }}>
+        <Typography variant="h3" sx={{ fontFamily: 'Ubuntu' }}>
           {t('pages.mainPage.title')}.
         </Typography>
         <h2>The quick brown fox jumps over the lazy dog.</h2>
-        <div>{count}</div>
-        <Button variant="contained" color="secondary" onClick={handleIncrement}>
-          +
+        <Button variant="contained" onClick={toggleIsCreatorOpened}>
+          {t('pages.mainPage.createBtn')}
         </Button>
-        <Button variant="contained" color="secondary" onClick={handleDecrement}>
-          -
-        </Button>
-        <Button variant="contained" color="secondary" onClick={toggleIsOpened}>
-          Show modal
-        </Button>
-        <Button variant="contained" color="secondary" onClick={toggleIsConfirmOpened}>
-          Show confirm modal
-        </Button>
+        <Grid container spacing={2} sx={{ mt: 2, mb: 4 }}>
+          {boards.length > 0 &&
+            boards.map((board) => (
+              <Grid item xs={12} sm={6} md={3} key={board.id}>
+                <ShortBoard id={board.id} title={board.title} />
+              </Grid>
+            ))}
+        </Grid>
       </Container>
-      <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
-        <p>this is modal</p>
+      <Modal isOpened={isOpen} onCancel={toggleIsCreatorOpened}>
+        <BoardCreator onCancel={toggleIsCreatorOpened} />
       </Modal>
-      <Modal isOpened={isConfirmOpened} onCancel={toggleIsConfirmOpened} action={testAction} />
     </Box>
   );
 }

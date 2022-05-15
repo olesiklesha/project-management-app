@@ -3,27 +3,31 @@ import Portal from '../Portal';
 import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { useTranslation } from 'react-i18next';
+import { useAppDispatch } from '../../hooks/redux';
+import { boardsSlice } from '../../store/reducers/boardsSlice';
 
 interface IModalProps {
   isOpened: boolean;
   onCancel: () => void;
   children?: JSX.Element | JSX.Element[];
-  action?: () => void;
+  id?: string;
 }
 
-export default function Modal({ isOpened, onCancel, children, action }: IModalProps) {
+export default function Modal({ isOpened, onCancel, children, id }: IModalProps) {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
   const handleClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       onCancel();
     }
   };
 
-  const handleAction = () => {
-    if (action) {
-      action();
-      onCancel();
-    }
+  const handleDelete = () => {
+    if (!id) return;
+
+    dispatch(boardsSlice.actions.deleteBoard(id));
+    onCancel();
   };
 
   return (
@@ -34,23 +38,28 @@ export default function Modal({ isOpened, onCancel, children, action }: IModalPr
             onClick={handleClick}
             sx={{
               position: 'fixed',
-              top: '0',
-              bottom: '0',
-              left: '0',
-              right: '0',
+              width: '100vw',
+              height: '100vh',
+              top: 0,
+              left: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               backgroundColor: 'rgba(0, 0, 0, 0.5)',
               zIndex: '1110',
             }}
           >
             <Box
               sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
+                position: 'relative',
                 backgroundColor: 'ghostwhite',
                 borderRadius: '4px',
-                padding: '3rem',
+                pr: { xs: '1.5rem', md: '3rem' },
+                pl: { xs: '1.5rem', md: '3rem' },
+                pt: '3rem',
+                pb: '3rem',
+                m: 2,
+                mr: 4,
               }}
             >
               <IconButton
@@ -65,7 +74,12 @@ export default function Modal({ isOpened, onCancel, children, action }: IModalPr
               </IconButton>
               {children || (
                 <Box>
-                  <Typography variant="h5" component="h3" sx={{ fontFamily: 'Ubuntu' }}>
+                  <Typography
+                    variant="h5"
+                    component="h3"
+                    sx={{ fontFamily: 'Ubuntu' }}
+                    align="center"
+                  >
                     {t('components.confirmModal.text')}
                   </Typography>
                   <Stack
@@ -79,7 +93,7 @@ export default function Modal({ isOpened, onCancel, children, action }: IModalPr
                     <Button variant="text" color="inherit" onClick={handleClick}>
                       {t('answers.no')}
                     </Button>
-                    <Button variant="outlined" color="error" onClick={handleAction}>
+                    <Button variant="contained" color="warning" onClick={handleDelete}>
                       {t('answers.yes')}
                     </Button>
                   </Stack>
