@@ -7,10 +7,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useTranslation } from 'react-i18next';
 import { BoardEditor, Modal } from '../index';
+import { useDeleteBoardMutation } from '../../services';
 
 function ShortBoard({ id, title }: IShortBoard) {
   const { t } = useTranslation();
   const path = AppRoutes.MAIN + `/${id}`;
+  const [deleteBoard] = useDeleteBoardMutation();
   const [isDeleteOpened, setDeleteOpened] = useState(false);
   const [isEditOpened, setEditOpened] = useState(false);
 
@@ -20,6 +22,10 @@ function ShortBoard({ id, title }: IShortBoard) {
 
   const toggleEditOpened = () => {
     setEditOpened((prev) => !prev);
+  };
+
+  const onConfirm = () => {
+    deleteBoard(id);
   };
 
   const handleBtnClick = (e: React.MouseEvent) => {
@@ -66,7 +72,7 @@ function ShortBoard({ id, title }: IShortBoard) {
       <Modal isOpened={isEditOpened} onCancel={toggleEditOpened}>
         <BoardEditor id={id} title={title} onCancel={toggleEditOpened} />
       </Modal>
-      <Modal isOpened={isDeleteOpened} onCancel={toggleDeleteOpened} id={id} />
+      <Modal isOpened={isDeleteOpened} onCancel={toggleDeleteOpened} onConfirm={onConfirm} />
     </>
   );
 }

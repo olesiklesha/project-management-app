@@ -3,19 +3,16 @@ import Portal from '../Portal';
 import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '../../hooks/redux';
-import { boardsSlice } from '../../store/reducers/boardsSlice';
 
 interface IModalProps {
   isOpened: boolean;
   onCancel: () => void;
   children?: JSX.Element | JSX.Element[];
-  id?: string;
+  onConfirm?: () => void;
 }
 
-export default function Modal({ isOpened, onCancel, children, id }: IModalProps) {
+export default function Modal({ isOpened, onCancel, children, onConfirm }: IModalProps) {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
 
   const handleClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
@@ -24,9 +21,9 @@ export default function Modal({ isOpened, onCancel, children, id }: IModalProps)
   };
 
   const handleDelete = () => {
-    if (!id) return;
+    if (!onConfirm) return;
 
-    dispatch(boardsSlice.actions.deleteBoard(id));
+    onConfirm();
     onCancel();
   };
 
