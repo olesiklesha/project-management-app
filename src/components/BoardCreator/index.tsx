@@ -6,11 +6,11 @@ import { IModalForm } from '../../models/models';
 import { useCreateBoardMutation } from '../../services';
 
 interface ICreatorState {
-  name: string;
+  title: string;
 }
 
 const initialState = {
-  name: '',
+  title: '',
 };
 
 function BoardCreator({ onCancel }: IModalForm) {
@@ -25,7 +25,7 @@ function BoardCreator({ onCancel }: IModalForm) {
   });
 
   const onSubmit = (data: ICreatorState) => {
-    createBoard(data.name);
+    createBoard(data.title);
 
     onCancel();
   };
@@ -48,9 +48,9 @@ function BoardCreator({ onCancel }: IModalForm) {
         variant="standard"
         sx={{ mb: 2, mt: 2 }}
         fullWidth
-        {...register('name', { required: t('form.errors.noTitle') })}
-        error={!!errors.name}
-        helperText={errors.name?.message}
+        {...register('title', { required: t('form.errors.noTitle') })}
+        error={!!errors.title}
+        helperText={errors.title?.message}
       />
       <Button type="submit" variant="contained" sx={{ width: '45%' }}>
         {t('actions.create')}

@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Alert, Box, Button, Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppSelector } from '../../hooks/redux';
 import { BoardCreator, Modal, ShortBoard } from '../../components';
-import { boardCreatorSlice } from '../../store/reducers/boardCreatorSlice';
 import { useGetAllBoardsQuery } from '../../services';
 import { apiErrorParser } from '../../utils';
 import { IRequestError } from '../../models/apiModels';
@@ -11,12 +10,11 @@ import { IRequestError } from '../../models/apiModels';
 function Main() {
   const { t } = useTranslation();
   const { boards } = useAppSelector((state) => state.boardsSlice);
-  const { isOpen } = useAppSelector((state) => state.boardCreatorSlice);
   const { isLoading, isError, error } = useGetAllBoardsQuery();
-  const dispatch = useAppDispatch();
+  const [isOpened, setOpened] = useState(false);
 
-  const toggleIsCreatorOpened = () => {
-    dispatch(boardCreatorSlice.actions.toggle());
+  const toggleIsOpened = () => {
+    setOpened((prev) => !prev);
   };
 
   return (
@@ -26,7 +24,7 @@ function Main() {
           {t('pages.mainPage.title')}.
         </Typography>
         <h2>The quick brown fox jumps over the lazy dog.</h2>
-        <Button variant="contained" onClick={toggleIsCreatorOpened}>
+        <Button variant="contained" onClick={toggleIsOpened}>
           {t('pages.mainPage.createBtn')}
         </Button>
         {isLoading && <h2>Loading...</h2>}
@@ -40,8 +38,8 @@ function Main() {
             ))}
         </Grid>
       </Container>
-      <Modal isOpened={isOpen} onCancel={toggleIsCreatorOpened}>
-        <BoardCreator onCancel={toggleIsCreatorOpened} />
+      <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
+        <BoardCreator onCancel={toggleIsOpened} />
       </Modal>
     </Box>
   );
