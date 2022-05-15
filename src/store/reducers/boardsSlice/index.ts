@@ -21,12 +21,6 @@ export const boardsSlice = createSlice({
         state.boards = payload;
       }
     );
-    builder.addMatcher(
-      appApi.endpoints.createBoard.matchFulfilled,
-      (state: IBoardState, { payload }) => {
-        state.boards.push(payload);
-      }
-    );
   },
 });
 
