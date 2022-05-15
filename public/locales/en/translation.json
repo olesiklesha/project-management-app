@@ -9,7 +9,8 @@
       "title": "Board page"
     },
     "editPage": {
-      "title": "Edit page"
+      "action": "Edit your account",
+      "submitButton": "Save changes"
     },
     "loginPage": {
       "action": "Log in to your account",
