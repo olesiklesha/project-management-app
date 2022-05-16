@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../hooks/redux';
 import { boardSlice, ITask } from '../../store/reducers/board';
+import EditIcon from '@mui/icons-material/Edit';
 
 interface IRormData {
   name: string;
@@ -10,6 +11,7 @@ interface IRormData {
 
 function EditableTask({ title, id, order }: ITask) {
   const [isEditing, setIsEditing] = useState(false);
+  const [show, setShow] = useState(false);
 
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: {
@@ -46,12 +48,33 @@ function EditableTask({ title, id, order }: ITask) {
           />
         </Box>
       ) : (
-        <Typography
-          onClick={() => setIsEditing(true)}
-          sx={{ p: '10px', backgroundColor: 'white', overflowWrap: 'break-word' }}
-        >
-          {title}
-        </Typography>
+        <>
+          <Typography
+            onClick={() => setIsEditing(true)}
+            onMouseOver={() => setShow(true)}
+            onMouseOut={() => setShow(false)}
+            sx={{
+              p: '10px',
+              backgroundColor: 'white',
+              overflowWrap: 'break-word',
+              position: 'relative',
+            }}
+          >
+            {title}
+            {show && (
+              <EditIcon
+                sx={{
+                  position: 'absolute',
+                  right: '8px',
+                  top: '8px',
+                  cursor: 'pointer',
+                  backgroundColor: 'white',
+                }}
+                onClick={(e) => e.stopPropagation()}
+              />
+            )}
+          </Typography>
+        </>
       )}
     </>
   );

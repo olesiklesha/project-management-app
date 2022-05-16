@@ -1,5 +1,5 @@
 import { Avatar, Box, IconButton, Link, Typography } from '@mui/material';
-import { ITeammateInfo } from '../../models/models';
+import { ITeammateInfo } from '../../models';
 import GhIcon from '../GhIcon';
 
 interface IProfileProps extends ITeammateInfo {
