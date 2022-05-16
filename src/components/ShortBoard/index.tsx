@@ -57,12 +57,12 @@ function ShortBoard({ id, title }: IBoard) {
           spacing={0.5}
           sx={{ position: 'absolute', top: '0.5rem', right: '0.5rem' }}
         >
-          <Tooltip title={t('actions.delete')}>
+          <Tooltip title={t('actions.delete')} sx={{ fontSize: '14px' }}>
             <IconButton size="medium" onClick={handleBtnClick} data-delete-board>
               <DeleteIcon color="warning" fontSize="small" />
             </IconButton>
           </Tooltip>
-          <Tooltip title={t('actions.edit')}>
+          <Tooltip title={t('actions.edit')} sx={{ fontSize: '14px' }}>
             <IconButton size="medium" onClick={handleBtnClick} data-edit-board>
               <EditIcon color="success" fontSize="small" />
             </IconButton>

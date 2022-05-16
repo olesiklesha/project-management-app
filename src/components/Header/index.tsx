@@ -7,10 +7,12 @@ import { AppIcon } from '../';
 import { LocaleSwitcher } from '../';
 import CreateBoardButton from '../CreateBoardButton';
 import UserMenu from '../UserMenu';
+import { useTranslation } from 'react-i18next';
 
 let timeout: TimeoutId;
 
 function Header() {
+  const { t } = useTranslation();
   const [isStickied, setStickied] = useState(false);
 
   useEffect(() => {
@@ -41,7 +43,7 @@ function Header() {
         }}
       >
         <Toolbar disableGutters sx={{ minHeight: { xs: '100%' }, display: 'flex', flexGrow: 1 }}>
-          <Tooltip title={'boards'}>
+          <Tooltip title={t('pages.mainPage.title')} sx={{ fontSize: '14px' }}>
             <IconButton component={RouterLink} to={AppRoutes.MAIN} aria-label="home-icon">
               <AppIcon />
             </IconButton>
