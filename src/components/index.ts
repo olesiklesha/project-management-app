@@ -13,3 +13,5 @@ export { default as Modal } from './Modal';
 export { default as Column } from './Column';
 export { default as EditableHeader } from './ChangebleHeader';
 export { default as EditableTask } from './ChangebleTask';
+export { default as TaskCreator } from './TaskCreator';
+export { default as ColumnCreator } from './ColumnCreator';

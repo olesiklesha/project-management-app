@@ -1,23 +1,25 @@
 import { TextField, Box, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useAppDispatch } from '../../hooks/redux';
+import { boardSlice, IColumn } from '../../store/reducers/board';
 
-interface IRormData {
+interface IFormData {
   name: string;
 }
 
-function EditableHeader() {
+function EditableHeader({ title, id, order, tasks }: IColumn) {
   const [isEditing, setIsEditing] = useState(false);
-  const [title, settitle] = useState('My main Task');
-
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: { name: title },
   });
 
-  const onSubmit = async (data: IRormData) => {
+  const dispatch = useAppDispatch();
+
+  const onSubmit = async (data: IFormData) => {
     const res = data.name !== '' ? data.name : title;
     setIsEditing(false);
-    settitle(res);
+    dispatch(boardSlice.actions.renameColumn({ id, order, title: res, tasks }));
     setValue('name', res);
     //request
   };
@@ -35,10 +37,11 @@ function EditableHeader() {
             {...register('name')}
             type="text"
             defaultValue={title}
+            size="small"
             inputProps={{
               style: {
                 padding: '10px 10px',
-                fontSize: '1.5rem',
+                fontSize: '1.25rem',
                 fontWeight: 'bold',
               },
             }}
@@ -48,7 +51,7 @@ function EditableHeader() {
       ) : (
         <Typography
           onClick={() => setIsEditing(true)}
-          sx={{ p: '10px 10px', fontWeight: 'bold', fontSize: '1.5rem' }}
+          sx={{ p: '10px 10px', fontWeight: 'bold', fontSize: '1.25rem' }}
         >
           {title}
         </Typography>

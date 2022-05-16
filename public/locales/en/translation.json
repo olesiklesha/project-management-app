@@ -6,7 +6,13 @@
       "boundary": "Sorry.. there was an error"
     },
     "boardPage": {
-      "title": "Board page"
+      "title": "Board page",
+      "addColumn": "Add column",
+      "addTask": "Add task",
+      "taskCreatorPlaceholder": "Enter new task",
+      "columnCreatorPlaceholder": "Enter title for new column",
+      "submit": "Submit",
+      "cancel": "Cancel"
     },
     "editPage": {
       "title": "Edit page"

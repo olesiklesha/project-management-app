@@ -6,7 +6,13 @@
       "boundary": "Извините.. что-то пошло не так"
     },
     "boardPage": {
-      "title": "Доски"
+      "title": "Доски",
+      "addColumn": "Добавить колонку",
+      "addTask": "Добавить карточку",
+      "taskCreatorPlaceholder": "Введите новую задачу",
+      "columnCreatorPlaceholder": "Введите название для новой колонки",
+      "submit": "Создать",
+      "cancel": "Отмена"
     },
     "editPage": {
       "title": "Страница редактирования"
