@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Alert,
   Box,
   Button,
   CircularProgress,
   Container,
-  Divider,
   Grid,
-  Link,
   Paper,
+  Stack,
   TextField,
   Typography,
+  IconButton,
+  Alert,
 } from '@mui/material';
-import { Delete, SaveAs } from '@mui/icons-material';
+import { Delete, SaveAs, ArrowBackIosNew } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
-import { Link as BrowserLink } from 'react-router-dom';
-import { AppIcon } from '../../components';
-import { apiErrorParser, getCurrentUser, logOut } from '../../utils';
-import { IRequestError, ISignInRequest, ISignUpRequest } from '../../models/apiModels';
+import { useNavigate } from 'react-router-dom';
+import { Modal } from '../../components';
+import { getCurrentUser, logOut } from '../../utils';
+import { ISignUpRequest } from '../../models/apiModels';
 import { AppRoutes } from '../../constants';
 import { useDeleteUserMutation, useEditUserMutation, useGetAllUsersQuery } from '../../services';
 
@@ -30,11 +30,15 @@ const editFormInitialState: ISignUpRequest = {
 
 function Edit() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
   const [id, setId] = useState('');
+  const [isDeleteOpened, setDeleteOpened] = useState(false);
+
   const { data, isLoading: isGetUsersLoading } = useGetAllUsersQuery();
-  const [deleteUser, { isLoading: isDeleteLoading, isError: isDeleteError }] =
+  const [deleteUser, { isLoading: isDeleteLoading, isSuccess: isDeleteSuccess }] =
     useDeleteUserMutation();
-  const [editUser, { isLoading: isEditLoading }] = useEditUserMutation();
+  const [editUser, { isLoading: isEditLoading, isSuccess: isEditSuccess }] = useEditUserMutation();
 
   const {
     register,
@@ -52,11 +56,12 @@ function Edit() {
       setValue('name', name);
       setId(id);
     }
-  }, [data]);
+  }, [data, setValue]);
 
   const handleDelete = async () => {
     await deleteUser(id);
-    if (!isDeleteError) logOut();
+    if (isDeleteSuccess) logOut();
+    navigate(AppRoutes.WELCOME);
   };
 
   const onSubmit = (data: ISignUpRequest) => {
@@ -78,11 +83,17 @@ function Edit() {
         sx={{ height: 'calc(100vh - 128px)' }}
       >
         <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500}>
-          <Paper elevation={2} sx={{ p: 3 }}>
+          <Paper elevation={2} sx={{ p: 3, position: 'relative' }}>
             {isGetUsersLoading ? (
               <CircularProgress />
             ) : (
               <>
+                <IconButton
+                  onClick={() => window.history.back()}
+                  sx={{ position: 'absolute', top: '10px', left: '10px' }}
+                >
+                  <ArrowBackIosNew />
+                </IconButton>
                 <Typography
                   component="h5"
                   variant="h5"
@@ -92,6 +103,11 @@ function Edit() {
                 >
                   {t('pages.editPage.action')}
                 </Typography>
+                {isEditSuccess && (
+                  <Alert severity="success" sx={{ mb: 1 }}>
+                    {t('form.messages.successEdit')}
+                  </Alert>
+                )}
                 <TextField
                   label={t('form.fields.name')}
                   variant="standard"
@@ -125,33 +141,43 @@ function Edit() {
                   error={!!errors.password}
                   helperText={errors.password?.message}
                 />
-                <Button
-                  type="submit"
-                  variant="contained"
-                  startIcon={
-                    isEditLoading ? <CircularProgress color="inherit" size={20} /> : <SaveAs />
-                  }
-                  color="success"
-                  sx={{ mt: 3, mb: 2 }}
+                <Stack
+                  direction={{ xs: 'column', sm: 'row' }}
+                  justifyContent="space-between"
+                  alignItems={{ xs: 'stretch', sm: 'center' }}
+                  spacing={1}
+                  sx={{ mt: 3 }}
                 >
-                  {t('pages.editPage.submitButton')}
-                </Button>
-                <Button
-                  onClick={handleDelete}
-                  variant="outlined"
-                  startIcon={
-                    isDeleteLoading ? <CircularProgress color="inherit" size={20} /> : <Delete />
-                  }
-                  color="error"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  {t('pages.editPage.deleteButton')}
-                </Button>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    startIcon={
+                      isEditLoading ? <CircularProgress color="inherit" size={20} /> : <SaveAs />
+                    }
+                    color="success"
+                  >
+                    {t('pages.editPage.submitButton')}
+                  </Button>
+                  <Button
+                    onClick={() => setDeleteOpened(true)}
+                    variant="outlined"
+                    startIcon={<Delete />}
+                    color="error"
+                  >
+                    {t('pages.editPage.deleteButton')}
+                  </Button>
+                </Stack>
               </>
             )}
           </Paper>
         </Box>
       </Grid>
+      <Modal
+        isOpened={isDeleteOpened}
+        onCancel={() => setDeleteOpened(false)}
+        onConfirm={handleDelete}
+        isLoading={isDeleteLoading}
+      />
     </>
   );
 }
