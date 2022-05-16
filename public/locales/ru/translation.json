@@ -15,7 +15,9 @@
       "cancel": "Отмена"
     },
     "editPage": {
-      "title": "Страница редактирования"
+      "action": "Измените свой аккаунт",
+      "submitButton": "Сохранить изменения",
+      "deleteButton": "Удалить аккаунт"
     },
     "loginPage": {
       "action": "Войдите в свой аккаунт",
@@ -61,7 +63,8 @@
     "fields": {
       "name": "Имя",
       "login": "Логин",
-      "password": "Пароль"
+      "password": "Пароль",
+      "newPassword": "Новый пароль"
     },
     "errors": {
       "noName": "⚠Имя обязательно",
@@ -70,6 +73,9 @@
       "minLengthLogin": "⚠Логин слишком короткий",
       "minLengthPassword": "⚠Пароль слишком короткий",
       "noTitle": "⚠Название обязательно"
+    },
+    "messages" : {
+      "successEdit": "Данные успешно обновлены"
     }
   },
   "api": {

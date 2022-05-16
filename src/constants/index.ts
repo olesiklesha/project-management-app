@@ -21,6 +21,7 @@ export const TEAM_INFO = [
     description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam dolorum eum
 excepturi consectetur, molestias ut velit itaque autem aliquid minima laboriosam
 voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?`,
+    gh: 'https://github.com/olesiklesha',
   },
   {
     avatar: './tyoma.jpg',
@@ -28,6 +29,7 @@ voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?`,
     description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam dolorum eum
 excepturi consectetur, molestias ut velit itaque autem aliquid minima laboriosam
 voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?`,
+    gh: 'https://github.com/ArtyomKr',
   },
   {
     avatar: './roma.jpg',
@@ -35,6 +37,7 @@ voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?`,
     description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam dolorum eum
 excepturi consectetur, molestias ut velit itaque autem aliquid minima laboriosam
 voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?`,
+    gh: 'https://github.com/romasho',
   },
 ];
 

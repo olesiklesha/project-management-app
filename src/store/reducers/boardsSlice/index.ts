@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IShortBoard } from '../../../models';
 import { appApi } from '../../../services';
+import { IBoard } from '../../../models/apiModels';
 
 interface IBoardState {
-  boards: IShortBoard[];
+  boards: IBoard[];
 }
 
 const initialState: IBoardState = {

@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { IShortBoard } from '../../models';
 import { NavLink } from 'react-router-dom';
 import { AppRoutes } from '../../constants';
 import { Card, IconButton, Stack, Tooltip, Typography } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import { Delete, Edit } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { BoardEditor, Modal } from '../index';
 import { useDeleteBoardMutation } from '../../services';
+import { IBoard } from '../../models/apiModels';
 
-function ShortBoard({ id, title }: IShortBoard) {
+function ShortBoard({ id, title }: IBoard) {
   const { t } = useTranslation();
   const path = AppRoutes.MAIN + `/${id}`;
   const [deleteBoard, { isLoading }] = useDeleteBoardMutation();
@@ -57,14 +56,14 @@ function ShortBoard({ id, title }: IShortBoard) {
           spacing={0.5}
           sx={{ position: 'absolute', top: '0.5rem', right: '0.5rem' }}
         >
-          <Tooltip title={t('actions.delete')}>
+          <Tooltip title={t('actions.delete')} sx={{ fontSize: '14px' }}>
             <IconButton size="medium" onClick={handleBtnClick} data-delete-board>
-              <DeleteIcon color="warning" fontSize="small" />
+              <Delete color="warning" fontSize="small" />
             </IconButton>
           </Tooltip>
-          <Tooltip title={t('actions.edit')}>
+          <Tooltip title={t('actions.edit')} sx={{ fontSize: '14px' }}>
             <IconButton size="medium" onClick={handleBtnClick} data-edit-board>
-              <EditIcon color="success" fontSize="small" />
+              <Edit color="success" fontSize="small" />
             </IconButton>
           </Tooltip>
         </Stack>

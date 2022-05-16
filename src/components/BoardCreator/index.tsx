@@ -2,18 +2,21 @@ import React from 'react';
 import { Box, TextField, Typography, Button, CircularProgress } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { IModalForm } from '../../models/models';
 import { useCreateBoardMutation } from '../../services';
 
 interface ICreatorState {
   title: string;
 }
 
+interface IBoardCreator {
+  onCancel: () => void;
+}
+
 const initialState = {
   title: '',
 };
 
-function BoardCreator({ onCancel }: IModalForm) {
+function BoardCreator({ onCancel }: IBoardCreator) {
   const [createBoard, { isLoading }] = useCreateBoardMutation();
   const { t } = useTranslation();
   const {

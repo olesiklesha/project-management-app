@@ -68,6 +68,7 @@ function Welcome() {
               name={el.name}
               avatar={el.avatar}
               description={el.description}
+              gh={el.gh}
               key={el.name}
               index={index}
             />

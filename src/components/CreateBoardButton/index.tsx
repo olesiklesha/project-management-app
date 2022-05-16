@@ -2,8 +2,10 @@ import { IconButton, Tooltip } from '@mui/material';
 import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 import React, { useState } from 'react';
 import { BoardCreator, Modal } from '../index';
+import { useTranslation } from 'react-i18next';
 
 function CreateBoardButton() {
+  const { t } = useTranslation();
   const [isOpened, setOpened] = useState(false);
 
   const toggleIsOpened = () => {
@@ -16,7 +18,7 @@ function CreateBoardButton() {
 
   return (
     <>
-      <Tooltip title={'create board'}>
+      <Tooltip title={t('pages.mainPage.createBtn')} sx={{ fontSize: '14px' }}>
         <IconButton aria-label="create new board" onClick={handleClick}>
           <NoteAddOutlinedIcon color="secondary" />
         </IconButton>

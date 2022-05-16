@@ -1,5 +1,5 @@
 import { AUTH, TOKEN_LIFETIME } from '../constants';
-import { IRequestError } from '../models/apiModels';
+import { IRequestError, IUserData } from '../models/apiModels';
 
 export function getLocalAuth() {
   const localStorageAuth = window.localStorage.getItem(AUTH);
@@ -21,4 +21,13 @@ export function apiErrorParser(error: IRequestError, t: (arg0: string) => string
     return `${t('api.errors.message')}: ${error.data.message}`;
   if ('status' in error) return `${t('api.errors.status')}: ${error.status}`;
   return t('api.errors.default');
+}
+
+export function getCurrentUser(data: IUserData[]) {
+  const { login } = getLocalAuth();
+  return data.find((user) => user.login === login) || { id: '', login, name: '' };
+}
+
+export function logOut() {
+  window.localStorage.removeItem(AUTH);
 }
