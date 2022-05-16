@@ -13,6 +13,7 @@ import {
   Link,
   CircularProgress,
   Alert,
+  IconButton,
 } from '@mui/material';
 import { AppRoutes } from '../../constants';
 import { AppIcon } from '../../components';
@@ -20,7 +21,8 @@ import { ISignInRequest, IRequestError } from '../../models/apiModels';
 import { useSignInMutation } from '../../services';
 import { isAuth } from '../../utils';
 import { apiErrorParser } from '../../utils';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { ArrowBackIosNew } from '@mui/icons-material';
 
 const signInFormInitialState: ISignInRequest = {
   login: '',
@@ -64,7 +66,13 @@ function LoginPage() {
             <AppIcon color="secondary" sx={{ fontSize: 60, mr: 1 }} />
             Task-app
           </Typography>
-          <Paper elevation={6} sx={{ p: 3 }}>
+          <Paper elevation={6} sx={{ p: 3, position: 'relative' }}>
+            <IconButton
+              onClick={() => navigate(AppRoutes.WELCOME)}
+              sx={{ position: 'absolute', top: '10px', left: '10px' }}
+            >
+              <ArrowBackIosNew />
+            </IconButton>
             <Typography
               component="h5"
               variant="h5"
@@ -74,7 +82,11 @@ function LoginPage() {
             >
               {t('pages.loginPage.action')}
             </Typography>
-            {isError && <Alert severity="error">{apiErrorParser(error as IRequestError, t)}</Alert>}
+            {isError && (
+              <Alert severity="error" sx={{ mb: 1 }}>
+                {apiErrorParser(error as IRequestError, t)}
+              </Alert>
+            )}
             <TextField
               label={t('form.fields.login')}
               variant="standard"
