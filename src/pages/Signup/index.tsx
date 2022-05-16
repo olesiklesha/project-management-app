@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as BrowserLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -15,14 +16,13 @@ import {
   Alert,
   IconButton,
 } from '@mui/material';
+import { ArrowBackIosNew } from '@mui/icons-material';
 import { AppRoutes } from '../../constants';
 import { AppIcon } from '../../components';
 import { IRequestError, ISignUpRequest } from '../../models/apiModels';
 import { useSignUpMutation, useSignInMutation } from '../../services';
 import { isAuth } from '../../utils';
 import { apiErrorParser } from '../../utils';
-import React, { useEffect } from 'react';
-import { ArrowBackIosNew } from '@mui/icons-material';
 
 const signUpFormInitialState: ISignUpRequest = {
   name: '',
