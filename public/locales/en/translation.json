@@ -30,7 +30,10 @@
       "loginLink": "Already have an account? Log In"
     },
     "mainPage": {
-      "title": "Main page"
+      "title": "Boards",
+      "createBtn": "Create board",
+      "editBoardTitle": "Edit board title",
+      "fieldTitle": "title"
     },
     "welcomePage": {
       "title": "Welcome page",
@@ -65,7 +68,8 @@
       "noLogin": "⚠Login is required",
       "noPassword": "⚠Password is required",
       "minLengthLogin": "⚠Login is too short",
-      "minLengthPassword": "⚠Password is too short"
+      "minLengthPassword": "⚠Password is too short",
+      "noTitle": "⚠Title is required"
     }
   },
   "api": {
@@ -78,5 +82,10 @@
   "answers": {
     "yes": "Yes",
     "no": "No"
+  },
+  "actions": {
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete"
   }
 }

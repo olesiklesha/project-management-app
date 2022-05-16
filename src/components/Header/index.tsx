@@ -14,7 +14,6 @@ import {
   ClickAwayListener,
   Tooltip,
 } from '@mui/material';
-import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 import PersonIcon from '@mui/icons-material/Person';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -26,6 +25,7 @@ import { useAppSelector } from '../../hooks/redux';
 import { AppRoutes, AUTH } from '../../constants';
 import { AppIcon } from '../';
 import { LocaleSwitcher } from '../';
+import CreateBoardButton from '../CreateBoardButton';
 
 let timeout: TimeoutId;
 
@@ -86,11 +86,7 @@ function Header() {
           </Tooltip>
           <Box sx={{ flexGrow: 1 }} />
           <LocaleSwitcher />
-          <Tooltip title={'create board'}>
-            <IconButton component={RouterLink} to={AppRoutes.BOARD} aria-label="create new board">
-              <NoteAddOutlinedIcon color="secondary" />
-            </IconButton>
-          </Tooltip>
+          <CreateBoardButton />
           <Button
             ref={anchorAuthRef}
             id="composition-button"

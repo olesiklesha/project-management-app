@@ -15,3 +15,6 @@ export { default as EditableHeader } from './ChangebleHeader';
 export { default as EditableTask } from './ChangebleTask';
 export { default as TaskCreator } from './TaskCreator';
 export { default as ColumnCreator } from './ColumnCreator';
+export { default as ShortBoard } from './ShortBoard';
+export { default as BoardCreator } from './BoardCreator';
+export { default as BoardEditor } from './BoardEditor';

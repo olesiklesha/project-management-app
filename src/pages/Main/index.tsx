@@ -1,62 +1,50 @@
-import React, { useCallback, useState } from 'react';
-import { Box, Button, Container, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Alert, Box, Button, Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { counterSlice } from '../../store/reducers/testSlice';
-import { Modal } from '../../components';
+import { useAppSelector } from '../../hooks/redux';
+import { BoardCreator, Modal, ShortBoard } from '../../components';
+import { useGetAllBoardsQuery } from '../../services';
+import { apiErrorParser } from '../../utils';
+import { IRequestError } from '../../models/apiModels';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
 function Main() {
   const { t } = useTranslation();
-  const { count } = useAppSelector((state) => state.testSlice);
-  const dispatch = useAppDispatch();
-  const [isOpened, setIsOpened] = useState(false);
-  const [isConfirmOpened, setIsConfirmOpened] = useState(false);
+  const { boards } = useAppSelector((state) => state.boardsSlice);
+  const { isLoading, isError, error } = useGetAllBoardsQuery();
+  const [isOpened, setOpened] = useState(false);
 
-  const toggleIsOpened = useCallback(() => {
-    setIsOpened((isOpened) => !isOpened);
-  }, []);
-
-  const toggleIsConfirmOpened = useCallback(() => {
-    setIsConfirmOpened((prev) => !prev);
-  }, []);
-
-  const testAction = () => {
-    console.log('toggle confirm');
-  };
-
-  const handleIncrement = () => {
-    dispatch(counterSlice.actions.increment());
-  };
-
-  const handleDecrement = () => {
-    dispatch(counterSlice.actions.decrement());
+  const toggleIsOpened = () => {
+    setOpened((prev) => !prev);
   };
 
   return (
     <Box sx={{ minHeight: 'calc(100vh - 128px)' }}>
       <Container maxWidth="xl">
-        <Typography variant="h2" sx={{ fontFamily: 'Ubuntu' }}>
+        <Typography variant="h3" sx={{ fontFamily: 'Ubuntu', mb: 1 }}>
           {t('pages.mainPage.title')}.
         </Typography>
-        <h2>The quick brown fox jumps over the lazy dog.</h2>
-        <div>{count}</div>
-        <Button variant="contained" color="secondary" onClick={handleIncrement}>
-          +
+        <Button
+          variant="contained"
+          onClick={toggleIsOpened}
+          startIcon={<AddCircleRoundedIcon color="secondary" />}
+        >
+          {t('pages.mainPage.createBtn')}
         </Button>
-        <Button variant="contained" color="secondary" onClick={handleDecrement}>
-          -
-        </Button>
-        <Button variant="contained" color="secondary" onClick={toggleIsOpened}>
-          Show modal
-        </Button>
-        <Button variant="contained" color="secondary" onClick={toggleIsConfirmOpened}>
-          Show confirm modal
-        </Button>
+        {isLoading && <h2>Loading...</h2>}
+        {isError && <Alert severity="error">{apiErrorParser(error as IRequestError, t)}</Alert>}
+        <Grid container spacing={2} sx={{ mt: 2, mb: 4 }}>
+          {boards.length > 0 &&
+            boards.map((board) => (
+              <Grid item xs={12} sm={6} md={3} key={board.id}>
+                <ShortBoard id={board.id} title={board.title} />
+              </Grid>
+            ))}
+        </Grid>
       </Container>
       <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
-        <p>this is modal</p>
+        <BoardCreator onCancel={toggleIsOpened} />
       </Modal>
-      <Modal isOpened={isConfirmOpened} onCancel={toggleIsConfirmOpened} action={testAction} />
     </Box>
   );
 }
