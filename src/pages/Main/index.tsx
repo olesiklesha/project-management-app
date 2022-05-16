@@ -22,7 +22,7 @@ function Main() {
     <Box sx={{ minHeight: 'calc(100vh - 128px)' }}>
       <Container maxWidth="xl">
         <Typography variant="h3" sx={{ fontFamily: 'Ubuntu', mb: 1 }}>
-          {t('pages.mainPage.title')}.
+          {t('pages.mainPage.title')}
         </Typography>
         <Button
           variant="contained"
