@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Box, Button, Container, Grid, Typography } from '@mui/material';
+import { Alert, Box, Button, CircularProgress, Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../hooks/redux';
 import { BoardCreator, Modal, ShortBoard } from '../../components';
@@ -22,7 +22,7 @@ function Main() {
     <Box sx={{ minHeight: 'calc(100vh - 128px)' }}>
       <Container maxWidth="xl">
         <Typography variant="h3" sx={{ fontFamily: 'Ubuntu', mb: 1 }}>
-          {t('pages.mainPage.title')}.
+          {t('pages.mainPage.title')}
         </Typography>
         <Button
           variant="contained"
@@ -31,7 +31,17 @@ function Main() {
         >
           {t('pages.mainPage.createBtn')}
         </Button>
-        {isLoading && <h2>Loading...</h2>}
+        {isLoading && (
+          <CircularProgress
+            size={40}
+            sx={{
+              position: 'fixed',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+            }}
+          />
+        )}
         {isError && <Alert severity="error">{apiErrorParser(error as IRequestError, t)}</Alert>}
         <Grid container spacing={2} sx={{ mt: 2, mb: 4 }}>
           {boards.length > 0 &&

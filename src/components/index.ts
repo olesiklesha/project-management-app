@@ -13,3 +13,4 @@ export { default as Modal } from './Modal';
 export { default as ShortBoard } from './ShortBoard';
 export { default as BoardCreator } from './BoardCreator';
 export { default as BoardEditor } from './BoardEditor';
+export { default as GhIcon } from './GhIcon';
