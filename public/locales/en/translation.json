@@ -9,7 +9,9 @@
       "title": "Board page"
     },
     "editPage": {
-      "title": "Edit page"
+      "action": "Edit your account",
+      "submitButton": "Save changes",
+      "deleteButton": "Delete account"
     },
     "loginPage": {
       "action": "Log in to your account",
@@ -55,7 +57,8 @@
     "fields": {
       "name": "Name",
       "login": "Login",
-      "password": "Password"
+      "password": "Password",
+      "newPassword": "New password"
     },
     "errors": {
       "noName": "⚠Name is required",
@@ -64,6 +67,9 @@
       "minLengthLogin": "⚠Login is too short",
       "minLengthPassword": "⚠Password is too short",
       "noTitle": "⚠Title is required"
+    },
+    "messages" : {
+      "successEdit": "Successfully updated"
     }
   },
   "api": {

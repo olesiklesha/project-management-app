@@ -4,13 +4,14 @@ import PersonIcon from '@mui/icons-material/Person';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { AppRoutes, AUTH } from '../../constants';
+import { AppRoutes } from '../../constants';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useAppSelector } from '../../hooks/redux';
 import { useTranslation } from 'react-i18next';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import LocaleSwitcher from '../LocaleSwitcher';
 import { BoardCreator, Modal } from '../index';
+import { logOut } from '../../utils';
 
 function UserMenu() {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ function UserMenu() {
   const [isOpened, setOpened] = useState(false);
 
   const handleLogout = () => {
-    window.localStorage.removeItem(AUTH);
+    logOut();
     setOpenAuthMenu(false);
     navigate(AppRoutes.WELCOME);
   };

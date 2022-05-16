@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AppRoutes } from '../../constants';
 import { Card, IconButton, Stack, Tooltip, Typography } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import { Delete, Edit } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { BoardEditor, Modal } from '../index';
 import { useDeleteBoardMutation } from '../../services';
@@ -59,12 +58,12 @@ function ShortBoard({ id, title }: IBoard) {
         >
           <Tooltip title={t('actions.delete')} sx={{ fontSize: '14px' }}>
             <IconButton size="medium" onClick={handleBtnClick} data-delete-board>
-              <DeleteIcon color="warning" fontSize="small" />
+              <Delete color="warning" fontSize="small" />
             </IconButton>
           </Tooltip>
           <Tooltip title={t('actions.edit')} sx={{ fontSize: '14px' }}>
             <IconButton size="medium" onClick={handleBtnClick} data-edit-board>
-              <EditIcon color="success" fontSize="small" />
+              <Edit color="success" fontSize="small" />
             </IconButton>
           </Tooltip>
         </Stack>
