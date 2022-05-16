@@ -1,22 +1,21 @@
 import React from 'react';
-import { Box, TextField, Typography, Button } from '@mui/material';
+import { Box, TextField, Typography, Button, CircularProgress } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { IModalForm } from '../../models/models';
-import { useAppDispatch } from '../../hooks/redux';
-import { boardsSlice } from '../../store/reducers/boardsSlice';
+import { useCreateBoardMutation } from '../../services';
 
 interface ICreatorState {
-  name: string;
+  title: string;
 }
 
 const initialState = {
-  name: '',
+  title: '',
 };
 
 function BoardCreator({ onCancel }: IModalForm) {
+  const [createBoard, { isLoading }] = useCreateBoardMutation();
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const {
     register,
     formState: { errors },
@@ -25,9 +24,9 @@ function BoardCreator({ onCancel }: IModalForm) {
     defaultValues: initialState,
   });
 
-  const onSubmit = (data: ICreatorState) => {
-    const id = String(Date.now());
-    dispatch(boardsSlice.actions.addBoard({ title: data.name, id }));
+  const onSubmit = async (data: ICreatorState) => {
+    await createBoard(data.title);
+
     onCancel();
   };
 
@@ -49,11 +48,16 @@ function BoardCreator({ onCancel }: IModalForm) {
         variant="standard"
         sx={{ mb: 2, mt: 2 }}
         fullWidth
-        {...register('name', { required: t('form.errors.noTitle') })}
-        error={!!errors.name}
-        helperText={errors.name?.message}
+        {...register('title', { required: t('form.errors.noTitle') })}
+        error={!!errors.title}
+        helperText={errors.title?.message}
       />
-      <Button type="submit" variant="contained" sx={{ width: '45%' }}>
+      <Button
+        type="submit"
+        variant="contained"
+        sx={{ width: '75%' }}
+        startIcon={isLoading && <CircularProgress color="secondary" size={20} />}
+      >
         {t('actions.create')}
       </Button>
     </Box>

@@ -1,30 +1,38 @@
-import React from 'react';
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Alert, Box, Button, Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppSelector } from '../../hooks/redux';
 import { BoardCreator, Modal, ShortBoard } from '../../components';
-import { boardCreatorSlice } from '../../store/reducers/boardCreatorSlice';
+import { useGetAllBoardsQuery } from '../../services';
+import { apiErrorParser } from '../../utils';
+import { IRequestError } from '../../models/apiModels';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
 function Main() {
   const { t } = useTranslation();
   const { boards } = useAppSelector((state) => state.boardsSlice);
-  const { isOpen } = useAppSelector((state) => state.boardCreatorSlice);
-  const dispatch = useAppDispatch();
+  const { isLoading, isError, error } = useGetAllBoardsQuery();
+  const [isOpened, setOpened] = useState(false);
 
-  const toggleIsCreatorOpened = () => {
-    dispatch(boardCreatorSlice.actions.toggle());
+  const toggleIsOpened = () => {
+    setOpened((prev) => !prev);
   };
 
   return (
     <Box sx={{ minHeight: 'calc(100vh - 128px)' }}>
       <Container maxWidth="xl">
-        <Typography variant="h3" sx={{ fontFamily: 'Ubuntu' }}>
+        <Typography variant="h3" sx={{ fontFamily: 'Ubuntu', mb: 1 }}>
           {t('pages.mainPage.title')}.
         </Typography>
-        <h2>The quick brown fox jumps over the lazy dog.</h2>
-        <Button variant="contained" onClick={toggleIsCreatorOpened}>
+        <Button
+          variant="contained"
+          onClick={toggleIsOpened}
+          startIcon={<AddCircleRoundedIcon color="secondary" />}
+        >
           {t('pages.mainPage.createBtn')}
         </Button>
+        {isLoading && <h2>Loading...</h2>}
+        {isError && <Alert severity="error">{apiErrorParser(error as IRequestError, t)}</Alert>}
         <Grid container spacing={2} sx={{ mt: 2, mb: 4 }}>
           {boards.length > 0 &&
             boards.map((board) => (
@@ -34,8 +42,8 @@ function Main() {
             ))}
         </Grid>
       </Container>
-      <Modal isOpened={isOpen} onCancel={toggleIsCreatorOpened}>
-        <BoardCreator onCancel={toggleIsCreatorOpened} />
+      <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
+        <BoardCreator onCancel={toggleIsOpened} />
       </Modal>
     </Box>
   );
