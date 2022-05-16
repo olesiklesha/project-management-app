@@ -67,6 +67,9 @@
       "minLengthLogin": "⚠Логин слишком короткий",
       "minLengthPassword": "⚠Пароль слишком короткий",
       "noTitle": "⚠Название обязательно"
+    },
+    "messages" : {
+      "successEdit": "Данные успешно обновлены"
     }
   },
   "api": {

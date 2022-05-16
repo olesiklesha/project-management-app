@@ -67,6 +67,9 @@
       "minLengthLogin": "⚠Login is too short",
       "minLengthPassword": "⚠Password is too short",
       "noTitle": "⚠Title is required"
+    },
+    "messages" : {
+      "successEdit": "Successfully updated"
     }
   },
   "api": {
