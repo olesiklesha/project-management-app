@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { IShortBoard } from '../../models';
 import { NavLink } from 'react-router-dom';
 import { AppRoutes } from '../../constants';
 import { Card, IconButton, Stack, Tooltip, Typography } from '@mui/material';
@@ -8,8 +7,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useTranslation } from 'react-i18next';
 import { BoardEditor, Modal } from '../index';
 import { useDeleteBoardMutation } from '../../services';
+import { IBoard } from '../../models/apiModels';
 
-function ShortBoard({ id, title }: IShortBoard) {
+function ShortBoard({ id, title }: IBoard) {
   const { t } = useTranslation();
   const path = AppRoutes.MAIN + `/${id}`;
   const [deleteBoard, { isLoading }] = useDeleteBoardMutation();
