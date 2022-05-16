@@ -22,10 +22,11 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { TimeoutId } from '@reduxjs/toolkit/dist/query/core/buildMiddleware/types';
 import { useAppSelector } from '../../hooks/redux';
-import { AppRoutes, AUTH } from '../../constants';
+import { AppRoutes } from '../../constants';
 import { AppIcon } from '../';
 import { LocaleSwitcher } from '../';
 import CreateBoardButton from '../CreateBoardButton';
+import { logOut } from '../../utils';
 
 let timeout: TimeoutId;
 
@@ -49,7 +50,7 @@ function Header() {
   });
 
   const handleLogout = () => {
-    window.localStorage.removeItem(AUTH);
+    logOut();
     setOpenAuthMenu(false);
     navigate(AppRoutes.WELCOME);
   };

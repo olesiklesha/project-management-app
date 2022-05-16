@@ -31,6 +31,13 @@ export const authSlice = createSlice({
       state.tokenDate = Date.now();
       window.localStorage.setItem(AUTH, JSON.stringify(state));
     });
+    builder.addMatcher(
+      appApi.endpoints.editUser.matchFulfilled,
+      (state: IAuthState, { payload }) => {
+        state.login = payload.login;
+        window.localStorage.setItem(AUTH, JSON.stringify(state));
+      }
+    );
   },
 });
 
