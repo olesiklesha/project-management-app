@@ -25,7 +25,7 @@ function EditableTask({ title, id, order }: ITask) {
     const res = data.name || title;
     setIsEditing(false);
     setValue('name', res);
-    dispatch(boardSlice.actions.editTask({ title: res, id, order }));
+    // dispatch(boardSlice.actions.editTask({ title: res, id, order }));
     //request
   };
 

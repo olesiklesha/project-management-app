@@ -18,7 +18,7 @@ const BASE_URL = 'https://cream-task-app.herokuapp.com/';
 
 const appApi = createApi({
   reducerPath: 'appApi',
-  tagTypes: ['Users', 'Boards', 'Columns', 'Tasks'],
+  tagTypes: ['Users', 'Boards', 'Columns', 'Tasks', 'Board'],
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -84,7 +84,7 @@ const appApi = createApi({
     }),
     getBoard: builder.query<IBoardData, string>({
       query: (id: string) => ({ url: `/boards/${id}` }),
-      providesTags: ['Columns'],
+      providesTags: ['Board'],
     }),
     deleteBoard: builder.mutation<void, string>({
       query: (id: string) => ({
@@ -111,7 +111,7 @@ const appApi = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Columns'],
+      invalidatesTags: ['Board'],
     }),
     getColumn: builder.query<IColumnData, { boardId: string; columnId: string }>({
       query: ({ boardId, columnId }) => ({ url: `/boards/${boardId}/columns/${columnId}` }),
@@ -121,7 +121,7 @@ const appApi = createApi({
         url: `/boards/${boardId}/columns/${columnId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Columns'],
+      invalidatesTags: ['Board'],
     }),
     editColumn: builder.mutation<
       IColumn,
@@ -132,7 +132,7 @@ const appApi = createApi({
         method: 'PUT',
         body: body,
       }),
-      invalidatesTags: ['Columns'],
+      invalidatesTags: ['Board'],
     }),
     getAllTasks: builder.query<ITask[], { boardId: string; columnId: string }>({
       query: ({ boardId, columnId }) => ({
@@ -146,7 +146,7 @@ const appApi = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Tasks'],
+      invalidatesTags: ['Board'],
     }),
     getTask: builder.query<ITask, { boardId: string; columnId: string; taskId: string }>({
       query: ({ boardId, columnId, taskId }) => ({
@@ -158,7 +158,7 @@ const appApi = createApi({
         url: `/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Tasks'],
+      invalidatesTags: ['Board'],
     }),
     editTask: builder.mutation<
       ITask,
@@ -169,7 +169,7 @@ const appApi = createApi({
         method: 'PUT',
         body: body,
       }),
-      invalidatesTags: ['Tasks'],
+      invalidatesTags: ['Board'],
     }),
     uploadFile: builder.mutation<void, BinaryData>({
       query: (file) => ({

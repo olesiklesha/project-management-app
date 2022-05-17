@@ -33,14 +33,14 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateColumn) {
 
   const onSubmit = async (data: IFormData) => {
     const nweId = String(Date.now());
-    dispatch(
-      boardSlice.actions.addTask({
-        title: '',
-        id: id,
-        order: 2,
-        tasks: [{ title: data.title, id: nweId + 1, order: 1 }],
-      })
-    );
+    // dispatch(
+    //   boardSlice.actions.addTask({
+    //     title: '',
+    //     id: id,
+    //     order: 2,
+    //     tasks: [{ title: data.title, id: nweId + 1, order: 1 }],
+    //   })
+    // );
     toggleIsOpened();
     reset();
     //request
