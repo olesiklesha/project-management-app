@@ -35,6 +35,7 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateTask) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<IFormData>({
     defaultValues: {
@@ -59,6 +60,7 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateTask) {
       },
     });
     toggleIsOpened();
+    reset();
   };
 
   return (
