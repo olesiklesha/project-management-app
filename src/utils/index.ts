@@ -1,5 +1,5 @@
 import { AUTH, TOKEN_LIFETIME } from '../constants';
-import { IColumnData, IRequestError, ITask, IUserData } from '../models';
+import { IColumnData, IRequestError, IUserData } from '../models';
 
 export function getLocalAuth() {
   const localStorageAuth = window.localStorage.getItem(AUTH);
@@ -33,9 +33,24 @@ export function logOut() {
   window.localStorage.removeItem(AUTH);
 }
 
-export function getNextOrder(data: IColumnData[] | ITask[]) {
+export function getNextOrder(data: IColumnData[], columnsId = '') {
   if (!data.length) return 1;
-  const orders = data.map((el) => el.order);
+  let orders: number[];
+
+  if (columnsId) {
+    const column = data.find((el) => el.id === columnsId);
+
+    if (!column) return 1;
+
+    const { tasks } = column;
+
+    if (!tasks.length) return 1;
+
+    orders = tasks.map((el) => el.order);
+  } else {
+    orders = data.map((el) => el.order);
+  }
+
   orders.sort((a, b) => b - a);
   return orders[0] + 1;
 }
