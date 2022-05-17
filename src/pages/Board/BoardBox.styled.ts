@@ -1,9 +1,9 @@
 import { Box, styled } from '@mui/material';
 
 const BoardBox = styled(Box)(({ theme }) => ({
-  minHeight: 'calc(100vh - 128px)',
   maxWidth: 'calc(100vw - 28px)',
   margin: '1rem',
+  paddingBottom: '1rem',
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'nowrap',

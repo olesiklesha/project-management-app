@@ -36,7 +36,7 @@ function Column({ columnInfo }: IColumnProps) {
         sx={{
           width: '272px',
           minWidth: '272px',
-          height: '100%',
+          maxHeight: '100%',
           display: 'flex',
           flexDirection: 'column',
         }}

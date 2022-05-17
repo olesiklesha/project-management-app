@@ -3,9 +3,10 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Modal } from '..';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { useCreateColumnMutation } from '../../services';
 import { boardSlice, IColumn } from '../../store/reducers/board';
+import { getNextOrder } from '../../utils';
 
 interface IFormData {
   title: string;
@@ -18,6 +19,8 @@ interface ICreateColumn {
 }
 
 function ColumnCreator({ isOpened, toggleIsOpened, maxOrder }: ICreateColumn) {
+  const { columns } = useAppSelector((state) => state.boardSlice.data);
+  console.log(getNextOrder(columns));
   const {
     register,
     handleSubmit,

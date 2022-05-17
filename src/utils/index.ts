@@ -1,5 +1,5 @@
 import { AUTH, TOKEN_LIFETIME } from '../constants';
-import { IRequestError, IUserData } from '../models/apiModels';
+import { IColumnData, IRequestError, ITask, IUserData } from '../models';
 
 export function getLocalAuth() {
   const localStorageAuth = window.localStorage.getItem(AUTH);
@@ -30,4 +30,11 @@ export function getCurrentUser(data: IUserData[]) {
 
 export function logOut() {
   window.localStorage.removeItem(AUTH);
+}
+
+export function getNextOrder(data: IColumnData[] | ITask[]) {
+  if (!data.length) return 1;
+  const orders = data.map((el) => el.order);
+  orders.sort((a, b) => b - a);
+  return orders[0] + 1;
 }
