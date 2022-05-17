@@ -3,9 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Modal } from '..';
-import { useAppDispatch } from '../../hooks/redux';
 import { useCreateColumnMutation } from '../../services';
-import { boardSlice, IColumn } from '../../store/reducers/board';
 
 interface IFormData {
   title: string;
@@ -14,10 +12,9 @@ interface IFormData {
 interface ICreateColumn {
   isOpened: boolean;
   toggleIsOpened: () => void;
-  maxOrder: IColumn;
 }
 
-function ColumnCreator({ isOpened, toggleIsOpened, maxOrder }: ICreateColumn) {
+function ColumnCreator({ isOpened, toggleIsOpened }: ICreateColumn) {
   const {
     register,
     handleSubmit,
@@ -40,7 +37,7 @@ function ColumnCreator({ isOpened, toggleIsOpened, maxOrder }: ICreateColumn) {
     reset();
     createColumn({
       id: String(idBoard),
-      body: { title: data.title, order: maxOrder.order + 1 },
+      body: { title: data.title, order: 1 },
     });
   };
 
