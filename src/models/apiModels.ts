@@ -8,7 +8,12 @@ interface IBackendError {
   };
 }
 
-type IRequestError = IBackendError | SerializedError | undefined;
+interface IFetchError {
+  status: string;
+  error: string;
+}
+
+type IRequestError = IBackendError| IFetchError | SerializedError | undefined;
 
 interface ISignUpRequest {
   name: string;

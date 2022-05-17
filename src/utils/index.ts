@@ -19,6 +19,7 @@ export function apiErrorParser(error: IRequestError, t: (arg0: string) => string
   if (!error) return;
   if ('data' in error && 'message' in error.data)
     return `${t('api.errors.message')}: ${error.data.message}`;
+  if ('error' in error) return `${t('api.errors.message')}: ${error.error}`;
   if ('status' in error) return `${t('api.errors.status')}: ${error.status}`;
   return t('api.errors.default');
 }
