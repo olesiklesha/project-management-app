@@ -1,5 +1,5 @@
 import React from 'react';
-import { ErrorBoundary, PrivateOutlet, RouteSwitch } from './components';
+import { ErrorBoundary, PrivateOutlet, RouteSwitch, ErrorToast } from './components';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoutes } from './constants';
 
@@ -28,6 +28,7 @@ function App() {
         </Route>
         <Route path={AppRoutes.ERROR} element={<ErrorPage />} />
       </Routes>
+      <ErrorToast />
     </ErrorBoundary>
   );
 }
