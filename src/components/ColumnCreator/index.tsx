@@ -18,7 +18,6 @@ interface ICreateColumn {
 
 function ColumnCreator({ isOpened, toggleIsOpened }: ICreateColumn) {
   const { columns } = useAppSelector((state) => state.boardSlice.data);
-  console.log(getNextOrder(columns));
   const {
     register,
     handleSubmit,
@@ -41,7 +40,7 @@ function ColumnCreator({ isOpened, toggleIsOpened }: ICreateColumn) {
     reset();
     createColumn({
       id: String(idBoard),
-      body: { title: data.title, order: 1 },
+      body: { title: data.title, order: getNextOrder(columns) },
     });
   };
 

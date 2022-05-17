@@ -28,11 +28,9 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateColumn) {
     reValidateMode: 'onChange',
   });
 
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   const onSubmit = async (data: IFormData) => {
-    const nweId = String(Date.now());
     // dispatch(
     //   boardSlice.actions.addTask({
     //     title: '',
@@ -43,7 +41,6 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateColumn) {
     // );
     toggleIsOpened();
     reset();
-    //request
   };
 
   return (

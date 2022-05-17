@@ -1,8 +1,7 @@
 import { TextareaAutosize, Box, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../hooks/redux';
-import { boardSlice, ITask } from '../../store/reducers/board';
+import { ITask } from '../../store/reducers/board';
 import EditIcon from '@mui/icons-material/Edit';
 
 interface IFormData {
@@ -18,8 +17,6 @@ function EditableTask({ title, id, order }: ITask) {
       name: title,
     },
   });
-
-  const dispatch = useAppDispatch();
 
   const onSubmit = async (data: IFormData) => {
     const res = data.name || title;
