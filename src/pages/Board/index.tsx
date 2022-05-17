@@ -20,7 +20,7 @@ function Board() {
   }, []);
 
   return (
-    <BoardBox>
+    <BoardBox sx={{ height: { xs: 'calc(100vh - 173.5px - 2rem)', sm: 'calc(100vh - 128px - 2rem)' }}}>
       {columns.map((el) => (
         <Column columnInfo={el} key={el.id} />
       ))}
