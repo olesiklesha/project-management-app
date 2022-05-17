@@ -4,7 +4,7 @@ import authSlice from './reducers/auth';
 import globalErrorSlice from './reducers/globalErrorSlice';
 import boardSlice from './reducers/board';
 import { appApi } from '../services';
-import { rtkQueryErrorLogger } from './middlewares';
+import { rtkQueryErrorCatcher } from './middlewares';
 
 const rootReducer = combineReducers({
   authSlice,
@@ -18,7 +18,7 @@ export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(appApi.middleware, rtkQueryErrorLogger),
+      getDefaultMiddleware().concat(appApi.middleware, rtkQueryErrorCatcher),
   });
 };
 
