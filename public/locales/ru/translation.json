@@ -6,7 +6,11 @@
       "boundary": "Извините.. что-то пошло не так"
     },
     "boardPage": {
-      "title": "Доски"
+      "title": "Доски",
+      "addColumn": "Добавить колонку",
+      "addTask": "Добавить карточку",
+      "taskCreatorPlaceholder": "Введите новую задачу",
+      "columnCreatorPlaceholder": "Введите название для новой колонки"
     },
     "editPage": {
       "action": "Измените свой аккаунт",
@@ -86,6 +90,7 @@
   "actions": {
     "create": "Создать",
     "edit": "Изменить",
-    "delete": "Удалить"
+    "delete": "Удалить",
+    "cancel": "Отмена"
   }
 }
