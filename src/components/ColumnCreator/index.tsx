@@ -1,9 +1,11 @@
 import { Box, Button, TextField } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import { Modal } from '..';
 import { useAppDispatch } from '../../hooks/redux';
-import { boardSlice } from '../../store/reducers/board';
+import { useCreateColumnMutation } from '../../services';
+import { boardSlice, IColumn } from '../../store/reducers/board';
 
 interface IFormData {
   title: string;
@@ -12,9 +14,10 @@ interface IFormData {
 interface ICreateColumn {
   isOpened: boolean;
   toggleIsOpened: () => void;
+  maxOrder: IColumn;
 }
 
-function ColumnCreator({ isOpened, toggleIsOpened }: ICreateColumn) {
+function ColumnCreator({ isOpened, toggleIsOpened, maxOrder }: ICreateColumn) {
   const {
     register,
     handleSubmit,
@@ -27,22 +30,18 @@ function ColumnCreator({ isOpened, toggleIsOpened }: ICreateColumn) {
     reValidateMode: 'onChange',
   });
 
-  const dispatch = useAppDispatch();
+  const [createColumn, { isLoading, error, isError }] = useCreateColumnMutation();
+  const { id: idBoard } = useParams();
+
   const { t } = useTranslation();
 
   const onSubmit = async (data: IFormData) => {
-    const id = String(Date.now());
-    dispatch(
-      boardSlice.actions.addColumn({
-        title: data.title,
-        id: id,
-        order: 2,
-        tasks: [],
-      })
-    );
     toggleIsOpened();
     reset();
-    //request
+    createColumn({
+      id: String(idBoard),
+      body: { title: data.title, order: maxOrder.order + 1 },
+    });
   };
 
   return (

@@ -84,6 +84,7 @@ const appApi = createApi({
     }),
     getBoard: builder.query<IBoardData, string>({
       query: (id: string) => ({ url: `/boards/${id}` }),
+      providesTags: ['Columns'],
     }),
     deleteBoard: builder.mutation<void, string>({
       query: (id: string) => ({
