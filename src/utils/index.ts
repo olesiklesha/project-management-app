@@ -33,6 +33,7 @@ export function logOut() {
 }
 
 export function getNextOrder(data: IColumnData[] | ITask[]) {
+  if (!data.length) return 1;
   const orders = data.map((el) => el.order);
   orders.sort((a, b) => b - a);
   return orders[0] + 1;
