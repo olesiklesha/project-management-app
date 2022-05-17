@@ -55,7 +55,7 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateColumn) {
           sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
         >
           <TextField
-            {...register('title', { required: 'Поле должно быть заполнено' })}
+            {...register('title', { required: t('form.errors.noTitle') })}
             type="text"
             placeholder={t('pages.boardPage.taskCreatorPlaceholder')}
             fullWidth
@@ -71,8 +71,8 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateColumn) {
           />
 
           <Box>
-            <Button onClick={handleSubmit(onSubmit)}>{t('pages.boardPage.submit')}</Button>
-            <Button onClick={toggleIsOpened}>{t('pages.boardPage.cancel')}</Button>
+            <Button onClick={handleSubmit(onSubmit)}>{t('actions.create')}</Button>
+            <Button onClick={toggleIsOpened}>{t('actions.cancel')}</Button>
           </Box>
         </Box>
       </Modal>

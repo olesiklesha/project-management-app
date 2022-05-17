@@ -4,12 +4,11 @@ import { boardSlice, IColumn } from '../../store/reducers/board';
 import { theme } from '../../theme';
 import { useAppDispatch } from '../../hooks/redux';
 import { useCallback, useState } from 'react';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Add, Delete } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import ColumnBox from './ColumnBox.styled';
 
 interface IColumnProps {
-  children?: JSX.Element | JSX.Element[];
   columnInfo: IColumn;
 }
 
@@ -40,42 +39,19 @@ function Column({ columnInfo }: IColumnProps) {
       <Box sx={{ p: '0 8px 12px 8px', display: 'flex', justifyContent: 'space-between' }}>
         <EditableHeader title={title} id={id} order={order} tasks={tasks} />
         <IconButton color="secondary" onClick={deleteColumn}>
-          <DeleteIcon />
+          <Delete />
         </IconButton>
       </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          rowGap: '1rem',
-          p: '0 8px 12px 8px',
-          minHeight: 0,
-          maxHeight: 'calc(100vh - 270px)',
-          overflowX: 'hidden',
-          overflowY: 'auto',
-          '&::-webkit-scrollbar': {
-            width: '0.4rem',
-          },
-          '&::-webkit-scrollbar-track': {
-            boxShadow: `inset 0 0 6px ${theme.palette.primary.main}`,
-            webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
-            borderRadius: '2rem',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: theme.palette.primary.main,
-            borderRadius: '2rem',
-          },
-        }}
-      >
+      <ColumnBox>
         {columnInfo.tasks.map((task) => (
           <EditableTask title={task.title} id={task.id} order={task.order} key={task.id} />
         ))}
-      </Box>
+      </ColumnBox>
       <Button
         variant="contained"
         sx={{ backgroundColor: theme.palette.background.paper, boxShadow: 'none', m: '10px' }}
         onClick={toggleIsOpened}
-        startIcon={<AddIcon />}
+        startIcon={<Add />}
       >
         {t('pages.boardPage.addTask')}
       </Button>

@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../hooks/redux';
 import { boardSlice, ITask } from '../../store/reducers/board';
 import EditIcon from '@mui/icons-material/Edit';
 
-interface IRormData {
+interface IFormData {
   name: string;
 }
 
@@ -21,8 +21,8 @@ function EditableTask({ title, id, order }: ITask) {
 
   const dispatch = useAppDispatch();
 
-  const onSubmit = async (data: IRormData) => {
-    const res = data.name !== '' ? data.name : title;
+  const onSubmit = async (data: IFormData) => {
+    const res = data.name || title;
     setIsEditing(false);
     setValue('name', res);
     dispatch(boardSlice.actions.editTask({ title: res, id, order }));

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from '../../constants';
 import { AppIcon } from '../';
-import { getLocalAuth } from '../../utils';
+import { isAuth } from '../../utils';
 
 interface Props {
   goBack?: () => void | null;
@@ -11,7 +11,7 @@ interface Props {
 
 function WelcomeHeader({ goBack }: Props) {
   const { t } = useTranslation();
-  const token = getLocalAuth();
+  const token = isAuth();
 
   return (
     <AppBar color="primary" position="relative" sx={{ boxShadow: 'none' }}>

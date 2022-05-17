@@ -17,7 +17,7 @@ function EditableHeader({ title, id, order, tasks }: IColumn) {
   const dispatch = useAppDispatch();
 
   const onSubmit = async (data: IFormData) => {
-    const res = data.name !== '' ? data.name : title;
+    const res = data.name || title;
     setIsEditing(false);
     dispatch(boardSlice.actions.renameColumn({ id, order, title: res, tasks }));
     setValue('name', res);
