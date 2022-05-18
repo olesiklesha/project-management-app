@@ -70,7 +70,8 @@ export const boardSlice = createSlice({
     builder.addMatcher(
       appApi.endpoints.getBoard.matchFulfilled,
       (state: IInitialState, { payload }) => {
-        state.data = payload;
+        // Object.assign(state.data, payload);
+        state.data = { ...payload };
       }
     );
   },
