@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Column, ColumnCreator } from '../../components';
 import { useAppSelector } from '../../hooks/redux';
 import AddIcon from '@mui/icons-material/Add';
@@ -30,7 +30,7 @@ function Board() {
         variant="contained"
         color="secondary"
         onClick={toggleIsOpened}
-        sx={{ width: '272px', minWidth: '272px' }}
+        sx={{ width: '272px', minWidth: '272px', order: 1000 }}
         startIcon={<AddIcon />}
       >
         {t('pages.boardPage.addColumn')}
