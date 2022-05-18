@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IBoardData } from '../../../models/apiModels';
+import { createSlice } from '@reduxjs/toolkit';
+import { IBoardData } from '../../../models';
 import { appApi } from '../../../services';
 
 export interface ITask {
@@ -70,7 +70,8 @@ export const boardSlice = createSlice({
     builder.addMatcher(
       appApi.endpoints.getBoard.matchFulfilled,
       (state: IInitialState, { payload }) => {
-        state.data = payload;
+        // Object.assign(state.data, payload);
+        state.data = { ...payload };
       }
     );
   },
