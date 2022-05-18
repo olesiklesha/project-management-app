@@ -90,6 +90,26 @@ const appApi = createApi({
         url: `/boards/${id}`,
         method: 'DELETE',
       }),
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          appApi.util.updateQueryData('getAllBoards', undefined, (draft) => {
+            //const updatedBoards = boards.filter((el) => el.id !== id);
+            console.log(JSON.stringify(draft));
+            return draft.filter((el) => el.id !== id);
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+
+          /**
+           * Alternatively, on failure you can invalidate the corresponding cache tags
+           * to trigger a re-fetch:
+           * dispatch(api.util.invalidateTags(['Post']))
+           */
+        }
+      },
       invalidatesTags: ['Boards'],
     }),
     editBoard: builder.mutation<IBoard, { id: string; title: string }>({
