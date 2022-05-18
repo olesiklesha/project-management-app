@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Paper, Button, Popper, Fade } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { useDeleteTaskMutation } from '../../services';
-import { Modal } from '..';
+import Modal from '../Modal';
 
 interface IPopperProps {
   boardId: string;
@@ -19,6 +19,7 @@ export default function TransitionsPopper({ boardId, columnId, taskId }: IPopper
   const toggleIsEditorOpened = () => {
     setIsEditorOpened((prev) => !prev);
   };
+
   const toggleIsPopperOpened = () => {
     setIsPopperOpened((prev) => !prev);
   };
