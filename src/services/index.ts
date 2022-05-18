@@ -80,6 +80,15 @@ const appApi = createApi({
         method: 'POST',
         body: { title },
       }),
+      async onQueryStarted(title, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          appApi.util.updateQueryData('getAllBoards', undefined, (draft) => {
+            draft.push({ id: String(Math.random() + Date.now()), title });
+            return draft;
+          })
+        );
+        queryFulfilled.catch(patchResult.undo);
+      },
       invalidatesTags: ['Boards'],
     }),
     getBoard: builder.query<IBoardData, string>({
@@ -93,22 +102,10 @@ const appApi = createApi({
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           appApi.util.updateQueryData('getAllBoards', undefined, (draft) => {
-            //const updatedBoards = boards.filter((el) => el.id !== id);
-            console.log(JSON.stringify(draft));
             return draft.filter((el) => el.id !== id);
           })
         );
-        try {
-          await queryFulfilled;
-        } catch {
-          patchResult.undo();
-
-          /**
-           * Alternatively, on failure you can invalidate the corresponding cache tags
-           * to trigger a re-fetch:
-           * dispatch(api.util.invalidateTags(['Post']))
-           */
-        }
+        queryFulfilled.catch(patchResult.undo);
       },
       invalidatesTags: ['Boards'],
     }),
@@ -118,6 +115,14 @@ const appApi = createApi({
         method: 'PUT',
         body: { title },
       }),
+      async onQueryStarted({ id, title }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          appApi.util.updateQueryData('getAllBoards', undefined, (draft) => {
+            return draft.map((el) => (el.id === id ? { id, title } : el));
+          })
+        );
+        queryFulfilled.catch(patchResult.undo);
+      },
       invalidatesTags: ['Boards'],
     }),
     getAllColumns: builder.query<IColumn[], string>({
@@ -130,6 +135,17 @@ const appApi = createApi({
         method: 'POST',
         body,
       }),
+      async onQueryStarted({ id, body }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          appApi.util.updateQueryData('getAllColumns', id, (draft) => {
+            const { title, order } = body;
+            const id = String(Math.random() + Date.now());
+            draft.push({ id, title, order });
+            return draft;
+          })
+        );
+        queryFulfilled.catch(patchResult.undo);
+      },
       invalidatesTags: ['Columns'],
     }),
     getColumn: builder.query<IColumnData, { boardId: string; columnId: string }>({
