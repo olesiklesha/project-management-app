@@ -1,5 +1,5 @@
 import React from 'react';
-import { Breadcrumbs, Link, Stack, Typography } from '@mui/material';
+import { Breadcrumbs, Link, Typography } from '@mui/material';
 import { Link as NavLink } from 'react-router-dom';
 import { AppRoutes } from '../../constants';
 import { Home, Pageview } from '@mui/icons-material';

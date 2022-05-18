@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IBoardData } from '../../../models/apiModels';
+import { createSlice } from '@reduxjs/toolkit';
+import { IBoardData } from '../../../models';
 import { appApi } from '../../../services';
 
 export interface ITask {
