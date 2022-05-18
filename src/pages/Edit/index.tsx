@@ -18,7 +18,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from '../../components';
 import { getCurrentUser, logOut } from '../../utils';
-import { ISignUpRequest } from '../../models/apiModels';
+import { ISignUpRequest } from '../../models';
 import { AppRoutes } from '../../constants';
 import { useDeleteUserMutation, useEditUserMutation, useGetAllUsersQuery } from '../../services';
 
