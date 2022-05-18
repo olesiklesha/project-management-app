@@ -1,7 +1,7 @@
 import { TextareaAutosize, Box, Typography, ClickAwayListener } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ITask } from '../../models/apiModels';
+import { ITask } from '../../models';
 import { useEditTaskMutation } from '../../services';
 import TransitionsPopper from '../Popper';
 
@@ -50,13 +50,7 @@ function EditableTask({ title, id, order, description, userId, boardId, columnId
       <ClickAwayListener onClickAway={handleClose}>
         <Box onMouseOver={() => setShow(true)} onMouseOut={() => setShow(false)}>
           {(show || isEditing) && (
-            <TransitionsPopper
-              open={isEditing}
-              setOpen={setIsEditing}
-              boardId={boardId}
-              columnId={columnId}
-              taskId={id}
-            />
+            <TransitionsPopper boardId={boardId} columnId={columnId} taskId={id} />
           )}
           {isEditing ? (
             <Box

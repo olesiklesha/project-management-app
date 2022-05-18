@@ -2,38 +2,56 @@ import React, { useState, useCallback } from 'react';
 import { Paper, Button, Popper, Fade } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { useDeleteTaskMutation } from '../../services';
-import { Modal } from '..';
+import Modal from '../Modal';
 
 interface IPopperProps {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   boardId: string;
   columnId: string;
   taskId: string;
 }
 
-export default function TransitionsPopper({
-  open,
-  setOpen,
-  boardId,
-  columnId,
-  taskId,
-}: IPopperProps) {
+export default function TransitionsPopper({ boardId, columnId, taskId }: IPopperProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [isPopperOpened, setIsPopperOpened] = useState(false);
+  const [isConfirmOpened, setIsConfirmOpened] = useState(false);
+  const [isEditorOpened, setIsEditorOpened] = useState(false);
 
-  const [isOpened, setIsOpened] = useState(false);
-  const toggleIsOpened = useCallback(() => {
-    setIsOpened((isOpened) => !isOpened);
-  }, []);
-
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    if (e.target !== e.currentTarget) {
-      setAnchorEl(e.currentTarget);
-      setOpen((previousOpen) => !previousOpen);
-    }
+  const toggleIsEditorOpened = () => {
+    setIsEditorOpened((prev) => !prev);
   };
 
-  const canBeOpen = open && Boolean(anchorEl);
+  const toggleIsPopperOpened = () => {
+    setIsPopperOpened((prev) => !prev);
+  };
+
+  const toggleIsConfirm = useCallback(() => {
+    setIsConfirmOpened((prev) => !prev);
+  }, []);
+
+  const handleBtnClick = (e: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(e.currentTarget);
+    toggleIsPopperOpened();
+  };
+
+  const handleDelete = () => {
+    toggleIsPopperOpened();
+    toggleIsConfirm();
+  };
+
+  const handleEdit = () => {
+    toggleIsPopperOpened();
+    toggleIsEditorOpened();
+  };
+
+  const deleteAction = async () => {
+    await deleteTask({
+      boardId: boardId,
+      columnId: columnId,
+      taskId: taskId,
+    });
+  };
+
+  const canBeOpen = isPopperOpened && Boolean(anchorEl);
   const idPopper = canBeOpen ? 'transition-popper' : undefined;
 
   const [deleteTask, {}] = useDeleteTaskMutation();
@@ -43,11 +61,17 @@ export default function TransitionsPopper({
       <Button
         aria-describedby={idPopper}
         type="button"
-        onClick={handleClick}
+        onClick={handleBtnClick}
         startIcon={<EditIcon />}
         sx={{ borderRadius: '100%', p: '0.5rem', width: '20px', minWidth: '35px' }}
       />
-      <Popper id={idPopper} open={open} anchorEl={anchorEl} transition placement="right-start">
+      <Popper
+        id={idPopper}
+        open={isPopperOpened}
+        anchorEl={anchorEl}
+        transition
+        placement="right-start"
+      >
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
             <Paper
@@ -66,16 +90,17 @@ export default function TransitionsPopper({
                 color="secondary"
                 size="small"
                 sx={{ width: '100%', mb: '0.5rem' }}
-                variant="outlined"
+                variant="contained"
+                onClick={handleEdit}
               >
                 Open task
               </Button>
               <Button
-                color="secondary"
+                color="warning"
                 size="small"
                 sx={{ width: '100%' }}
-                variant="outlined"
-                onClick={toggleIsOpened}
+                variant="contained"
+                onClick={handleDelete}
               >
                 Delete task
               </Button>
@@ -83,17 +108,10 @@ export default function TransitionsPopper({
           </Fade>
         )}
       </Popper>
-      <Modal
-        isOpened={isOpened}
-        onCancel={toggleIsOpened}
-        onConfirm={() => {
-          deleteTask({
-            boardId: boardId,
-            columnId: columnId,
-            taskId: taskId,
-          });
-        }}
-      />
+      <Modal isOpened={isConfirmOpened} onCancel={toggleIsConfirm} onConfirm={deleteAction} />
+      <Modal isOpened={isEditorOpened} onCancel={toggleIsEditorOpened}>
+        <p>there will be task editor</p>
+      </Modal>
     </div>
   );
 }
