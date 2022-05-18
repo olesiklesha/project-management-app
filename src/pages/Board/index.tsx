@@ -47,7 +47,7 @@ function Board() {
           variant="contained"
           color="secondary"
           onClick={toggleIsOpened}
-          sx={{ width: '272px', minWidth: '272px' }}
+          sx={{ width: '272px', minWidth: '272px', order: 1000 }}
           startIcon={<AddIcon />}
         >
           {t('pages.boardPage.addColumn')}
