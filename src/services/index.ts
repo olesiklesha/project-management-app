@@ -140,6 +140,14 @@ const appApi = createApi({
         url: `/boards/${boardId}/columns/${columnId}`,
         method: 'DELETE',
       }),
+      onQueryStarted({ boardId, columnId }, { dispatch, queryFulfilled }) {
+        const deleteResult = dispatch(
+          appApi.util.updateQueryData('getAllColumns', boardId, (draft) => {
+            draft.filter((el) => el.id !== columnId);
+          })
+        );
+        queryFulfilled.catch(deleteResult.undo);
+      },
       invalidatesTags: ['Columns'],
     }),
     editColumn: builder.mutation<
@@ -151,6 +159,15 @@ const appApi = createApi({
         method: 'PUT',
         body: body,
       }),
+      onQueryStarted({ boardId, columnId, body }, { dispatch, queryFulfilled }) {
+        const editResult = dispatch(
+          appApi.util.updateQueryData('getAllColumns', boardId, (draft) => {
+            const id = String(Date.now());
+            draft.map((el) => (el.id === columnId ? { id, ...body } : el));
+          })
+        );
+        queryFulfilled.catch(editResult.undo);
+      },
       invalidatesTags: ['Columns'],
     }),
     getAllTasks: builder.query<ITask[], { boardId: string; columnId: string }>({
@@ -165,6 +182,15 @@ const appApi = createApi({
         method: 'POST',
         body,
       }),
+      onQueryStarted({ boardId, columnId, body }, { dispatch, queryFulfilled }) {
+        const addResult = dispatch(
+          appApi.util.updateQueryData('getAllTasks', { boardId, columnId }, (draft) => {
+            const id = String(Date.now());
+            draft.push({ id, boardId, columnId, ...body });
+          })
+        );
+        queryFulfilled.catch(addResult.undo);
+      },
       invalidatesTags: ['Tasks'],
     }),
     getTask: builder.query<ITask, { boardId: string; columnId: string; taskId: string }>({
@@ -177,6 +203,14 @@ const appApi = createApi({
         url: `/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
         method: 'DELETE',
       }),
+      onQueryStarted({ boardId, columnId, taskId }, { dispatch, queryFulfilled }) {
+        const deleteResult = dispatch(
+          appApi.util.updateQueryData('getAllTasks', { boardId, columnId }, (draft) => {
+            draft.filter((el) => el.id !== taskId);
+          })
+        );
+        queryFulfilled.catch(deleteResult.undo);
+      },
       invalidatesTags: ['Tasks'],
     }),
     editTask: builder.mutation<
@@ -188,6 +222,15 @@ const appApi = createApi({
         method: 'PUT',
         body: body,
       }),
+      onQueryStarted({ boardId, columnId, taskId, body }, { dispatch, queryFulfilled }) {
+        const editResult = dispatch(
+          appApi.util.updateQueryData('getAllTasks', { boardId, columnId }, (draft) => {
+            const id = String(Date.now());
+            draft.map((el) => (el.id === taskId ? { id, ...body } : el));
+          })
+        );
+        queryFulfilled.catch(editResult.undo);
+      },
       invalidatesTags: ['Tasks'],
     }),
     uploadFile: builder.mutation<void, BinaryData>({
