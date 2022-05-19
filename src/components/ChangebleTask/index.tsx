@@ -1,17 +1,21 @@
-import { TextareaAutosize, Box, Typography } from '@mui/material';
+import { TextareaAutosize, Box, Typography, ClickAwayListener } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../hooks/redux';
-import { boardSlice, ITask } from '../../store/reducers/board';
-import EditIcon from '@mui/icons-material/Edit';
+import { ITask } from '../../models';
+import { useEditTaskMutation } from '../../services';
+import TransitionsPopper from '../Popper';
 
 interface IFormData {
   name: string;
 }
 
-function EditableTask({ title, id, order }: ITask) {
+function EditableTask({ title, id, order, description, userId, boardId, columnId }: ITask) {
   const [isEditing, setIsEditing] = useState(false);
   const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setIsEditing(false);
+    handleSubmit(onSubmit);
+  };
 
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: {
@@ -19,64 +23,75 @@ function EditableTask({ title, id, order }: ITask) {
     },
   });
 
-  const dispatch = useAppDispatch();
+  const [editTask, {}] = useEditTaskMutation();
 
   const onSubmit = async (data: IFormData) => {
     const res = data.name || title;
     setIsEditing(false);
+    setShow(false);
     setValue('name', res);
-    dispatch(boardSlice.actions.editTask({ title: res, id, order }));
-    //request
+    editTask({
+      boardId: boardId,
+      columnId: columnId,
+      taskId: id,
+      body: {
+        title: res,
+        order: order,
+        description: res,
+        userId: userId,
+        boardId: boardId,
+        columnId: columnId,
+      },
+    });
   };
 
   return (
-    <>
-      {isEditing ? (
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} onBlur={handleSubmit(onSubmit)}>
-          <TextareaAutosize
-            {...register('name')}
-            defaultValue={title}
-            autoFocus
-            style={{
-              width: '256px',
-              fontSize: '1rem',
-              fontFamily: 'Roboto',
-              lineHeight: '1.5',
-              padding: '10px',
-              resize: 'vertical',
-            }}
-          />
-        </Box>
-      ) : (
-        <>
-          <Typography
-            onClick={() => setIsEditing(true)}
-            onMouseOver={() => setShow(true)}
-            onMouseOut={() => setShow(false)}
-            sx={{
-              p: '10px',
-              backgroundColor: 'white',
-              overflowWrap: 'break-word',
-              position: 'relative',
-            }}
-          >
-            {title}
-            {show && (
-              <EditIcon
-                sx={{
-                  position: 'absolute',
-                  right: '8px',
-                  top: '8px',
-                  cursor: 'pointer',
-                  backgroundColor: 'white',
+    <Box sx={{ position: 'relative' }}>
+      <ClickAwayListener onClickAway={handleClose}>
+        <Box onMouseOver={() => setShow(true)} onMouseOut={() => setShow(false)}>
+          {(show || isEditing) && (
+            <TransitionsPopper boardId={boardId} columnId={columnId} taskId={id} />
+          )}
+          {isEditing ? (
+            <Box
+              component="form"
+              onSubmit={handleSubmit(onSubmit)}
+              onBlur={handleSubmit(onSubmit)}
+              sx={{ order: order, position: 'relative' }}
+            >
+              <TextareaAutosize
+                {...register('name')}
+                defaultValue={title}
+                autoFocus
+                style={{
+                  width: '256px',
+                  fontSize: '1rem',
+                  fontFamily: 'Roboto',
+                  lineHeight: '1.5',
+                  padding: '10px',
+                  resize: 'vertical',
                 }}
-                onClick={(e) => e.stopPropagation()}
               />
-            )}
-          </Typography>
-        </>
-      )}
-    </>
+            </Box>
+          ) : (
+            <>
+              <Typography
+                sx={{
+                  p: '10px',
+                  backgroundColor: 'white',
+                  overflowWrap: 'break-word',
+                  position: 'relative',
+                  order: order,
+                  boxShadow: '0px 3px 5px 0px rgba(0, 0, 0, 0.3)',
+                }}
+              >
+                {title}
+              </Typography>
+            </>
+          )}
+        </Box>
+      </ClickAwayListener>
+    </Box>
   );
 }
 

@@ -1,4 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import { IBoardData } from '../../../models';
+import { appApi } from '../../../services';
 
 export interface ITask {
   title: string;
@@ -13,86 +15,65 @@ export interface IColumn {
   tasks: ITask[];
 }
 
-interface BoardState {
-  id: string;
-  title: string;
-  columns: IColumn[];
+interface IInitialState {
+  data: IBoardData;
 }
 
-const initialState: BoardState = {
-  id: '',
-  title: 'Test',
-  columns: [
-    {
-      title: 'My main Task',
-      id: '11',
-      order: 1,
-      tasks: [
-        {
-          id: '6e3abe9c-ceb1-40fa-9a04-eb2b2184daf9',
-          title: 'Task: pet the cat',
-          order: 1,
-        },
-        {
-          id: '6e3abe9c-ceb1-40fa-9a04-eb2b2184daf8',
-          title: 'Task: pet the dog',
-          order: 1,
-        },
-      ],
-    },
-    {
-      title: 'My main Task # 2',
-      id: '12',
-      order: 1,
-      tasks: [
-        {
-          id: '6e3abe9c-ceb1-40fa-9a04-eb2b2184daf6',
-          title:
-            'Task: pet the cat, pet the cat, pet the cat, pet the cat, pet the cat, pet the cat, pet the cat',
-          order: 1,
-        },
-      ],
-    },
-  ],
+const initialState: IInitialState = {
+  data: {
+    title: '',
+    id: '',
+    columns: [],
+  },
 };
 
 export const boardSlice = createSlice({
   name: 'test',
   initialState,
-  reducers: {
-    addColumn: (state, action: PayloadAction<IColumn>) => {
-      state.columns.push(action.payload);
-    },
-    deleteColumn: (state, action: PayloadAction<string>) => {
-      state.columns = state.columns.filter((el) => el.id !== action.payload);
-    },
-    renameColumn: (state, action: PayloadAction<IColumn>) => {
-      state.columns = state.columns.map((el) =>
-        el.id === action.payload.id ? action.payload : el
-      );
-    },
-    editTask: (state, action: PayloadAction<ITask>) => {
-      state.columns = state.columns.map((column) => {
-        return {
-          title: column.title,
-          id: column.id,
-          order: column.order,
-          tasks: column.tasks.map((task) =>
-            task.id === action.payload.id ? action.payload : task
-          ),
-        };
-      });
-    },
-    addTask: (state, action: PayloadAction<IColumn>) => {
-      state.columns = state.columns.map((column) => {
-        return column.id === action.payload.id
-          ? {
-              ...column,
-              tasks: [...column.tasks, action.payload.tasks[0]],
-            }
-          : column;
-      });
-    },
+  reducers: {},
+  //   {addColumn: (state, action: PayloadAction<IColumn>) => {
+  //     state.columns.push(action.payload);
+  //   },
+  //   deleteColumn: (state, action: PayloadAction<string>) => {
+  //     state.columns = state.columns.filter((el) => el.id !== action.payload);
+  //   },
+  //   renameColumn: (state, action: PayloadAction<IColumn>) => {
+  //     state.columns = state.columns.map((el) =>
+  //       el.id === action.payload.id ? action.payload : el
+  //     );
+  //   },
+  //   editTask: (state, action: PayloadAction<ITask>) => {
+  //     state.columns = state.columns.map((column) => {
+  //       return {
+  //         title: column.title,
+  //         id: column.id,
+  //         order: column.order,
+  //         tasks: column.tasks.map((task) =>
+  //           task.id === action.payload.id ? action.payload : task
+  //         ),
+  //       };
+  //     });
+  //   },
+  //   addTask: (state, action: PayloadAction<IColumn>) => {
+  //     state.columns = state.columns.map((column) => {
+  //       return column.id === action.payload.id
+  //         ? {
+  //             ...column,
+  //             tasks: [...column.tasks, action.payload.tasks[0]],
+  //           }
+  //         : column;
+  //     });
+  //   },
+  // }
+
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      appApi.endpoints.getBoard.matchFulfilled,
+      (state: IInitialState, { payload }) => {
+        // Object.assign(state.data, payload);
+        state.data = { ...payload };
+      }
+    );
   },
 });
 

@@ -1,9 +1,10 @@
 import { Box, Button, TextField } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import { Modal } from '..';
-import { useAppDispatch } from '../../hooks/redux';
-import { boardSlice } from '../../store/reducers/board';
+import { useCreateColumnMutation, useGetBoardQuery } from '../../services';
+import { getNextOrder } from '../../utils';
 
 interface IFormData {
   title: string;
@@ -15,6 +16,10 @@ interface ICreateColumn {
 }
 
 function ColumnCreator({ isOpened, toggleIsOpened }: ICreateColumn) {
+  const { id: idBoard } = useParams();
+  const { data } = useGetBoardQuery(String(idBoard));
+  const columns = data?.columns || [];
+
   const {
     register,
     handleSubmit,
@@ -27,22 +32,17 @@ function ColumnCreator({ isOpened, toggleIsOpened }: ICreateColumn) {
     reValidateMode: 'onChange',
   });
 
-  const dispatch = useAppDispatch();
+  const [createColumn, { isLoading, error, isError }] = useCreateColumnMutation();
+
   const { t } = useTranslation();
 
   const onSubmit = async (data: IFormData) => {
-    const id = String(Date.now());
-    dispatch(
-      boardSlice.actions.addColumn({
-        title: data.title,
-        id: id,
-        order: 2,
-        tasks: [],
-      })
-    );
     toggleIsOpened();
     reset();
-    //request
+    createColumn({
+      id: String(idBoard),
+      body: { title: data.title, order: getNextOrder(columns) },
+    });
   };
 
   return (

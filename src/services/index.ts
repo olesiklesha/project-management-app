@@ -1,16 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  ISignUpRequest,
-  IUserData,
-  ISignInRequest,
-  ISignInResponse,
   IBoard,
   IBoardData,
   IColumn,
   IColumnData,
+  ISignInRequest,
+  ISignInResponse,
+  ISignUpRequest,
   ITask,
   ITaskRequest,
-} from '../models/apiModels';
+  IUserData,
+} from '../models';
 import { authSlice } from '../store/reducers/auth';
 import { RootState } from '../store';
 
@@ -18,7 +18,7 @@ const BASE_URL = 'https://cream-task-app.herokuapp.com/';
 
 const appApi = createApi({
   reducerPath: 'appApi',
-  tagTypes: ['Users', 'Boards', 'Columns', 'Tasks'],
+  tagTypes: ['Users', 'Boards', 'Columns', 'Tasks', 'Board'],
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -92,6 +92,7 @@ const appApi = createApi({
     }),
     getBoard: builder.query<IBoardData, string>({
       query: (id: string) => ({ url: `/boards/${id}` }),
+      providesTags: ['Board'],
     }),
     deleteBoard: builder.mutation<void, string>({
       query: (id: string) => ({
@@ -136,14 +137,14 @@ const appApi = createApi({
       }),
       async onQueryStarted({ id, body }, { dispatch, queryFulfilled }) {
         const addResult = dispatch(
-          appApi.util.updateQueryData('getAllColumns', id, (draft) => {
+          appApi.util.updateQueryData('getBoard', id, (draft) => {
             const id = String(Date.now());
-            draft.push({ id, ...body });
+            draft.columns.push({ id, tasks: [], ...body });
           })
         );
         queryFulfilled.catch(addResult.undo);
       },
-      invalidatesTags: ['Columns'],
+      invalidatesTags: ['Board'],
     }),
     getColumn: builder.query<IColumnData, { boardId: string; columnId: string }>({
       query: ({ boardId, columnId }) => ({ url: `/boards/${boardId}/columns/${columnId}` }),
@@ -155,13 +156,13 @@ const appApi = createApi({
       }),
       onQueryStarted({ boardId, columnId }, { dispatch, queryFulfilled }) {
         const deleteResult = dispatch(
-          appApi.util.updateQueryData('getAllColumns', boardId, (draft) =>
-            draft.filter((el) => el.id !== columnId)
-          )
+          appApi.util.updateQueryData('getBoard', boardId, (draft) => {
+            draft.columns = draft.columns.filter((el) => el.id !== columnId);
+          })
         );
         queryFulfilled.catch(deleteResult.undo);
       },
-      invalidatesTags: ['Columns'],
+      invalidatesTags: ['Board'],
     }),
     editColumn: builder.mutation<
       IColumn,
@@ -174,14 +175,18 @@ const appApi = createApi({
       }),
       onQueryStarted({ boardId, columnId, body }, { dispatch, queryFulfilled }) {
         const editResult = dispatch(
-          appApi.util.updateQueryData('getAllColumns', boardId, (draft) => {
+          appApi.util.updateQueryData('getBoard', boardId, (draft) => {
             const id = String(Date.now());
-            return draft.map((el) => (el.id === columnId ? { id, ...body } : el));
+            const column = draft.columns.find((el) => el.id === columnId);
+            const tasks = column?.tasks || [];
+            draft.columns = draft.columns.map((el) =>
+              el.id === columnId ? { id, tasks, ...body } : el
+            );
           })
         );
         queryFulfilled.catch(editResult.undo);
       },
-      invalidatesTags: ['Columns'],
+      invalidatesTags: ['Board'],
     }),
     getAllTasks: builder.query<ITask[], { boardId: string; columnId: string }>({
       query: ({ boardId, columnId }) => ({
@@ -197,14 +202,16 @@ const appApi = createApi({
       }),
       onQueryStarted({ boardId, columnId, body }, { dispatch, queryFulfilled }) {
         const addResult = dispatch(
-          appApi.util.updateQueryData('getAllTasks', { boardId, columnId }, (draft) => {
+          appApi.util.updateQueryData('getBoard', boardId, (draft) => {
             const id = String(Date.now());
-            draft.push({ id, boardId, columnId, ...body });
+            draft.columns.forEach((el) => {
+              if (el.id === columnId) el.tasks.push({ id, files: [], ...body });
+            });
           })
         );
         queryFulfilled.catch(addResult.undo);
       },
-      invalidatesTags: ['Tasks'],
+      invalidatesTags: ['Board'],
     }),
     getTask: builder.query<ITask, { boardId: string; columnId: string; taskId: string }>({
       query: ({ boardId, columnId, taskId }) => ({
@@ -218,13 +225,15 @@ const appApi = createApi({
       }),
       onQueryStarted({ boardId, columnId, taskId }, { dispatch, queryFulfilled }) {
         const deleteResult = dispatch(
-          appApi.util.updateQueryData('getAllTasks', { boardId, columnId }, (draft) =>
-            draft.filter((el) => el.id !== taskId)
-          )
+          appApi.util.updateQueryData('getBoard', boardId, (draft) => {
+            draft.columns.forEach((el) => {
+              if (el.id === columnId) el.tasks = el.tasks.filter((task) => task.id !== taskId);
+            });
+          })
         );
         queryFulfilled.catch(deleteResult.undo);
       },
-      invalidatesTags: ['Tasks'],
+      invalidatesTags: ['Board'],
     }),
     editTask: builder.mutation<
       ITask,
@@ -237,14 +246,19 @@ const appApi = createApi({
       }),
       onQueryStarted({ boardId, columnId, taskId, body }, { dispatch, queryFulfilled }) {
         const editResult = dispatch(
-          appApi.util.updateQueryData('getAllTasks', { boardId, columnId }, (draft) => {
+          appApi.util.updateQueryData('getBoard', boardId, (draft) => {
             const id = String(Date.now());
-            return draft.map((el) => (el.id === taskId ? { id, ...body } : el));
+            draft.columns.forEach((el) => {
+              if (el.id === columnId)
+                el.tasks = el.tasks.map((task) =>
+                  task.id === taskId ? { id, files: [], ...body } : task
+                );
+            });
           })
         );
         queryFulfilled.catch(editResult.undo);
       },
-      invalidatesTags: ['Tasks'],
+      invalidatesTags: ['Board'],
     }),
     uploadFile: builder.mutation<void, BinaryData>({
       query: (file) => ({
