@@ -9,7 +9,10 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
 function Main() {
   const { t } = useTranslation();
-  const { data, isLoading, isError, error } = useGetAllBoardsQuery();
+  const { data, isLoading, isError, error } = useGetAllBoardsQuery(undefined, {
+    pollingInterval: 30000,
+  });
+
   const [isOpened, setOpened] = useState(false);
   const boards = data || [];
 

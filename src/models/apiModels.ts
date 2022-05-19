@@ -13,7 +13,7 @@ interface IFetchError {
   error: string;
 }
 
-type IRequestError = IBackendError| IFetchError | SerializedError | undefined;
+type IRequestError = IBackendError | IFetchError | SerializedError | undefined;
 
 interface ISignUpRequest {
   name: string;

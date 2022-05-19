@@ -81,13 +81,12 @@ const appApi = createApi({
         body: { title },
       }),
       async onQueryStarted(title, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
+        const addResult = dispatch(
           appApi.util.updateQueryData('getAllBoards', undefined, (draft) => {
-            draft.push({ id: String(Math.random() + Date.now()), title });
-            return draft;
+            draft.push({ id: String(Date.now()), title });
           })
         );
-        queryFulfilled.catch(patchResult.undo);
+        queryFulfilled.catch(addResult.undo);
       },
       invalidatesTags: ['Boards'],
     }),
@@ -100,12 +99,12 @@ const appApi = createApi({
         method: 'DELETE',
       }),
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          appApi.util.updateQueryData('getAllBoards', undefined, (draft) => {
-            return draft.filter((el) => el.id !== id);
-          })
+        const deleteResult = dispatch(
+          appApi.util.updateQueryData('getAllBoards', undefined, (draft) =>
+            draft.filter((el) => el.id !== id)
+          )
         );
-        queryFulfilled.catch(patchResult.undo);
+        queryFulfilled.catch(deleteResult.undo);
       },
       invalidatesTags: ['Boards'],
     }),
@@ -116,12 +115,12 @@ const appApi = createApi({
         body: { title },
       }),
       async onQueryStarted({ id, title }, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          appApi.util.updateQueryData('getAllBoards', undefined, (draft) => {
-            return draft.map((el) => (el.id === id ? { id, title } : el));
-          })
+        const editResult = dispatch(
+          appApi.util.updateQueryData('getAllBoards', undefined, (draft) =>
+            draft.map((el) => (el.id === id ? { id, title } : el))
+          )
         );
-        queryFulfilled.catch(patchResult.undo);
+        queryFulfilled.catch(editResult.undo);
       },
       invalidatesTags: ['Boards'],
     }),
@@ -136,15 +135,13 @@ const appApi = createApi({
         body,
       }),
       async onQueryStarted({ id, body }, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
+        const addResult = dispatch(
           appApi.util.updateQueryData('getAllColumns', id, (draft) => {
-            const { title, order } = body;
-            const id = String(Math.random() + Date.now());
-            draft.push({ id, title, order });
-            return draft;
+            const id = String(Date.now());
+            draft.push({ id, ...body });
           })
         );
-        queryFulfilled.catch(patchResult.undo);
+        queryFulfilled.catch(addResult.undo);
       },
       invalidatesTags: ['Columns'],
     }),
@@ -156,6 +153,14 @@ const appApi = createApi({
         url: `/boards/${boardId}/columns/${columnId}`,
         method: 'DELETE',
       }),
+      onQueryStarted({ boardId, columnId }, { dispatch, queryFulfilled }) {
+        const deleteResult = dispatch(
+          appApi.util.updateQueryData('getAllColumns', boardId, (draft) =>
+            draft.filter((el) => el.id !== columnId)
+          )
+        );
+        queryFulfilled.catch(deleteResult.undo);
+      },
       invalidatesTags: ['Columns'],
     }),
     editColumn: builder.mutation<
@@ -167,6 +172,15 @@ const appApi = createApi({
         method: 'PUT',
         body: body,
       }),
+      onQueryStarted({ boardId, columnId, body }, { dispatch, queryFulfilled }) {
+        const editResult = dispatch(
+          appApi.util.updateQueryData('getAllColumns', boardId, (draft) => {
+            const id = String(Date.now());
+            return draft.map((el) => (el.id === columnId ? { id, ...body } : el));
+          })
+        );
+        queryFulfilled.catch(editResult.undo);
+      },
       invalidatesTags: ['Columns'],
     }),
     getAllTasks: builder.query<ITask[], { boardId: string; columnId: string }>({
@@ -181,6 +195,15 @@ const appApi = createApi({
         method: 'POST',
         body,
       }),
+      onQueryStarted({ boardId, columnId, body }, { dispatch, queryFulfilled }) {
+        const addResult = dispatch(
+          appApi.util.updateQueryData('getAllTasks', { boardId, columnId }, (draft) => {
+            const id = String(Date.now());
+            draft.push({ id, boardId, columnId, ...body });
+          })
+        );
+        queryFulfilled.catch(addResult.undo);
+      },
       invalidatesTags: ['Tasks'],
     }),
     getTask: builder.query<ITask, { boardId: string; columnId: string; taskId: string }>({
@@ -193,6 +216,14 @@ const appApi = createApi({
         url: `/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
         method: 'DELETE',
       }),
+      onQueryStarted({ boardId, columnId, taskId }, { dispatch, queryFulfilled }) {
+        const deleteResult = dispatch(
+          appApi.util.updateQueryData('getAllTasks', { boardId, columnId }, (draft) =>
+            draft.filter((el) => el.id !== taskId)
+          )
+        );
+        queryFulfilled.catch(deleteResult.undo);
+      },
       invalidatesTags: ['Tasks'],
     }),
     editTask: builder.mutation<
@@ -204,6 +235,15 @@ const appApi = createApi({
         method: 'PUT',
         body: body,
       }),
+      onQueryStarted({ boardId, columnId, taskId, body }, { dispatch, queryFulfilled }) {
+        const editResult = dispatch(
+          appApi.util.updateQueryData('getAllTasks', { boardId, columnId }, (draft) => {
+            const id = String(Date.now());
+            return draft.map((el) => (el.id === taskId ? { id, ...body } : el));
+          })
+        );
+        queryFulfilled.catch(editResult.undo);
+      },
       invalidatesTags: ['Tasks'],
     }),
     uploadFile: builder.mutation<void, BinaryData>({
