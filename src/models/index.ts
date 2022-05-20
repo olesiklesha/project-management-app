@@ -1,7 +1,4 @@
-export interface IShortBoard {
-  id: string;
-  title: string;
-}
+export * from './apiModels';
 
 export interface ITeammateInfo {
   avatar: string;

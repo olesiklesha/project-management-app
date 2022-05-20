@@ -1,27 +1,34 @@
 import { TextField, Box, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../hooks/redux';
-import { boardSlice, IColumn } from '../../store/reducers/board';
+import { useParams } from 'react-router-dom';
+import { useEditColumnMutation } from '../../services';
+import { IColumn } from '../../store/reducers/board';
 
 interface IFormData {
   name: string;
 }
 
-function EditableHeader({ title, id, order, tasks }: IColumn) {
+function EditableHeader({ title, id, order }: IColumn) {
+  const [editColumn, {}] = useEditColumnMutation();
   const [isEditing, setIsEditing] = useState(false);
+  const { id: idBoard } = useParams();
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: { name: title },
   });
 
-  const dispatch = useAppDispatch();
-
   const onSubmit = async (data: IFormData) => {
     const res = data.name || title;
     setIsEditing(false);
-    dispatch(boardSlice.actions.renameColumn({ id, order, title: res, tasks }));
+    editColumn({
+      boardId: String(idBoard),
+      columnId: id,
+      body: {
+        title: res,
+        order: order,
+      },
+    });
     setValue('name', res);
-    //request
   };
 
   return (

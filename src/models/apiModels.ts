@@ -13,7 +13,7 @@ interface IFetchError {
   error: string;
 }
 
-type IRequestError = IBackendError| IFetchError | SerializedError | undefined;
+type IRequestError = IBackendError | IFetchError | SerializedError | undefined;
 
 interface ISignUpRequest {
   name: string;
@@ -66,7 +66,7 @@ interface IColumnFiles {
   fileSize: number;
 }
 
-type IColumnTask = Omit<ITask, 'boardId' | 'columnId'> & { files: IColumnFiles[]; done: boolean };
+type IColumnTask = Omit<ITask, 'boardId' | 'columnId'> & { files: IColumnFiles[] };
 
 type IColumnData = IColumn & { tasks: IColumnTask[] };
 

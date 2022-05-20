@@ -1,16 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  ISignUpRequest,
-  IUserData,
-  ISignInRequest,
-  ISignInResponse,
   IBoard,
   IBoardData,
   IColumn,
   IColumnData,
+  ISignInRequest,
+  ISignInResponse,
+  ISignUpRequest,
   ITask,
   ITaskRequest,
-} from '../models/apiModels';
+  IUserData,
+} from '../models';
 import { authSlice } from '../store/reducers/auth';
 import { RootState } from '../store';
 
@@ -18,7 +18,7 @@ const BASE_URL = 'https://cream-task-app.herokuapp.com/';
 
 const appApi = createApi({
   reducerPath: 'appApi',
-  tagTypes: ['Users', 'Boards', 'Columns', 'Tasks'],
+  tagTypes: ['Users', 'Boards', 'Columns', 'Tasks', 'Board'],
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -80,16 +80,33 @@ const appApi = createApi({
         method: 'POST',
         body: { title },
       }),
+      async onQueryStarted(title, { dispatch, queryFulfilled }) {
+        const addResult = dispatch(
+          appApi.util.updateQueryData('getAllBoards', undefined, (draft) => {
+            draft.push({ id: String(Date.now()), title });
+          })
+        );
+        queryFulfilled.catch(addResult.undo);
+      },
       invalidatesTags: ['Boards'],
     }),
     getBoard: builder.query<IBoardData, string>({
       query: (id: string) => ({ url: `/boards/${id}` }),
+      providesTags: ['Board'],
     }),
     deleteBoard: builder.mutation<void, string>({
       query: (id: string) => ({
         url: `/boards/${id}`,
         method: 'DELETE',
       }),
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        const deleteResult = dispatch(
+          appApi.util.updateQueryData('getAllBoards', undefined, (draft) =>
+            draft.filter((el) => el.id !== id)
+          )
+        );
+        queryFulfilled.catch(deleteResult.undo);
+      },
       invalidatesTags: ['Boards'],
     }),
     editBoard: builder.mutation<IBoard, { id: string; title: string }>({
@@ -98,6 +115,14 @@ const appApi = createApi({
         method: 'PUT',
         body: { title },
       }),
+      async onQueryStarted({ id, title }, { dispatch, queryFulfilled }) {
+        const editResult = dispatch(
+          appApi.util.updateQueryData('getAllBoards', undefined, (draft) =>
+            draft.map((el) => (el.id === id ? { id, title } : el))
+          )
+        );
+        queryFulfilled.catch(editResult.undo);
+      },
       invalidatesTags: ['Boards'],
     }),
     getAllColumns: builder.query<IColumn[], string>({
@@ -110,7 +135,16 @@ const appApi = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Columns'],
+      async onQueryStarted({ id, body }, { dispatch, queryFulfilled }) {
+        const addResult = dispatch(
+          appApi.util.updateQueryData('getBoard', id, (draft) => {
+            const id = String(Date.now());
+            draft.columns.push({ id, tasks: [], ...body });
+          })
+        );
+        queryFulfilled.catch(addResult.undo);
+      },
+      invalidatesTags: ['Board'],
     }),
     getColumn: builder.query<IColumnData, { boardId: string; columnId: string }>({
       query: ({ boardId, columnId }) => ({ url: `/boards/${boardId}/columns/${columnId}` }),
@@ -120,7 +154,15 @@ const appApi = createApi({
         url: `/boards/${boardId}/columns/${columnId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Columns'],
+      onQueryStarted({ boardId, columnId }, { dispatch, queryFulfilled }) {
+        const deleteResult = dispatch(
+          appApi.util.updateQueryData('getBoard', boardId, (draft) => {
+            draft.columns = draft.columns.filter((el) => el.id !== columnId);
+          })
+        );
+        queryFulfilled.catch(deleteResult.undo);
+      },
+      invalidatesTags: ['Board'],
     }),
     editColumn: builder.mutation<
       IColumn,
@@ -131,7 +173,20 @@ const appApi = createApi({
         method: 'PUT',
         body: body,
       }),
-      invalidatesTags: ['Columns'],
+      onQueryStarted({ boardId, columnId, body }, { dispatch, queryFulfilled }) {
+        const editResult = dispatch(
+          appApi.util.updateQueryData('getBoard', boardId, (draft) => {
+            const id = String(Date.now());
+            const column = draft.columns.find((el) => el.id === columnId);
+            const tasks = column?.tasks || [];
+            draft.columns = draft.columns.map((el) =>
+              el.id === columnId ? { id, tasks, ...body } : el
+            );
+          })
+        );
+        queryFulfilled.catch(editResult.undo);
+      },
+      invalidatesTags: ['Board'],
     }),
     getAllTasks: builder.query<ITask[], { boardId: string; columnId: string }>({
       query: ({ boardId, columnId }) => ({
@@ -145,7 +200,18 @@ const appApi = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Tasks'],
+      onQueryStarted({ boardId, columnId, body }, { dispatch, queryFulfilled }) {
+        const addResult = dispatch(
+          appApi.util.updateQueryData('getBoard', boardId, (draft) => {
+            const id = String(Date.now());
+            draft.columns.forEach((el) => {
+              if (el.id === columnId) el.tasks.push({ id, files: [], ...body });
+            });
+          })
+        );
+        queryFulfilled.catch(addResult.undo);
+      },
+      invalidatesTags: ['Board'],
     }),
     getTask: builder.query<ITask, { boardId: string; columnId: string; taskId: string }>({
       query: ({ boardId, columnId, taskId }) => ({
@@ -157,7 +223,17 @@ const appApi = createApi({
         url: `/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Tasks'],
+      onQueryStarted({ boardId, columnId, taskId }, { dispatch, queryFulfilled }) {
+        const deleteResult = dispatch(
+          appApi.util.updateQueryData('getBoard', boardId, (draft) => {
+            draft.columns.forEach((el) => {
+              if (el.id === columnId) el.tasks = el.tasks.filter((task) => task.id !== taskId);
+            });
+          })
+        );
+        queryFulfilled.catch(deleteResult.undo);
+      },
+      invalidatesTags: ['Board'],
     }),
     editTask: builder.mutation<
       ITask,
@@ -168,7 +244,21 @@ const appApi = createApi({
         method: 'PUT',
         body: body,
       }),
-      invalidatesTags: ['Tasks'],
+      onQueryStarted({ boardId, columnId, taskId, body }, { dispatch, queryFulfilled }) {
+        const editResult = dispatch(
+          appApi.util.updateQueryData('getBoard', boardId, (draft) => {
+            const id = String(Date.now());
+            draft.columns.forEach((el) => {
+              if (el.id === columnId)
+                el.tasks = el.tasks.map((task) =>
+                  task.id === taskId ? { id, files: [], ...body } : task
+                );
+            });
+          })
+        );
+        queryFulfilled.catch(editResult.undo);
+      },
+      invalidatesTags: ['Board'],
     }),
     uploadFile: builder.mutation<void, BinaryData>({
       query: (file) => ({
