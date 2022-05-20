@@ -32,7 +32,7 @@ function ColumnCreator({ isOpened, toggleIsOpened }: ICreateColumn) {
     reValidateMode: 'onChange',
   });
 
-  const [createColumn, { isLoading, error, isError }] = useCreateColumnMutation();
+  const [createColumn, {}] = useCreateColumnMutation();
 
   const { t } = useTranslation();
 
