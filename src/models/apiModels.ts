@@ -66,7 +66,7 @@ interface IColumnFiles {
   fileSize: number;
 }
 
-type IColumnTask = Omit<ITask, 'boardId' | 'columnId'> & { files: IColumnFiles[]; done: boolean };
+type IColumnTask = Omit<ITask, 'boardId' | 'columnId'> & { files: IColumnFiles[] };
 
 type IColumnData = IColumn & { tasks: IColumnTask[] };
 

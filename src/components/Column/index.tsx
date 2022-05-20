@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import ColumnBox from './ColumnBox.styled';
 import { useDeleteColumnMutation } from '../../services';
 import { useParams } from 'react-router-dom';
-import { IColumnData } from '../../models/apiModels';
+import { IColumnData } from '../../models';
 
 interface IColumnProps {
   columnInfo: IColumnData;

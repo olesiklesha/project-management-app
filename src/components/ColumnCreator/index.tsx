@@ -3,8 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Modal } from '..';
-import { useAppSelector } from '../../hooks/redux';
-import { useCreateColumnMutation } from '../../services';
+import { useCreateColumnMutation, useGetBoardQuery } from '../../services';
 import { getNextOrder } from '../../utils';
 
 interface IFormData {
@@ -17,7 +16,10 @@ interface ICreateColumn {
 }
 
 function ColumnCreator({ isOpened, toggleIsOpened }: ICreateColumn) {
-  const { columns } = useAppSelector((state) => state.boardSlice.data);
+  const { id: idBoard } = useParams();
+  const { data } = useGetBoardQuery(String(idBoard));
+  const columns = data?.columns || [];
+
   const {
     register,
     handleSubmit,
@@ -31,7 +33,6 @@ function ColumnCreator({ isOpened, toggleIsOpened }: ICreateColumn) {
   });
 
   const [createColumn, { isLoading, error, isError }] = useCreateColumnMutation();
-  const { id: idBoard } = useParams();
 
   const { t } = useTranslation();
 
