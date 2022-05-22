@@ -80,7 +80,7 @@ function Edit() {
         justifyContent="center"
         alignItems="center"
         component={Container}
-        sx={{ height: 'calc(100vh - 128px)' }}
+        sx={{ height: 'calc(100vh - 128px)', bgcolor: 'primary.light' }}
       >
         <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500}>
           <Paper elevation={2} sx={{ p: 3, position: 'relative' }}>
