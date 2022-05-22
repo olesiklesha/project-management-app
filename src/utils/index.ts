@@ -1,5 +1,5 @@
 import { AUTH, TOKEN_LIFETIME } from '../constants';
-import { IColumnData, IRequestError, IUserData } from '../models';
+import { IColumnData, IColumnTask, IRequestError, IUserData } from '../models';
 
 export function getLocalAuth() {
   const localStorageAuth = window.localStorage.getItem(AUTH);
@@ -53,4 +53,20 @@ export function getNextOrder(data: IColumnData[], columnsId = '') {
 
   orders.sort((a, b) => b - a);
   return orders[0] + 1;
+}
+
+// TODO! refactor these functions or do sorting in api
+
+export function sortByOrder(data: IColumnData[]) {
+  if (!data.length) return data;
+  const arr = [...data];
+  // console.log(arr.sort((a, b) => Number(a.order) - Number(b.order)));
+  return arr.sort((a, b) => a.order - b.order);
+}
+
+export function sortTasksByOrder(data: IColumnTask[]) {
+  if (!data.length) return data;
+  const arr = [...data];
+  // console.log(arr.sort((a, b) => Number(a.order) - Number(b.order)));
+  return arr.sort((a, b) => a.order - b.order);
 }

@@ -28,7 +28,10 @@ function BoardCreator({ onCancel }: IBoardCreator) {
   });
 
   const onSubmit = async (data: ICreatorState) => {
-    await createBoard(data.title);
+    await createBoard({
+      title: data.title,
+      description: '',
+    });
 
     onCancel();
   };
@@ -55,6 +58,7 @@ function BoardCreator({ onCancel }: IBoardCreator) {
         error={!!errors.title}
         helperText={errors.title?.message}
       />
+      <TextField multiline rows={4} label="description" />
       <Button
         type="submit"
         variant="contained"

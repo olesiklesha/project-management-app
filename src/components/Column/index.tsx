@@ -8,12 +8,15 @@ import ColumnBox from './ColumnBox.styled';
 import { useDeleteColumnMutation } from '../../services';
 import { useParams } from 'react-router-dom';
 import { IColumnData } from '../../models';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { sortTasksByOrder } from '../../utils';
 
 interface IColumnProps {
   columnInfo: IColumnData;
+  index: number;
 }
 
-function Column({ columnInfo }: IColumnProps) {
+function Column({ columnInfo, index }: IColumnProps) {
   const { title, id, order, tasks } = columnInfo;
   const { id: idBoard } = useParams();
   const { t } = useTranslation();
@@ -31,58 +34,69 @@ function Column({ columnInfo }: IColumnProps) {
   const [deleteColumn, {}] = useDeleteColumnMutation();
 
   return (
-    <>
-      <Paper
-        sx={{
-          width: '272px',
-          minWidth: '272px',
-          maxHeight: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          order: `${order}`,
-        }}
-      >
-        <Box sx={{ p: '0 8px 12px 8px', display: 'flex', justifyContent: 'space-between' }}>
-          <EditableHeader title={title} id={id} order={order} tasks={tasks} />
-          <IconButton color="secondary" onClick={toggleIsOpenedComfirm}>
-            <Delete />
-          </IconButton>
-        </Box>
-        <ColumnBox>
-          {columnInfo.tasks.map((task) => (
-            <EditableTask
-              title={task.title}
-              id={task.id}
-              order={task.order}
-              key={task.id}
-              description={task.description}
-              userId={task.userId}
-              boardId={String(idBoard)}
-              columnId={id}
-            />
-          ))}
-        </ColumnBox>
-        <Button
-          variant="contained"
+    <Draggable draggableId={id} index={index}>
+      {(provided) => (
+        <Paper
           sx={{
-            backgroundColor: theme.palette.background.paper,
-            boxShadow: 'none',
-            m: '10px',
-            order: 1000,
+            width: '272px',
+            minWidth: '272px',
+            maxHeight: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            // order: `${order}`,
           }}
-          onClick={toggleIsOpened}
-          startIcon={<Add />}
+          ref={provided.innerRef}
+          {...provided.dragHandleProps}
+          {...provided.draggableProps}
         >
-          {t('pages.boardPage.addTask')}
-        </Button>
-        <TaskCreator isOpened={isOpened} toggleIsOpened={toggleIsOpened} id={id} />
-      </Paper>
-      <Modal
-        isOpened={isOpenedConfirm}
-        onCancel={toggleIsOpenedComfirm}
-        onConfirm={() => deleteColumn({ boardId: String(idBoard), columnId: id })}
-      />
-    </>
+          <Box sx={{ p: '0 8px 12px 8px', display: 'flex', justifyContent: 'space-between' }}>
+            <EditableHeader title={title} id={id} order={order} tasks={tasks} />
+            <IconButton color="secondary" onClick={toggleIsOpenedComfirm}>
+              <Delete />
+            </IconButton>
+          </Box>
+          <Droppable droppableId={id}>
+            {(provided) => (
+              <ColumnBox ref={provided.innerRef} {...provided.droppableProps}>
+                {sortTasksByOrder(tasks).map((task, i) => (
+                  <EditableTask
+                    title={task.title}
+                    id={task.id}
+                    order={task.order}
+                    key={task.id}
+                    description={task.description}
+                    userId={task.userId}
+                    boardId={String(idBoard)}
+                    columnId={id}
+                    index={i}
+                  />
+                ))}
+                {provided.placeholder}
+              </ColumnBox>
+            )}
+          </Droppable>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: theme.palette.background.paper,
+              boxShadow: 'none',
+              m: '10px',
+              order: 1000,
+            }}
+            onClick={toggleIsOpened}
+            startIcon={<Add />}
+          >
+            {t('pages.boardPage.addTask')}
+          </Button>
+          <TaskCreator isOpened={isOpened} toggleIsOpened={toggleIsOpened} id={id} />
+          <Modal
+            isOpened={isOpenedConfirm}
+            onCancel={toggleIsOpenedComfirm}
+            onConfirm={() => deleteColumn({ boardId: String(idBoard), columnId: id })}
+          />
+        </Paper>
+      )}
+    </Draggable>
   );
 }
 

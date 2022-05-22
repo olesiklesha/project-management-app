@@ -173,19 +173,19 @@ const appApi = createApi({
         method: 'PUT',
         body: body,
       }),
-      onQueryStarted({ boardId, columnId, body }, { dispatch, queryFulfilled }) {
-        const editResult = dispatch(
-          appApi.util.updateQueryData('getBoard', boardId, (draft) => {
-            const id = String(Date.now());
-            const column = draft.columns.find((el) => el.id === columnId);
-            const tasks = column?.tasks || [];
-            draft.columns = draft.columns.map((el) =>
-              el.id === columnId ? { id, tasks, ...body } : el
-            );
-          })
-        );
-        queryFulfilled.catch(editResult.undo);
-      },
+      // onQueryStarted({ boardId, columnId, body }, { dispatch, queryFulfilled }) {
+      //   const editResult = dispatch(
+      //     appApi.util.updateQueryData('getBoard', boardId, (draft) => {
+      //       const id = String(Date.now());
+      //       const column = draft.columns.find((el) => el.id === columnId);
+      //       const tasks = column?.tasks || [];
+      //       draft.columns = draft.columns.map((el) =>
+      //         el.id === columnId ? { id, tasks, ...body } : el
+      //       );
+      //     })
+      //   );
+      //   queryFulfilled.catch(editResult.undo);
+      // },
       invalidatesTags: ['Board'],
     }),
     getAllTasks: builder.query<ITask[], { boardId: string; columnId: string }>({
@@ -260,7 +260,7 @@ const appApi = createApi({
       },
       invalidatesTags: ['Board'],
     }),
-    uploadFile: builder.mutation<void, {  taskId: string, file: BinaryData }>({
+    uploadFile: builder.mutation<void, { taskId: string; file: BinaryData }>({
       query: (body) => ({
         url: `/file`,
         headers: {

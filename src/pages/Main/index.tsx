@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { BoardCreator, Modal, ShortBoard } from '../../components';
 import { useGetAllBoardsQuery } from '../../services';
 import { apiErrorParser } from '../../utils';
-import { IRequestError } from '../../models/apiModels';
+import { IRequestError } from '../../models';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
 function Main() {
@@ -50,7 +50,7 @@ function Main() {
             {boards.length > 0 &&
               boards.map((board) => (
                 <Grid item xs={12} sm={6} md={3} key={board.id}>
-                  <ShortBoard id={board.id} title={board.title} />
+                  <ShortBoard id={board.id} title={board.title} description={board.description} />
                 </Grid>
               ))}
           </Grid>

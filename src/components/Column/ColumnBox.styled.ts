@@ -5,7 +5,7 @@ const ColumnBox = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   rowGap: '1rem',
   padding: '0 8px 12px 8px',
-  minHeight: 0,
+  minHeight: '40px',
   maxHeight: 'calc(100vh - 270px)',
   overflowX: 'hidden',
   overflowY: 'auto',
