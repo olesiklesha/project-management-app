@@ -83,4 +83,5 @@ export type {
   ITaskRequest,
   IColumn,
   IColumnData,
+  IColumnTask,
 };

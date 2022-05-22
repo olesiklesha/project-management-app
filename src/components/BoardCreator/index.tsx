@@ -58,6 +58,7 @@ function BoardCreator({ onCancel }: IBoardCreator) {
         error={!!errors.title}
         helperText={errors.title?.message}
       />
+      <TextField multiline rows={4} label="description" />
       <Button
         type="submit"
         variant="contained"
