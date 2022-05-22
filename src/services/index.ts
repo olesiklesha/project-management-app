@@ -260,7 +260,7 @@ const appApi = createApi({
       },
       invalidatesTags: ['Board'],
     }),
-    uploadFile: builder.mutation<void, {  taskId: string, file: BinaryData }>({
+    uploadFile: builder.mutation<void, { taskId: string; file: BinaryData }>({
       query: (body) => ({
         url: `/file`,
         headers: {

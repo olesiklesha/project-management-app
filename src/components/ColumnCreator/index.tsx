@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Modal } from '..';
 import { useCreateColumnMutation, useGetBoardQuery } from '../../services';
-import { getNextOrder } from '../../utils';
 
 interface IFormData {
   title: string;
@@ -41,7 +40,7 @@ function ColumnCreator({ isOpened, toggleIsOpened }: ICreateColumn) {
     reset();
     createColumn({
       id: String(idBoard),
-      body: { title: data.title, order: getNextOrder(columns) },
+      body: { title: data.title },
     });
   };
 
