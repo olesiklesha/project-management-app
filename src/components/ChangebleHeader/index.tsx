@@ -10,7 +10,7 @@ interface IFormData {
 }
 
 function EditableHeader({ title, id, order }: IColumn) {
-  const [editColumn, { isLoading, error, isError }] = useEditColumnMutation();
+  const [editColumn, {}] = useEditColumnMutation();
   const [isEditing, setIsEditing] = useState(false);
   const { id: idBoard } = useParams();
   const { register, handleSubmit, setValue } = useForm({

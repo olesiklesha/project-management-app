@@ -8,11 +8,19 @@ interface IPopperProps {
   boardId: string;
   columnId: string;
   taskId: string;
+  isPopperOpened: boolean;
+  setIsPopperOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function TransitionsPopper({ boardId, columnId, taskId }: IPopperProps) {
+export default function TransitionsPopper({
+  boardId,
+  columnId,
+  taskId,
+  isPopperOpened,
+  setIsPopperOpened,
+}: IPopperProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [isPopperOpened, setIsPopperOpened] = useState(false);
+  // const [isPopperOpened, setIsPopperOpened] = useState(false);
   const [isConfirmOpened, setIsConfirmOpened] = useState(false);
   const [isEditorOpened, setIsEditorOpened] = useState(false);
 
@@ -21,7 +29,7 @@ export default function TransitionsPopper({ boardId, columnId, taskId }: IPopper
   };
 
   const toggleIsPopperOpened = () => {
-    setIsPopperOpened((prev) => !prev);
+    setIsPopperOpened(true);
   };
 
   const toggleIsConfirm = useCallback(() => {

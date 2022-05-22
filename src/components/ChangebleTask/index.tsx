@@ -9,12 +9,13 @@ interface IFormData {
   name: string;
 }
 
-function EditableTask({ title, id, order, description, userId, boardId, columnId }: ITask) {
+function EditableTask({ title, id, order, userId, boardId, columnId }: ITask) {
   const [isEditing, setIsEditing] = useState(false);
   const [show, setShow] = useState(false);
-  const handleClose = () => {
-    setIsEditing(false);
-    handleSubmit(onSubmit);
+  const clickAwayHandler = () => {
+    if (isEditing) {
+      handleSubmit(onSubmit)();
+    }
   };
 
   const { register, handleSubmit, setValue } = useForm({
@@ -47,16 +48,21 @@ function EditableTask({ title, id, order, description, userId, boardId, columnId
 
   return (
     <Box sx={{ position: 'relative' }}>
-      <ClickAwayListener onClickAway={handleClose}>
+      <ClickAwayListener onClickAway={clickAwayHandler}>
         <Box onMouseOver={() => setShow(true)} onMouseOut={() => setShow(false)}>
           {(show || isEditing) && (
-            <TransitionsPopper boardId={boardId} columnId={columnId} taskId={id} />
+            <TransitionsPopper
+              boardId={boardId}
+              columnId={columnId}
+              taskId={id}
+              isPopperOpened={isEditing}
+              setIsPopperOpened={setIsEditing}
+            />
           )}
           {isEditing ? (
             <Box
               component="form"
               onSubmit={handleSubmit(onSubmit)}
-              onBlur={handleSubmit(onSubmit)}
               sx={{ order: order, position: 'relative' }}
             >
               <TextareaAutosize
