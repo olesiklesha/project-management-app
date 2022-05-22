@@ -55,7 +55,16 @@ export function getNextOrder(data: IColumnData[], columnsId = '') {
   return orders[0] + 1;
 }
 
+// TODO! refactor these functions or do sorting in api
+
 export function sortByOrder(data: IColumnData[]) {
+  if (!data.length) return data;
+  const arr = [...data];
+  // console.log(arr.sort((a, b) => Number(a.order) - Number(b.order)));
+  return arr.sort((a, b) => a.order - b.order);
+}
+
+export function sortTasksByOrder(data: IColumnTask[]) {
   if (!data.length) return data;
   const arr = [...data];
   // console.log(arr.sort((a, b) => Number(a.order) - Number(b.order)));

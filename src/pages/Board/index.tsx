@@ -5,7 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
 import BoardBox from './BoardBox.styled';
 import { useParams } from 'react-router-dom';
-import { useEditColumnMutation, useGetBoardQuery } from '../../services';
+import { useEditColumnMutation, useEditTaskMutation, useGetBoardQuery } from '../../services';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { sortByOrder } from '../../utils';
 import { IColumnData } from '../../models';
@@ -14,17 +14,10 @@ function Board() {
   const { t } = useTranslation();
   const [isOpened, setIsOpened] = useState(false);
   const { id } = useParams();
-  // const [sortedColumns, setSortedColumns] = useState<IColumnData[]>([]);
   const [editColumn] = useEditColumnMutation();
+  const [editTask] = useEditTaskMutation();
 
   const { data, isLoading } = useGetBoardQuery(String(id));
-
-  // useEffect(() => {
-  //   // setSortedColumns()
-  //   if (!data) return;
-  //   const val = sortByOrder(data.columns);
-  //   setSortedColumns(val as IColumnData[]);
-  // }, [data]);
 
   const toggleIsOpened = useCallback(() => {
     setIsOpened((isOpened) => !isOpened);
@@ -41,14 +34,35 @@ function Board() {
 
     if (type === 'column') {
       const [column] = data.columns.filter((el) => el.id === draggableId);
-      console.log('destination', destination);
-      console.log('source', source);
       editColumn({
         boardId: data.id,
         columnId: draggableId,
         body: {
           title: column.title,
           order: destination.index + 1,
+        },
+      });
+    } else {
+      const [column] = data.columns.filter((el) => el.id === source.droppableId);
+      if (!column) return;
+      const [task] = column.tasks.filter((el) => el.id === draggableId);
+      const { title, description, userId } = task;
+      // console.log(task);
+      // console.log('destination', destination);
+      // console.log('source', source);
+      // console.log(draggableId);
+      console.log(destination.index + 1);
+      editTask({
+        boardId: data.id,
+        columnId: source.droppableId,
+        taskId: draggableId,
+        body: {
+          title,
+          order: destination.index + 1,
+          description,
+          userId,
+          boardId: data.id,
+          columnId: destination.droppableId,
         },
       });
     }

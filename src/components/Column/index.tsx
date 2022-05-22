@@ -8,7 +8,8 @@ import ColumnBox from './ColumnBox.styled';
 import { useDeleteColumnMutation } from '../../services';
 import { useParams } from 'react-router-dom';
 import { IColumnData } from '../../models';
-import { Draggable } from 'react-beautiful-dnd';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { sortTasksByOrder } from '../../utils';
 
 interface IColumnProps {
   columnInfo: IColumnData;
@@ -54,20 +55,26 @@ function Column({ columnInfo, index }: IColumnProps) {
               <Delete />
             </IconButton>
           </Box>
-          <ColumnBox>
-            {columnInfo.tasks.map((task) => (
-              <EditableTask
-                title={task.title}
-                id={task.id}
-                order={task.order}
-                key={task.id}
-                description={task.description}
-                userId={task.userId}
-                boardId={String(idBoard)}
-                columnId={id}
-              />
-            ))}
-          </ColumnBox>
+          <Droppable droppableId={id}>
+            {(provided) => (
+              <ColumnBox ref={provided.innerRef} {...provided.droppableProps}>
+                {sortTasksByOrder(tasks).map((task, i) => (
+                  <EditableTask
+                    title={task.title}
+                    id={task.id}
+                    order={task.order}
+                    key={task.id}
+                    description={task.description}
+                    userId={task.userId}
+                    boardId={String(idBoard)}
+                    columnId={id}
+                    index={i}
+                  />
+                ))}
+                {provided.placeholder}
+              </ColumnBox>
+            )}
+          </Droppable>
           <Button
             variant="contained"
             sx={{
