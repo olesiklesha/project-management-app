@@ -62,7 +62,8 @@
       "name": "Имя",
       "login": "Логин",
       "password": "Пароль",
-      "newPassword": "Новый пароль"
+      "newPassword": "Новый пароль",
+      "description": "Описание"
     },
     "errors": {
       "noName": "⚠Имя обязательно",
@@ -70,7 +71,8 @@
       "noPassword": "⚠Пароль обязателен",
       "minLengthLogin": "⚠Логин слишком короткий",
       "minLengthPassword": "⚠Пароль слишком короткий",
-      "noTitle": "⚠Название обязательно"
+      "noTitle": "⚠Название обязательно",
+      "noDescription": "⚠Описание обязательно"
     },
     "messages" : {
       "successEdit": "Данные успешно обновлены"
