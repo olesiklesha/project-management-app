@@ -92,6 +92,20 @@ const appApi = createApi({
     }),
     getBoard: builder.query<IBoardData, string>({
       query: (id: string) => ({ url: `/boards/${id}` }),
+      transformResponse: (response: IBoardData) => {
+        const { id, title, description, columns } = response;
+        columns.forEach((column) => {
+          const { tasks } = column;
+          tasks.sort((a, b) => a.order - b.order);
+        });
+        columns.sort((a, b) => a.order - b.order);
+        return {
+          id,
+          title,
+          description,
+          columns,
+        };
+      },
       providesTags: ['Board'],
     }),
     deleteBoard: builder.mutation<void, string>({

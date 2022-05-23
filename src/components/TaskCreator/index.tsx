@@ -3,10 +3,9 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Modal from '../Modal';
 import { useParams } from 'react-router-dom';
-import { getCurrentUser, getNextOrder } from '../../utils';
+import { getCurrentUser } from '../../utils';
 import { useCreateTaskMutation, useGetAllUsersQuery } from '../../services';
 import { useEffect, useState } from 'react';
-import { useAppSelector } from '../../hooks/redux';
 
 interface IFormData {
   title: string;
@@ -20,7 +19,6 @@ interface ICreateTask {
 
 function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateTask) {
   const { id: boardId } = useParams();
-  const { columns } = useAppSelector((state) => state.boardSlice.data);
   const [userId, setUserId] = useState('');
   const { data, isLoading: isGetUsersLoading } = useGetAllUsersQuery();
   const [createTask] = useCreateTaskMutation();
@@ -47,8 +45,6 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateTask) {
   const { t } = useTranslation();
 
   const onSubmit = async (data: IFormData) => {
-    const order = getNextOrder(columns, id);
-    console.log(order);
     createTask({
       boardId: String(boardId),
       columnId: id,
