@@ -44,7 +44,7 @@ function Main() {
         {!isLoading && (
           <Grid container spacing={2} sx={{ mt: 2, mb: 4 }}>
             {data &&
-              data.length &&
+              data.length > 0 &&
               data.map((board) => (
                 <Grid item xs={12} sm={6} md={3} key={board.id}>
                   <ShortBoard id={board.id} title={board.title} description={board.description} />
