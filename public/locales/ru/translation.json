@@ -39,8 +39,16 @@
       "title": "Приветсвенная страница",
       "signUpButton": "Зарегистрироваться",
       "logInButton": "Войти",
+      "descriptionTitle": "Управляйте рабочими процессами и взаимодействием в команде",
+      "description1": "Cream — это приложение, которое поможет вам совместно работать над вашими проектами и достичь новых высот продуктивности. Кроме того, Cream поддерживает несколько языков, например ",
+      "description2": "Присоединитесь сейчас, чтобы организовать все ваши задачи и изменить то, как работает ваша команда",
       "howToUse": "Как работать с приложением",
       "team": "Команда",
+      "teamDescriptions": {
+        "Alex": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam dolorum eum excepturi consectetur, molestias ut velit itaque autem aliquid minima laboriosam voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?",
+        "Artyom": "Парень отвественный за все взаимодествия с бэкэндом. Задеплоил сервер и написал все запросы к API. Создал страницы логина, регистрации и изменения аккаунта, настроил локализацию приложения. Любит: пиво и чистый код. Не любит: работу.",
+        "Roma": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam dolorum eum excepturi consectetur, molestias ut velit itaque autem aliquid minima laboriosam voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?"
+      },
       "goToMain": "Главная страница"
     }
   },
