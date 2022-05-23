@@ -48,14 +48,13 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateTask) {
 
   const onSubmit = async (data: IFormData) => {
     const order = getNextOrder(columns, id);
-    console.log(order);
     createTask({
       boardId: String(boardId),
       columnId: id,
       body: {
         title: data.title,
         order,
-        description: data.title,
+        description: ' ',
         userId,
       },
     });

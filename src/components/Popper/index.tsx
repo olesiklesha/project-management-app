@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
-import { Paper, Button, Popper, Fade } from '@mui/material';
+import { Paper, Button, Popper, Fade, CircularProgress } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import { useDeleteTaskMutation } from '../../services';
+import { useDeleteTaskMutation, useGetTaskQuery } from '../../services';
 import Modal from '../Modal';
 
 interface IPopperProps {
@@ -64,6 +64,12 @@ export default function TransitionsPopper({
 
   const [deleteTask, {}] = useDeleteTaskMutation();
 
+  const { data: columnData, isSuccess } = useGetTaskQuery({
+    boardId: '1639b95c-69a1-42bb-92a1-01d3b99f9808',
+    columnId: 'ff9c431b-7234-49ce-9b4d-0a154d59ce51',
+    taskId: '02b9de6f-1c6c-4110-971f-ee62a1d21497',
+  });
+
   return (
     <div style={{ position: 'absolute', top: 0, right: 0, zIndex: 100 }}>
       <Button
@@ -118,7 +124,15 @@ export default function TransitionsPopper({
       </Popper>
       <Modal isOpened={isConfirmOpened} onCancel={toggleIsConfirm} onConfirm={deleteAction} />
       <Modal isOpened={isEditorOpened} onCancel={toggleIsEditorOpened}>
-        <p>there will be task editor</p>
+        {isSuccess ? (
+          <>
+            <p>there will be task editor</p>
+            <p>{columnData.title}</p>
+            <p>{columnData.description}</p>
+          </>
+        ) : (
+          <CircularProgress />
+        )}
       </Modal>
     </div>
   );
