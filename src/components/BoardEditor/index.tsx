@@ -30,7 +30,7 @@ function BoardEditor({ onCancel, id, title }: IEditorProps) {
 
   const onSubmit = async (data: IEditorState) => {
     const { title } = data;
-    await editBoard({ title, id });
+    await editBoard({ title, id, description: '' });
     onCancel();
   };
 

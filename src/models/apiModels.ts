@@ -39,6 +39,7 @@ interface ISignInResponse {
 interface IBoard {
   id: string;
   title: string;
+  description: string;
 }
 
 type IBoardData = IBoard & { columns: IColumnData[] };
@@ -53,7 +54,7 @@ interface ITask {
   columnId: string;
 }
 
-type ITaskRequest = Omit<ITask, 'id' | 'boardId' | 'columnId'>;
+type ITaskRequest = Omit<ITask, 'id' | 'order' | 'boardId' | 'columnId'>;
 
 interface IColumn {
   id: string;
@@ -82,4 +83,5 @@ export type {
   ITaskRequest,
   IColumn,
   IColumnData,
+  IColumnTask,
 };

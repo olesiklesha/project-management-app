@@ -6,7 +6,6 @@ import {
   Box,
   Grid,
   Paper,
-  Container,
   TextField,
   Button,
   Typography,
@@ -19,7 +18,7 @@ import {
 import { ArrowBackIosNew } from '@mui/icons-material';
 import { AppRoutes } from '../../constants';
 import { AppIcon } from '../../components';
-import { ISignInRequest, IRequestError } from '../../models/apiModels';
+import { ISignInRequest, IRequestError } from '../../models';
 import { useSignInMutation } from '../../services';
 import { isAuth } from '../../utils';
 import { apiErrorParser } from '../../utils';
@@ -58,10 +57,9 @@ function LoginPage() {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        component={Container}
-        sx={{ height: '100vh' }}
+        sx={{ height: '100vh', bgcolor: 'primary.light' }}
       >
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500} sx={{ zIndex: 2 }}>
           <Typography component="h1" fontSize={60} fontWeight={500} align="center" gutterBottom>
             <AppIcon color="secondary" sx={{ fontSize: 60, mr: 1 }} />
             Task-app
@@ -132,6 +130,9 @@ function LoginPage() {
               {t('pages.loginPage.signUpLink')}
             </Link>
           </Paper>
+        </Box>
+        <Box sx={{ position: 'fixed', bottom: 0, width: '90%' }}>
+          <img width="100%" src="Yellow_People.jpg" alt="people working" />
         </Box>
       </Grid>
     </>

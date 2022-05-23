@@ -19,7 +19,7 @@ import {
 import { ArrowBackIosNew } from '@mui/icons-material';
 import { AppRoutes } from '../../constants';
 import { AppIcon } from '../../components';
-import { IRequestError, ISignUpRequest } from '../../models/apiModels';
+import { IRequestError, ISignUpRequest } from '../../models';
 import { useSignUpMutation, useSignInMutation } from '../../services';
 import { isAuth } from '../../utils';
 import { apiErrorParser } from '../../utils';
@@ -62,7 +62,7 @@ function SignUpPage() {
         justifyContent="center"
         alignItems="center"
         component={Container}
-        sx={{ height: '100vh' }}
+        sx={{ height: '100vh', bgcolor: 'primary.light' }}
       >
         <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500}>
           <Typography component="h1" fontSize={60} fontWeight={500} align="center" gutterBottom>

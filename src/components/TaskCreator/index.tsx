@@ -53,7 +53,6 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateTask) {
       columnId: id,
       body: {
         title: data.title,
-        order,
         description: ' ',
         userId,
       },
