@@ -1,5 +1,5 @@
 import { AUTH, TOKEN_LIFETIME } from '../constants';
-import { IRequestError, IUserData } from '../models';
+import { IBoard, IRequestError, IUserData } from '../models';
 
 export function getLocalAuth() {
   const localStorageAuth = window.localStorage.getItem(AUTH);
@@ -31,4 +31,8 @@ export function getCurrentUser(data: IUserData[]) {
 
 export function logOut() {
   window.localStorage.removeItem(AUTH);
+}
+
+export function sortBoards(x: IBoard, y: IBoard) {
+  return x.title.localeCompare(y.title);
 }

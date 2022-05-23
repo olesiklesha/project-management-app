@@ -59,41 +59,39 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateTask) {
   };
 
   return (
-    <>
-      <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
-        <Box
-          component="form"
-          onSubmit={handleSubmit(onSubmit)}
-          sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-        >
-          {isGetUsersLoading ? (
-            <CircularProgress />
-          ) : (
-            <>
-              <TextField
-                {...register('title', { required: t('form.errors.noTitle') })}
-                type="text"
-                placeholder={t('pages.boardPage.taskCreatorPlaceholder')}
-                fullWidth
-                inputProps={{
-                  style: {
-                    fontSize: '1.25rem',
-                    fontWeight: 'bold',
-                  },
-                }}
-                error={!!errors.title}
-                helperText={errors.title?.message}
-                autoFocus
-              />
-              <Box>
-                <Button onClick={handleSubmit(onSubmit)}>{t('actions.create')}</Button>
-                <Button onClick={toggleIsOpened}>{t('actions.cancel')}</Button>
-              </Box>
-            </>
-          )}
-        </Box>
-      </Modal>
-    </>
+    <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      >
+        {isGetUsersLoading ? (
+          <CircularProgress />
+        ) : (
+          <>
+            <TextField
+              {...register('title', { required: t('form.errors.noTitle') })}
+              type="text"
+              placeholder={t('pages.boardPage.taskCreatorPlaceholder')}
+              fullWidth
+              inputProps={{
+                style: {
+                  fontSize: '1.25rem',
+                  fontWeight: 'bold',
+                },
+              }}
+              error={!!errors.title}
+              helperText={errors.title?.message}
+              autoFocus
+            />
+            <Box>
+              <Button onClick={handleSubmit(onSubmit)}>{t('actions.create')}</Button>
+              <Button onClick={toggleIsOpened}>{t('actions.cancel')}</Button>
+            </Box>
+          </>
+        )}
+      </Box>
+    </Modal>
   );
 }
 

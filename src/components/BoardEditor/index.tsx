@@ -3,7 +3,7 @@ import { Box, TextField, Typography, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useEditBoardMutation } from '../../services';
-import { Modal } from '../index';
+import { Modal } from '..';
 
 interface IEditorState {
   title: string;
