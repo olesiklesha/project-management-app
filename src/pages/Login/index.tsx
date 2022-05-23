@@ -62,7 +62,7 @@ function LoginPage() {
         <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500} sx={{ zIndex: 2 }}>
           <Typography component="h1" fontSize={60} fontWeight={500} align="center" gutterBottom>
             <AppIcon color="secondary" sx={{ fontSize: 60, mr: 1 }} />
-            Task-app
+            Cream
           </Typography>
           <Paper elevation={6} sx={{ p: 3, position: 'relative' }}>
             <IconButton
@@ -131,8 +131,11 @@ function LoginPage() {
             </Link>
           </Paper>
         </Box>
-        <Box sx={{ position: 'fixed', bottom: 0, width: '70%' }}>
-          <img width="100%" src="Yellow_People.webp" alt="people working" />
+        <Box sx={{ position: 'fixed', bottom: 0, width: '90%' }}>
+          <Grid container justifyContent="space-between" alignItems="flex-end">
+            <img width="35%" src="Team_Working.svg" alt="people working" />
+            <img width="35%" src="Girl_Texting.svg" alt="people working" />
+          </Grid>
         </Box>
       </Grid>
     </>

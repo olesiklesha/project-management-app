@@ -65,7 +65,7 @@ function SignUpPage() {
         <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500} sx={{ zIndex: 2 }}>
           <Typography component="h1" fontSize={60} fontWeight={500} align="center" gutterBottom>
             <AppIcon color="secondary" sx={{ fontSize: 60, mr: 1 }} />
-            Task-app
+            Cream
           </Typography>
           <Paper elevation={6} sx={{ p: 3, position: 'relative' }}>
             <IconButton
@@ -147,10 +147,10 @@ function SignUpPage() {
             </Link>
           </Paper>
         </Box>
-        <Box sx={{ position: 'fixed', bottom: 0, width: '90%' }}>
-          <Grid container justifyContent="space-between">
-            <img width="35%" src="Pixel_Working_04.jpg" alt="people working" />
-            <img width="35%" src="Taking_Notes.webp" alt="people working" />
+        <Box sx={{ position: 'fixed', bottom: 0, width: '100%' }}>
+          <Grid container justifyContent="space-between" alignItems="flex-end">
+            <img width="35%" src="Woman_In_Park.svg" alt="people working" />
+            <img width="35%" src="Woman_Talking.svg" alt="people working" />
           </Grid>
         </Box>
       </Grid>
