@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, CircularProgress, Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { BoardCreator, Modal, ShortBoard } from '../../components';
+import { BoardCreator, ShortBoard } from '../../components';
 import { useGetAllBoardsQuery } from '../../services';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
@@ -53,9 +53,7 @@ function Main() {
           </Grid>
         )}
       </Container>
-      <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
-        <BoardCreator onCancel={toggleIsOpened} />
-      </Modal>
+      <BoardCreator isOpened={isOpened} onCancel={toggleIsOpened} />
     </Box>
   );
 }
