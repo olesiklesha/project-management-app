@@ -131,8 +131,8 @@ function LoginPage() {
             </Link>
           </Paper>
         </Box>
-        <Box sx={{ position: 'fixed', bottom: 0, width: '90%' }}>
-          <img width="100%" src="Yellow_People.jpg" alt="people working" />
+        <Box sx={{ position: 'fixed', bottom: 0, width: '70%' }}>
+          <img width="100%" src="Yellow_People.webp" alt="people working" />
         </Box>
       </Grid>
     </>

@@ -82,7 +82,7 @@ function Edit() {
         component={Container}
         sx={{ height: 'calc(100vh - 128px)', bgcolor: 'primary.light' }}
       >
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500} sx={{ zIndex: 2 }}>
           <Paper elevation={2} sx={{ p: 3, position: 'relative' }}>
             {isGetUsersLoading ? (
               <CircularProgress />
@@ -170,6 +170,9 @@ function Edit() {
               </>
             )}
           </Paper>
+        </Box>
+        <Box sx={{ position: 'fixed', bottom: 0, width: '70%' }}>
+          <img width="100%" src="Pixel_Working.webp" alt="taking notes" />
         </Box>
       </Grid>
       <Modal

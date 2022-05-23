@@ -21,13 +21,11 @@ function Welcome() {
               component="h3"
               sx={{ fontFamily: 'Ubuntu', fontSize: '2.5rem', mt: '2rem' }}
             >
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              {t('pages.welcomePage.descriptionTitle')}
             </Typography>
             <Typography sx={{ fontSize: '1.5rem' }} component="h4">
-              Cum, voluptatibus accusantium delectus ipsum laboriosam maxime nam excepturi, dolorem
-              saepe aliquam magni est exut &nbsp;
-              <LocaleSelector />
-              &nbsp; quos temporibus reiciendis quia facilis molestiae.
+              {t('pages.welcomePage.description1')} &nbsp;
+              <LocaleSelector />. &nbsp; {t('pages.welcomePage.description2')}
             </Typography>
           </Box>
           <CustomizedImg
@@ -67,7 +65,7 @@ function Welcome() {
             <Profile
               name={el.name}
               avatar={el.avatar}
-              description={el.description}
+              description={t(el.description)}
               gh={el.gh}
               key={el.name}
               index={index}

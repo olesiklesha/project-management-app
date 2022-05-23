@@ -6,7 +6,6 @@ import {
   Box,
   Grid,
   Paper,
-  Container,
   TextField,
   Button,
   Typography,
@@ -61,10 +60,9 @@ function SignUpPage() {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        component={Container}
         sx={{ height: '100vh', bgcolor: 'primary.light' }}
       >
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500} sx={{ zIndex: 2 }}>
           <Typography component="h1" fontSize={60} fontWeight={500} align="center" gutterBottom>
             <AppIcon color="secondary" sx={{ fontSize: 60, mr: 1 }} />
             Task-app
@@ -148,6 +146,12 @@ function SignUpPage() {
               {t('pages.signUpPage.loginLink')}
             </Link>
           </Paper>
+        </Box>
+        <Box sx={{ position: 'fixed', bottom: 0, width: '90%' }}>
+          <Grid container justifyContent="space-between">
+            <img width="35%" src="Pixel_Working_04.jpg" alt="people working" />
+            <img width="35%" src="Taking_Notes.webp" alt="people working" />
+          </Grid>
         </Box>
       </Grid>
     </>
