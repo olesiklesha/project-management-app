@@ -13,6 +13,7 @@ import {
 } from '../models';
 import { authSlice } from '../store/reducers/auth';
 import { RootState } from '../store';
+import { sortBoards } from '../utils';
 
 const BASE_URL = 'https://cream-task-app.herokuapp.com/';
 
@@ -72,6 +73,11 @@ const appApi = createApi({
     }),
     getAllBoards: builder.query<IBoard[], void>({
       query: () => ({ url: '/boards' }),
+      transformResponse: (response: IBoard[]) => {
+        if (!response.length) return response;
+
+        return response.sort(sortBoards);
+      },
       providesTags: ['Boards'],
     }),
     createBoard: builder.mutation<IBoard, Omit<IBoard, 'id'>>({
@@ -84,6 +90,7 @@ const appApi = createApi({
         const addResult = dispatch(
           appApi.util.updateQueryData('getAllBoards', undefined, (draft) => {
             draft.push({ id: String(Date.now()), title, description });
+            draft.sort(sortBoards);
           })
         );
         queryFulfilled.catch(addResult.undo);
@@ -92,6 +99,20 @@ const appApi = createApi({
     }),
     getBoard: builder.query<IBoardData, string>({
       query: (id: string) => ({ url: `/boards/${id}` }),
+      transformResponse: (response: IBoardData) => {
+        const { id, title, description, columns } = response;
+        columns.forEach((column) => {
+          const { tasks } = column;
+          tasks.sort((a, b) => a.order - b.order);
+        });
+        columns.sort((a, b) => a.order - b.order);
+        return {
+          id,
+          title,
+          description,
+          columns,
+        };
+      },
       providesTags: ['Board'],
     }),
     deleteBoard: builder.mutation<void, string>({

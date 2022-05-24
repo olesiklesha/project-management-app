@@ -53,7 +53,7 @@ function EditableTask({ title, id, order, userId, boardId, columnId, index }: ID
     <Draggable draggableId={id} index={index}>
       {(provided) => (
         <Box
-          sx={{ position: 'relative' }}
+          sx={{ position: 'relative', mb: '1rem', minHeight: '48px' }}
           ref={provided.innerRef}
           {...provided.dragHandleProps}
           {...provided.draggableProps}
@@ -83,27 +83,25 @@ function EditableTask({ title, id, order, userId, boardId, columnId, index }: ID
                       width: '256px',
                       fontSize: '1rem',
                       fontFamily: 'Roboto',
-                      lineHeight: '1.5',
+                      lineHeight: '1.4',
                       padding: '10px',
                       resize: 'vertical',
                     }}
                   />
                 </Box>
               ) : (
-                <>
-                  <Typography
-                    sx={{
-                      p: '10px',
-                      backgroundColor: 'white',
-                      overflowWrap: 'break-word',
-                      position: 'relative',
-                      order: order,
-                      boxShadow: '0px 3px 5px 0px rgba(0, 0, 0, 0.3)',
-                    }}
-                  >
-                    {title}
-                  </Typography>
-                </>
+                <Typography
+                  sx={{
+                    p: '10px',
+                    backgroundColor: 'white',
+                    overflowWrap: 'break-word',
+                    position: 'relative',
+                    order: order,
+                    boxShadow: '0px 3px 5px 0px rgba(0, 0, 0, 0.3)',
+                  }}
+                >
+                  {title}
+                </Typography>
               )}
             </Box>
           </ClickAwayListener>

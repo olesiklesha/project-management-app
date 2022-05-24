@@ -70,7 +70,8 @@
       "name": "Name",
       "login": "Login",
       "password": "Password",
-      "newPassword": "New password"
+      "newPassword": "New password",
+      "description": "Description"
     },
     "errors": {
       "noName": "⚠Name is required",
@@ -78,7 +79,8 @@
       "noPassword": "⚠Password is required",
       "minLengthLogin": "⚠Login is too short",
       "minLengthPassword": "⚠Password is too short",
-      "noTitle": "⚠Title is required"
+      "noTitle": "⚠Title is required",
+      "noDescription": "⚠Description is required"
     },
     "messages" : {
       "successEdit": "Successfully updated"

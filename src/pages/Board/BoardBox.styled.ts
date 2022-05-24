@@ -1,6 +1,6 @@
-import { Box, styled } from '@mui/material';
+import { styled } from '@mui/material';
 
-const BoardBox = styled(Box)(({ theme }) => ({
+const BoardBox = styled('div')(({ theme }) => ({
   maxWidth: 'calc(100vw - 28px)',
   margin: '1rem',
   paddingBottom: '1rem',

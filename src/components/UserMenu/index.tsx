@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import {
+  Person,
+  KeyboardArrowDown,
+  ModeEdit,
+  Logout,
+  AddCircleOutlineRounded,
+} from '@mui/icons-material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AppRoutes } from '../../constants';
-import LogoutIcon from '@mui/icons-material/Logout';
 import { useAppSelector } from '../../hooks/redux';
 import { useTranslation } from 'react-i18next';
-import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import LocaleSwitcher from '../LocaleSwitcher';
-import { BoardCreator, Modal } from '../index';
+import { BoardCreator } from '..';
 import { logOut } from '../../utils';
 
 function UserMenu() {
@@ -48,12 +50,12 @@ function UserMenu() {
       <Button
         ref={anchorAuthRef}
         id="composition-button"
-        startIcon={<PersonIcon color="secondary" />}
+        startIcon={<Person color="secondary" />}
         color="inherit"
         sx={{ fontWeight: 'bold', textTransform: 'none' }}
         onClick={handleToggleAuthMenu}
         endIcon={
-          <KeyboardArrowDownIcon
+          <KeyboardArrowDown
             color="secondary"
             sx={{
               transform: `rotate(${openAuthMenu ? '180' : '0'}deg)`,
@@ -97,14 +99,14 @@ function UserMenu() {
                   >
                     <Button
                       sx={{ textTransform: 'none', color: 'inherit' }}
-                      startIcon={<AddCircleOutlineRoundedIcon color="success" />}
+                      startIcon={<AddCircleOutlineRounded color="success" />}
                     >
                       {t('pages.mainPage.createBtn')}
                     </Button>
                   </MenuItem>
                   <MenuItem onClick={handleCloseAuthMenu}>
                     <Button
-                      startIcon={<ModeEditIcon color="success" />}
+                      startIcon={<ModeEdit color="success" />}
                       component={RouterLink}
                       to={AppRoutes.EDIT}
                       sx={{ textTransform: 'none', color: 'inherit' }}
@@ -114,7 +116,7 @@ function UserMenu() {
                   </MenuItem>
                   <MenuItem onClick={handleLogout}>
                     <Button
-                      startIcon={<LogoutIcon color="error" />}
+                      startIcon={<Logout color="error" />}
                       sx={{ textTransform: 'none', color: 'inherit' }}
                     >
                       {t('components.header.logOut')}
@@ -126,9 +128,7 @@ function UserMenu() {
           </Grow>
         )}
       </Popper>
-      <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
-        <BoardCreator onCancel={toggleIsOpened} />
-      </Modal>
+      <BoardCreator isOpened={isOpened} onCancel={toggleIsOpened} />
     </>
   );
 }
