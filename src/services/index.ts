@@ -13,7 +13,7 @@ import {
 } from '../models';
 import { authSlice } from '../store/reducers/auth';
 import { RootState } from '../store';
-import { sortBoards } from '../utils';
+import { changeArrOrder, sortBoards } from '../utils';
 
 const BASE_URL = 'https://cream-task-app.herokuapp.com/';
 
@@ -194,19 +194,20 @@ const appApi = createApi({
         method: 'PUT',
         body: body,
       }),
-      // onQueryStarted({ boardId, columnId, body }, { dispatch, queryFulfilled }) {
-      //   const editResult = dispatch(
-      //     appApi.util.updateQueryData('getBoard', boardId, (draft) => {
-      //       const id = String(Date.now());
-      //       const column = draft.columns.find((el) => el.id === columnId);
-      //       const tasks = column?.tasks || [];
-      //       draft.columns = draft.columns.map((el) =>
-      //         el.id === columnId ? { id, tasks, ...body } : el
-      //       );
-      //     })
-      //   );
-      //   queryFulfilled.catch(editResult.undo);
-      // },
+      onQueryStarted({ boardId, columnId, body }, { dispatch, queryFulfilled }) {
+        const editResult = dispatch(
+          appApi.util.updateQueryData('getBoard', boardId, (draft) => {
+            const id = String(Date.now());
+            const { title, order } = body;
+            let oldColumn = draft.columns.find((el) => el.id === columnId);
+            const tasks = oldColumn?.tasks || [];
+            const oldOrder = oldColumn?.order ?? 0;
+            oldColumn = { id, tasks, ...body };
+            draft.columns = changeArrOrder(draft.columns, oldOrder - 1, body.order - 1);
+          })
+        );
+        queryFulfilled.catch(editResult.undo);
+      },
       invalidatesTags: ['Board'],
     }),
     getAllTasks: builder.query<ITask[], { boardId: string; columnId: string }>({
@@ -269,6 +270,10 @@ const appApi = createApi({
         const editResult = dispatch(
           appApi.util.updateQueryData('getBoard', boardId, (draft) => {
             const id = String(Date.now());
+            const targetIndex = draft.columns.findIndex((el) => el.id === columnId);
+            if (columnId !== body.columnId) {
+              draft.columns[targetIndex].tasks = draft.columns[targetIndex].tasks.filter((task) => task.id !== taskId)
+            }
             draft.columns.forEach((el) => {
               if (el.id === columnId)
                 el.tasks = el.tasks.map((task) =>
