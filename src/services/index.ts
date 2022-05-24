@@ -13,7 +13,7 @@ import {
 } from '../models';
 import { authSlice } from '../store/reducers/auth';
 import { RootState } from '../store';
-import { changeArrOrder, sortBoards } from '../utils';
+import { changeElOrder, sortBoards } from '../utils';
 
 const BASE_URL = 'https://cream-task-app.herokuapp.com/';
 
@@ -197,13 +197,15 @@ const appApi = createApi({
       onQueryStarted({ boardId, columnId, body }, { dispatch, queryFulfilled }) {
         const editResult = dispatch(
           appApi.util.updateQueryData('getBoard', boardId, (draft) => {
-            const id = String(Date.now());
             const { title, order } = body;
-            let oldColumn = draft.columns.find((el) => el.id === columnId);
-            const tasks = oldColumn?.tasks || [];
-            const oldOrder = oldColumn?.order ?? 0;
-            oldColumn = { id, tasks, ...body };
-            draft.columns = changeArrOrder(draft.columns, oldOrder - 1, body.order - 1);
+            const column = draft.columns.find((el) => el.id === columnId);
+            if (!column) return draft;
+
+            const oldOrder = column.order;
+            column.title = title;
+            column.order = order;
+
+            draft.columns = changeElOrder(draft.columns, oldOrder - 1, body.order - 1);
           })
         );
         queryFulfilled.catch(editResult.undo);
@@ -269,17 +271,23 @@ const appApi = createApi({
       onQueryStarted({ boardId, columnId, taskId, body }, { dispatch, queryFulfilled }) {
         const editResult = dispatch(
           appApi.util.updateQueryData('getBoard', boardId, (draft) => {
+            const column = draft.columns.find((el) => el.id === body.columnId);
+            if (!column) return draft;
+
             const id = String(Date.now());
-            const targetIndex = draft.columns.findIndex((el) => el.id === columnId);
+            const newTask = { id, files: [], ...body };
+
             if (columnId !== body.columnId) {
-              draft.columns[targetIndex].tasks = draft.columns[targetIndex].tasks.filter((task) => task.id !== taskId)
+              const oldColumn = draft.columns.find((el) => el.id === columnId);
+              if (oldColumn) oldColumn.tasks = oldColumn.tasks.filter((task) => task.id !== taskId);
+              column.tasks.splice(body.order - 1, 0, newTask);
             }
-            draft.columns.forEach((el) => {
-              if (el.id === columnId)
-                el.tasks = el.tasks.map((task) =>
-                  task.id === taskId ? { id, files: [], ...body } : task
-                );
-            });
+
+            const task = column.tasks.find((el) => el.id === taskId);
+            if (task) {
+              column.tasks = column.tasks.map((task) => (task.id === taskId ? newTask : task));
+              column.tasks = changeElOrder(column.tasks, task.order - 1, body.order - 1);
+            }
           })
         );
         queryFulfilled.catch(editResult.undo);

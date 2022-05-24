@@ -37,7 +37,7 @@ export function sortBoards(x: IBoard, y: IBoard) {
   return x.title.localeCompare(y.title);
 }
 
-export function changeArrOrder<T>(arr: Array<T>, from: number, to: number) {
+export function changeElOrder<T>(arr: Array<T>, from: number, to: number) {
   const cloneArr = arr.slice();
   const moved = cloneArr.splice(from, 1);
   cloneArr.splice(to, 0, moved[0]);
