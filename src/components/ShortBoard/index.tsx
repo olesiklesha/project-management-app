@@ -6,9 +6,9 @@ import { Delete, Edit } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { BoardEditor, Modal } from '../index';
 import { useDeleteBoardMutation } from '../../services';
-import { IBoard } from '../../models/apiModels';
+import { IBoard } from '../../models';
 
-function ShortBoard({ id, title }: IBoard) {
+function ShortBoard({ id, title, description }: IBoard) {
   const { t } = useTranslation();
   const path = AppRoutes.MAIN + `/${id}`;
   const [deleteBoard, { isLoading }] = useDeleteBoardMutation();
@@ -23,15 +23,18 @@ function ShortBoard({ id, title }: IBoard) {
     setEditOpened((prev) => !prev);
   };
 
-  const onConfirm = async () => {
-    await deleteBoard(id);
+  const onConfirm = () => {
+    deleteBoard(id);
   };
 
   const handleBtnClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const isEdit = e.currentTarget.getAttribute('data-edit-board');
-    if (isEdit) toggleEditOpened();
-    else toggleDeleteOpened();
+    if (isEdit) {
+      toggleEditOpened();
+    } else {
+      toggleDeleteOpened();
+    }
   };
 
   return (
@@ -39,7 +42,15 @@ function ShortBoard({ id, title }: IBoard) {
       <Card
         component={NavLink}
         to={path}
-        sx={{ display: 'block', p: '2.5rem 1rem', textDecoration: 'none', position: 'relative' }}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          p: '2.5rem 1rem',
+          textDecoration: 'none',
+          position: 'relative',
+          height: '100%',
+        }}
       >
         <Typography
           variant="h6"
@@ -47,9 +58,13 @@ function ShortBoard({ id, title }: IBoard) {
           sx={{
             fontFamily: 'Ubuntu',
             fontWeight: 500,
+            fontSize: '1.4rem',
           }}
         >
           {title}
+        </Typography>
+        <Typography variant="body1" align="center">
+          {description}
         </Typography>
         <Stack
           direction="row"
@@ -68,9 +83,13 @@ function ShortBoard({ id, title }: IBoard) {
           </Tooltip>
         </Stack>
       </Card>
-      <Modal isOpened={isEditOpened} onCancel={toggleEditOpened}>
-        <BoardEditor id={id} title={title} onCancel={toggleEditOpened} />
-      </Modal>
+      <BoardEditor
+        id={id}
+        title={title}
+        description={description}
+        onCancel={toggleEditOpened}
+        isOpened={isEditOpened}
+      />
       <Modal
         isOpened={isDeleteOpened}
         onCancel={toggleDeleteOpened}

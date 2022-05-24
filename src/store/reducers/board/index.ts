@@ -22,6 +22,7 @@ interface IInitialState {
 const initialState: IInitialState = {
   data: {
     title: '',
+    description: '',
     id: '',
     columns: [],
   },

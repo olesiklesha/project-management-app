@@ -13,6 +13,7 @@ import {
 } from '../models';
 import { authSlice } from '../store/reducers/auth';
 import { RootState } from '../store';
+import { sortBoards } from '../utils';
 
 const BASE_URL = 'https://cream-task-app.herokuapp.com/';
 
@@ -72,18 +73,24 @@ const appApi = createApi({
     }),
     getAllBoards: builder.query<IBoard[], void>({
       query: () => ({ url: '/boards' }),
+      transformResponse: (response: IBoard[]) => {
+        if (!response.length) return response;
+
+        return response.sort(sortBoards);
+      },
       providesTags: ['Boards'],
     }),
-    createBoard: builder.mutation<IBoard, string>({
-      query: (title: string) => ({
+    createBoard: builder.mutation<IBoard, Omit<IBoard, 'id'>>({
+      query: (body) => ({
         url: '/boards',
         method: 'POST',
-        body: { title },
+        body: body,
       }),
-      async onQueryStarted(title, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ title, description }, { dispatch, queryFulfilled }) {
         const addResult = dispatch(
           appApi.util.updateQueryData('getAllBoards', undefined, (draft) => {
-            draft.push({ id: String(Date.now()), title });
+            draft.push({ id: String(Date.now()), title, description });
+            draft.sort(sortBoards);
           })
         );
         queryFulfilled.catch(addResult.undo);
@@ -92,6 +99,20 @@ const appApi = createApi({
     }),
     getBoard: builder.query<IBoardData, string>({
       query: (id: string) => ({ url: `/boards/${id}` }),
+      transformResponse: (response: IBoardData) => {
+        const { id, title, description, columns } = response;
+        columns.forEach((column) => {
+          const { tasks } = column;
+          tasks.sort((a, b) => a.order - b.order);
+        });
+        columns.sort((a, b) => a.order - b.order);
+        return {
+          id,
+          title,
+          description,
+          columns,
+        };
+      },
       providesTags: ['Board'],
     }),
     deleteBoard: builder.mutation<void, string>({
@@ -109,16 +130,16 @@ const appApi = createApi({
       },
       invalidatesTags: ['Boards'],
     }),
-    editBoard: builder.mutation<IBoard, { id: string; title: string }>({
-      query: ({ id, title }) => ({
+    editBoard: builder.mutation<IBoard, IBoard>({
+      query: ({ id, title, description }) => ({
         url: `/boards/${id}`,
         method: 'PUT',
-        body: { title },
+        body: { title, description },
       }),
-      async onQueryStarted({ id, title }, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ id, title, description }, { dispatch, queryFulfilled }) {
         const editResult = dispatch(
           appApi.util.updateQueryData('getAllBoards', undefined, (draft) =>
-            draft.map((el) => (el.id === id ? { id, title } : el))
+            draft.map((el) => (el.id === id ? { id, title, description } : el))
           )
         );
         queryFulfilled.catch(editResult.undo);
@@ -129,7 +150,7 @@ const appApi = createApi({
       query: (boardId) => ({ url: `/boards/${boardId}/columns` }),
       providesTags: ['Columns'],
     }),
-    createColumn: builder.mutation<IColumn, { id: string; body: Omit<IColumn, 'id'> }>({
+    createColumn: builder.mutation<IColumn, { id: string; body: { title: string } }>({
       query: ({ id, body }) => ({
         url: `/boards/${id}/columns`,
         method: 'POST',
@@ -139,7 +160,7 @@ const appApi = createApi({
         const addResult = dispatch(
           appApi.util.updateQueryData('getBoard', id, (draft) => {
             const id = String(Date.now());
-            draft.columns.push({ id, tasks: [], ...body });
+            draft.columns.push({ id, order: 999, tasks: [], ...body });
           })
         );
         queryFulfilled.catch(addResult.undo);
@@ -173,19 +194,19 @@ const appApi = createApi({
         method: 'PUT',
         body: body,
       }),
-      onQueryStarted({ boardId, columnId, body }, { dispatch, queryFulfilled }) {
-        const editResult = dispatch(
-          appApi.util.updateQueryData('getBoard', boardId, (draft) => {
-            const id = String(Date.now());
-            const column = draft.columns.find((el) => el.id === columnId);
-            const tasks = column?.tasks || [];
-            draft.columns = draft.columns.map((el) =>
-              el.id === columnId ? { id, tasks, ...body } : el
-            );
-          })
-        );
-        queryFulfilled.catch(editResult.undo);
-      },
+      // onQueryStarted({ boardId, columnId, body }, { dispatch, queryFulfilled }) {
+      //   const editResult = dispatch(
+      //     appApi.util.updateQueryData('getBoard', boardId, (draft) => {
+      //       const id = String(Date.now());
+      //       const column = draft.columns.find((el) => el.id === columnId);
+      //       const tasks = column?.tasks || [];
+      //       draft.columns = draft.columns.map((el) =>
+      //         el.id === columnId ? { id, tasks, ...body } : el
+      //       );
+      //     })
+      //   );
+      //   queryFulfilled.catch(editResult.undo);
+      // },
       invalidatesTags: ['Board'],
     }),
     getAllTasks: builder.query<ITask[], { boardId: string; columnId: string }>({
@@ -205,7 +226,7 @@ const appApi = createApi({
           appApi.util.updateQueryData('getBoard', boardId, (draft) => {
             const id = String(Date.now());
             draft.columns.forEach((el) => {
-              if (el.id === columnId) el.tasks.push({ id, files: [], ...body });
+              if (el.id === columnId) el.tasks.push({ id, order: 999, files: [], ...body });
             });
           })
         );
@@ -260,14 +281,14 @@ const appApi = createApi({
       },
       invalidatesTags: ['Board'],
     }),
-    uploadFile: builder.mutation<void, BinaryData>({
-      query: (file) => ({
+    uploadFile: builder.mutation<void, { taskId: string; file: BinaryData }>({
+      query: (body) => ({
         url: `/file`,
         headers: {
           'content-type': 'multipart/form-data',
         },
         method: 'POST',
-        body: file,
+        body: body,
       }),
     }),
     getFile: builder.query<BinaryData, { taskId: string; filename: string }>({

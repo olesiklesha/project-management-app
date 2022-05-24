@@ -3,8 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Modal } from '..';
-import { useCreateColumnMutation, useGetBoardQuery } from '../../services';
-import { getNextOrder } from '../../utils';
+import { useCreateColumnMutation } from '../../services';
 
 interface IFormData {
   title: string;
@@ -17,8 +16,6 @@ interface ICreateColumn {
 
 function ColumnCreator({ isOpened, toggleIsOpened }: ICreateColumn) {
   const { id: idBoard } = useParams();
-  const { data } = useGetBoardQuery(String(idBoard));
-  const columns = data?.columns || [];
 
   const {
     register,
@@ -36,47 +33,44 @@ function ColumnCreator({ isOpened, toggleIsOpened }: ICreateColumn) {
 
   const { t } = useTranslation();
 
-  const onSubmit = async (data: IFormData) => {
+  const onSubmit = async ({ title }: IFormData) => {
     toggleIsOpened();
     reset();
     createColumn({
-      id: String(idBoard),
-      body: { title: data.title, order: getNextOrder(columns) },
+      id: idBoard ?? '',
+      body: { title },
     });
   };
 
   return (
-    <>
-      <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
-        <Box
-          component="form"
-          onSubmit={handleSubmit(onSubmit)}
-          sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-        >
-          <TextField
-            {...register('title', { required: t('form.errors.noTitle') })}
-            type="text"
-            placeholder={t('pages.boardPage.columnCreatorPlaceholder')}
-            fullWidth
-            inputProps={{
-              style: {
-                fontSize: '1.25rem',
-                fontWeight: 'bold',
-                width: 'calc(100%)',
-              },
-            }}
-            error={!!errors.title}
-            helperText={errors.title?.message}
-            autoFocus
-          />
-
-          <Box>
-            <Button onClick={handleSubmit(onSubmit)}>{t('actions.create')}</Button>
-            <Button onClick={toggleIsOpened}>{t('actions.cancel')}</Button>
-          </Box>
+    <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      >
+        <TextField
+          {...register('title', { required: t('form.errors.noTitle') })}
+          type="text"
+          placeholder={t('pages.boardPage.columnCreatorPlaceholder')}
+          fullWidth
+          inputProps={{
+            style: {
+              fontSize: '1.25rem',
+              fontWeight: 'bold',
+              width: 'calc(100%)',
+            },
+          }}
+          error={!!errors.title}
+          helperText={errors.title?.message}
+          autoFocus
+        />
+        <Box>
+          <Button onClick={handleSubmit(onSubmit)}>{t('actions.create')}</Button>
+          <Button onClick={toggleIsOpened}>{t('actions.cancel')}</Button>
         </Box>
-      </Modal>
-    </>
+      </Box>
+    </Modal>
   );
 }
 
