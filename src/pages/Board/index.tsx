@@ -1,5 +1,5 @@
 import { Box, Button, CircularProgress } from '@mui/material';
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { AppBreadcrumbs, Column, ColumnCreator } from '../../components';
 import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
@@ -7,8 +7,6 @@ import BoardBox from './BoardBox.styled';
 import { useParams } from 'react-router-dom';
 import { useEditColumnMutation, useEditTaskMutation, useGetBoardQuery } from '../../services';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import { sortByOrder } from '../../utils';
-import { IColumnData } from '../../models';
 
 function Board() {
   const { t } = useTranslation();
@@ -47,11 +45,7 @@ function Board() {
       if (!column) return;
       const [task] = column.tasks.filter((el) => el.id === draggableId);
       const { title, description, userId } = task;
-      // console.log(task);
-      // console.log('destination', destination);
-      // console.log('source', source);
-      // console.log(draggableId);
-      console.log(destination.index + 1);
+
       editTask({
         boardId: data.id,
         columnId: source.droppableId,
@@ -101,9 +95,7 @@ function Board() {
               }}
             >
               {data &&
-                sortByOrder(data.columns).map((el, i) => (
-                  <Column columnInfo={el} key={el.id} index={i} />
-                ))}
+                data.columns.map((el, i) => <Column columnInfo={el} key={el.id} index={i} />)}
               <Button
                 variant="contained"
                 color="secondary"

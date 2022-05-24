@@ -9,7 +9,6 @@ import { useDeleteColumnMutation } from '../../services';
 import { useParams } from 'react-router-dom';
 import { IColumnData } from '../../models';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { sortTasksByOrder } from '../../utils';
 
 interface IColumnProps {
   columnInfo: IColumnData;
@@ -58,7 +57,7 @@ function Column({ columnInfo, index }: IColumnProps) {
           <Droppable droppableId={id}>
             {(provided) => (
               <ColumnBox ref={provided.innerRef} {...provided.droppableProps}>
-                {sortTasksByOrder(tasks).map((task, i) => (
+                {tasks.map((task, i) => (
                   <EditableTask
                     title={task.title}
                     id={task.id}

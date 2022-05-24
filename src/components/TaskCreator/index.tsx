@@ -59,59 +59,57 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateTask) {
   };
 
   return (
-    <>
-      <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
-        <Box
-          component="form"
-          onSubmit={handleSubmit(onSubmit)}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            minWidth: '25vw',
-            rowGap: '1rem',
-          }}
-        >
-          <Typography variant="h5" sx={{ fontFamily: 'Ubuntu', fontWeight: 500 }} align="center">
-            {t('pages.boardPage.addTask')}
-          </Typography>
-          {isGetUsersLoading ? (
-            <CircularProgress />
-          ) : (
-            <>
-              <TextField
-                {...register('title', { required: t('form.errors.noTitle') })}
-                type="text"
-                placeholder={t('pages.boardPage.taskCreatorPlaceholder')}
-                fullWidth
-                inputProps={{
-                  style: {
-                    fontSize: '1.25rem',
-                    fontWeight: 'bold',
-                  },
-                }}
-                error={!!errors.title}
-                helperText={errors.title?.message}
-                autoFocus
-                label={t('pages.mainPage.fieldTitle')}
-                variant="standard"
-                sx={{ mb: 2, mt: 2, flexGrow: 1 }}
-              />
-              <Box>
-                <Button
-                  onClick={handleSubmit(onSubmit)}
-                  variant="contained"
-                  sx={{ p: '0.5rem 1.25rem', mr: '1rem' }}
-                >
-                  {t('actions.create')}
-                </Button>
-                <Button onClick={toggleIsOpened}>{t('actions.cancel')}</Button>
-              </Box>
-            </>
-          )}
-        </Box>
-      </Modal>
-    </>
+    <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          minWidth: '25vw',
+          rowGap: '1rem',
+        }}
+      >
+        <Typography variant="h5" sx={{ fontFamily: 'Ubuntu', fontWeight: 500 }} align="center">
+          {t('pages.boardPage.addTask')}
+        </Typography>
+        {isGetUsersLoading ? (
+          <CircularProgress />
+        ) : (
+          <>
+            <TextField
+              {...register('title', { required: t('form.errors.noTitle') })}
+              type="text"
+              placeholder={t('pages.boardPage.taskCreatorPlaceholder')}
+              fullWidth
+              inputProps={{
+                style: {
+                  fontSize: '1.25rem',
+                  fontWeight: 'bold',
+                },
+              }}
+              error={!!errors.title}
+              helperText={errors.title?.message}
+              autoFocus
+              label={t('pages.mainPage.fieldTitle')}
+              variant="standard"
+              sx={{ mb: 2, mt: 2, flexGrow: 1 }}
+            />
+            <Box>
+              <Button
+                onClick={handleSubmit(onSubmit)}
+                variant="contained"
+                sx={{ p: '0.5rem 1.25rem', mr: '1rem' }}
+              >
+                {t('actions.create')}
+              </Button>
+              <Button onClick={toggleIsOpened}>{t('actions.cancel')}</Button>
+            </Box>
+          </>
+        )}
+      </Box>
+    </Modal>
   );
 }
 
