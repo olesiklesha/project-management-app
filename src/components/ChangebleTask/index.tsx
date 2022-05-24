@@ -59,7 +59,12 @@ function EditableTask({ title, id, order, userId, boardId, columnId, index }: ID
           {...provided.draggableProps}
         >
           <ClickAwayListener onClickAway={clickAwayHandler}>
-            <Box onMouseOver={() => setShow(true)} onMouseOut={() => setShow(false)}>
+            <Box
+              onMouseOver={() => setShow(true)}
+              onMouseOut={() => {
+                if (!isEditing) setShow(false);
+              }}
+            >
               {(show || isEditing) && (
                 <TransitionsPopper
                   boardId={boardId}

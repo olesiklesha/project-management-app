@@ -58,7 +58,7 @@ function EditableHeader({ title, id, order }: IColumn) {
       ) : (
         <Typography
           onClick={() => setIsEditing(true)}
-          sx={{ p: '10px 10px', fontWeight: 'bold', fontSize: '1.25rem' }}
+          sx={{ p: '20px 10px 10px', fontWeight: 'bold', fontSize: '1.25rem' }}
         >
           {title}
         </Typography>

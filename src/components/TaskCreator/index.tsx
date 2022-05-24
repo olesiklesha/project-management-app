@@ -1,12 +1,11 @@
-import { Box, Button, CircularProgress, TextField } from '@mui/material';
+import { Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Modal from '../Modal';
 import { useParams } from 'react-router-dom';
-import { getCurrentUser, getNextOrder } from '../../utils';
+import { getCurrentUser } from '../../utils';
 import { useCreateTaskMutation, useGetAllUsersQuery } from '../../services';
 import { useEffect, useState } from 'react';
-import { useAppSelector } from '../../hooks/redux';
 
 interface IFormData {
   title: string;
@@ -20,7 +19,6 @@ interface ICreateTask {
 
 function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateTask) {
   const { id: boardId } = useParams();
-  const { columns } = useAppSelector((state) => state.boardSlice.data);
   const [userId, setUserId] = useState('');
   const { data, isLoading: isGetUsersLoading } = useGetAllUsersQuery();
   const [createTask] = useCreateTaskMutation();
@@ -47,7 +45,6 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateTask) {
   const { t } = useTranslation();
 
   const onSubmit = async (data: IFormData) => {
-    const order = getNextOrder(columns, id);
     createTask({
       boardId: String(boardId),
       columnId: id,
@@ -67,8 +64,17 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateTask) {
         <Box
           component="form"
           onSubmit={handleSubmit(onSubmit)}
-          sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            minWidth: '25vw',
+            rowGap: '1rem',
+          }}
         >
+          <Typography variant="h5" sx={{ fontFamily: 'Ubuntu', fontWeight: 500 }} align="center">
+            {t('pages.boardPage.addTask')}
+          </Typography>
           {isGetUsersLoading ? (
             <CircularProgress />
           ) : (
@@ -87,9 +93,18 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateTask) {
                 error={!!errors.title}
                 helperText={errors.title?.message}
                 autoFocus
+                label={t('pages.mainPage.fieldTitle')}
+                variant="standard"
+                sx={{ mb: 2, mt: 2, flexGrow: 1 }}
               />
               <Box>
-                <Button onClick={handleSubmit(onSubmit)}>{t('actions.create')}</Button>
+                <Button
+                  onClick={handleSubmit(onSubmit)}
+                  variant="contained"
+                  sx={{ p: '0.5rem 1.25rem', mr: '1rem' }}
+                >
+                  {t('actions.create')}
+                </Button>
                 <Button onClick={toggleIsOpened}>{t('actions.cancel')}</Button>
               </Box>
             </>

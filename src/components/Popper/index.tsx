@@ -1,8 +1,9 @@
-import React, { useState, useCallback } from 'react';
-import { Paper, Button, Popper, Fade, CircularProgress } from '@mui/material';
+import React, { useState } from 'react';
+import { Paper, Button, Popper, Fade } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import { useDeleteTaskMutation, useGetTaskQuery } from '../../services';
+import { useDeleteTaskMutation } from '../../services';
 import Modal from '../Modal';
+import TaskModal from '../TaskModal';
 
 interface IPopperProps {
   boardId: string;
@@ -20,21 +21,22 @@ export default function TransitionsPopper({
   setIsPopperOpened,
 }: IPopperProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  // const [isPopperOpened, setIsPopperOpened] = useState(false);
   const [isConfirmOpened, setIsConfirmOpened] = useState(false);
   const [isEditorOpened, setIsEditorOpened] = useState(false);
 
   const toggleIsEditorOpened = () => {
     setIsEditorOpened((prev) => !prev);
+    if (isEditorOpened) setIsPopperOpened(false);
   };
 
   const toggleIsPopperOpened = () => {
     setIsPopperOpened(true);
   };
 
-  const toggleIsConfirm = useCallback(() => {
+  const toggleIsConfirm = () => {
     setIsConfirmOpened((prev) => !prev);
-  }, []);
+    if (isEditorOpened) setIsPopperOpened(false);
+  };
 
   const handleBtnClick = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(e.currentTarget);
@@ -42,20 +44,19 @@ export default function TransitionsPopper({
   };
 
   const handleDelete = () => {
-    toggleIsPopperOpened();
     toggleIsConfirm();
+    if (isEditorOpened) setIsPopperOpened(false);
   };
 
   const handleEdit = () => {
-    toggleIsPopperOpened();
     toggleIsEditorOpened();
   };
 
   const deleteAction = async () => {
     await deleteTask({
-      boardId: boardId,
-      columnId: columnId,
-      taskId: taskId,
+      boardId,
+      columnId,
+      taskId,
     });
   };
 
@@ -64,12 +65,6 @@ export default function TransitionsPopper({
 
   const [deleteTask, {}] = useDeleteTaskMutation();
 
-  const { data: columnData, isSuccess } = useGetTaskQuery({
-    boardId: '1639b95c-69a1-42bb-92a1-01d3b99f9808',
-    columnId: 'ff9c431b-7234-49ce-9b4d-0a154d59ce51',
-    taskId: '02b9de6f-1c6c-4110-971f-ee62a1d21497',
-  });
-
   return (
     <div style={{ position: 'absolute', top: 0, right: 0, zIndex: 100 }}>
       <Button
@@ -77,7 +72,13 @@ export default function TransitionsPopper({
         type="button"
         onClick={handleBtnClick}
         startIcon={<EditIcon />}
-        sx={{ borderRadius: '100%', p: '0.5rem', width: '20px', minWidth: '35px' }}
+        sx={{
+          borderRadius: '100%',
+          p: '0.5rem 0.5rem 0.5rem 1.25rem',
+          mr: '3px',
+          width: '20px',
+          minWidth: '35px',
+        }}
       />
       <Popper
         id={idPopper}
@@ -101,22 +102,22 @@ export default function TransitionsPopper({
               }}
             >
               <Button
-                color="secondary"
+                color="inherit"
                 size="small"
                 sx={{ width: '100%', mb: '0.5rem' }}
                 variant="contained"
                 onClick={handleEdit}
               >
-                Open task
+                Open card
               </Button>
               <Button
-                color="warning"
+                color="inherit"
                 size="small"
                 sx={{ width: '100%' }}
                 variant="contained"
                 onClick={handleDelete}
               >
-                Delete task
+                Delete card
               </Button>
             </Paper>
           </Fade>
@@ -124,15 +125,7 @@ export default function TransitionsPopper({
       </Popper>
       <Modal isOpened={isConfirmOpened} onCancel={toggleIsConfirm} onConfirm={deleteAction} />
       <Modal isOpened={isEditorOpened} onCancel={toggleIsEditorOpened}>
-        {isSuccess ? (
-          <>
-            <p>there will be task editor</p>
-            <p>{columnData.title}</p>
-            <p>{columnData.description}</p>
-          </>
-        ) : (
-          <CircularProgress />
-        )}
+        <TaskModal boardId={boardId} columnId={columnId} taskId={taskId} />
       </Modal>
     </div>
   );
