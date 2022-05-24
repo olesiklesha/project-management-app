@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   CircularProgress,
-  Container,
   Grid,
   Paper,
   Stack,
@@ -83,7 +82,7 @@ function Edit() {
           height: 'calc(100vh - 128px)',
           bgcolor: 'primary.light',
           backgroundImage: 'url(Yellow_People.svg)',
-          backgroundSize: 'auto 100',
+          backgroundSize: '100% 30%',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center bottom',
         }}
