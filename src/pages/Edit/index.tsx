@@ -79,8 +79,14 @@ function Edit() {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        component={Container}
-        sx={{ height: 'calc(100vh - 128px)', bgcolor: 'primary.light' }}
+        sx={{
+          height: 'calc(100vh - 128px)',
+          bgcolor: 'primary.light',
+          backgroundImage: 'url(Yellow_People.svg)',
+          backgroundSize: 'auto 100',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center bottom',
+        }}
       >
         <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500} sx={{ zIndex: 2 }}>
           <Paper elevation={2} sx={{ p: 3, position: 'relative' }}>
@@ -170,9 +176,6 @@ function Edit() {
               </>
             )}
           </Paper>
-        </Box>
-        <Box sx={{ position: 'fixed', bottom: 0, width: '70%' }}>
-          <img width="100%" src="Pixel_Working.webp" alt="taking notes" />
         </Box>
       </Grid>
       <Modal
