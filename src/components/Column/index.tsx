@@ -42,6 +42,7 @@ function Column({ columnInfo, index }: IColumnProps) {
             maxHeight: '100%',
             display: 'flex',
             flexDirection: 'column',
+            mr: '1rem',
             // order: `${order}`,
           }}
           ref={provided.innerRef}

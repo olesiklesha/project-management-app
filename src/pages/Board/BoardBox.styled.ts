@@ -8,7 +8,6 @@ const BoardBox = styled('div')(({ theme }) => ({
   flexDirection: 'row',
   flexWrap: 'nowrap',
   alignItems: 'flex-start',
-  columnGap: '1rem',
   overflowX: 'auto',
   '&::-webkit-scrollbar': {
     width: '0.4rem',
