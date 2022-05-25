@@ -45,7 +45,7 @@
       "howToUse": "Как работать с приложением",
       "team": "Команда",
       "teamDescriptions": {
-        "Alex": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam dolorum eum excepturi consectetur, molestias ut velit itaque autem aliquid minima laboriosam voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?",
+        "Alex": "Лидер группы. Вещи, за которые он отвечал: организация командной работы, построение базовой структуры приложения, частные и публичные маршруты, главная страница, перетаскивание колонок и задач на странице доски и липкий заголовок с пользовательским меню. Вещи, которые он любит: программирование, футбол и пиво. Вещи, которые он не любит: завод",
         "Artyom": "Парень отвественный за все взаимодествия с бэкэндом. Задеплоил сервер и написал все запросы к API. Создал страницы логина, регистрации и изменения аккаунта, настроил локализацию приложения. Любит: пиво и чистый код. Не любит: работу.",
         "Roma": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam dolorum eum excepturi consectetur, molestias ut velit itaque autem aliquid minima laboriosam voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?"
       },

@@ -79,7 +79,7 @@ function Edit() {
         justifyContent="center"
         alignItems="center"
         sx={{
-          height: 'calc(100vh - 128px)',
+          height: { xs: 'calc(100vh - 173.5px)', sm: 'calc(100vh - 128px)' },
           bgcolor: 'primary.light',
           backgroundImage: 'url(Yellow_People.svg)',
           backgroundSize: '100% 30%',
@@ -87,7 +87,12 @@ function Edit() {
           backgroundPosition: 'center bottom',
         }}
       >
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500} sx={{ zIndex: 2 }}>
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          maxWidth={500}
+          sx={{ zIndex: 2, m: '0 0.5rem' }}
+        >
           <Paper elevation={2} sx={{ p: 3, position: 'relative' }}>
             {isGetUsersLoading ? (
               <CircularProgress />

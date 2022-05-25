@@ -26,7 +26,7 @@ function Column({ columnInfo, index }: IColumnProps) {
   }, []);
 
   const [isOpenedConfirm, setIsOpenedConfirm] = useState(false);
-  const toggleIsOpenedComfirm = useCallback(() => {
+  const toggleIsOpenedConfirm = useCallback(() => {
     setIsOpenedConfirm((isOpenedConfirm) => !isOpenedConfirm);
   }, []);
 
@@ -51,7 +51,7 @@ function Column({ columnInfo, index }: IColumnProps) {
         >
           <Box sx={{ p: '0 8px 12px 8px', display: 'flex', justifyContent: 'space-between' }}>
             <EditableHeader title={title} id={id} order={order} tasks={tasks} />
-            <IconButton color="secondary" onClick={toggleIsOpenedComfirm}>
+            <IconButton color="secondary" onClick={toggleIsOpenedConfirm}>
               <Delete />
             </IconButton>
           </Box>
@@ -91,7 +91,7 @@ function Column({ columnInfo, index }: IColumnProps) {
           <TaskCreator isOpened={isOpened} toggleIsOpened={toggleIsOpened} id={id} />
           <Modal
             isOpened={isOpenedConfirm}
-            onCancel={toggleIsOpenedComfirm}
+            onCancel={toggleIsOpenedConfirm}
             onConfirm={() => deleteColumn({ boardId: String(idBoard), columnId: id })}
           />
         </Paper>
