@@ -15,7 +15,7 @@ const defaultInitialState: IAuthState = {
   tokenDate: null,
 };
 
-const initialState = getLocalAuth() || defaultInitialState;
+const initialState = getLocalAuth() ?? defaultInitialState;
 
 export const authSlice = createSlice({
   name: 'auth',

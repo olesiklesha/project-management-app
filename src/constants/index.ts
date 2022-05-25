@@ -18,30 +18,24 @@ export const TEAM_INFO = [
   {
     avatar: './alex.jpg',
     name: 'Alex',
-    description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam dolorum eum
-excepturi consectetur, molestias ut velit itaque autem aliquid minima laboriosam
-voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?`,
+    description: `pages.welcomePage.teamDescriptions.Alex`,
     gh: 'https://github.com/olesiklesha',
   },
   {
     avatar: './tyoma.jpg',
     name: 'Artyom',
-    description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam dolorum eum
-excepturi consectetur, molestias ut velit itaque autem aliquid minima laboriosam
-voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?`,
+    description: `pages.welcomePage.teamDescriptions.Artyom`,
     gh: 'https://github.com/ArtyomKr',
   },
   {
     avatar: './roma.jpg',
     name: 'Roma',
-    description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam dolorum eum
-excepturi consectetur, molestias ut velit itaque autem aliquid minima laboriosam
-voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?`,
+    description: `pages.welcomePage.teamDescriptions.Roma`,
     gh: 'https://github.com/romasho',
   },
 ];
 
 export const locales = [
-  { name: 'en-EN', nativeName: 'Eng', MUIname: 'enUs' },
-  { name: 'ru-RU', nativeName: 'Руc', MUIname: 'ruRU' },
+  { name: 'en-EN', nativeName: 'Engish', MUIname: 'enUs' },
+  { name: 'ru-RU', nativeName: 'Руcский', MUIname: 'ruRU' },
 ];

@@ -6,7 +6,6 @@ import {
   Box,
   Grid,
   Paper,
-  Container,
   TextField,
   Button,
   Typography,
@@ -19,7 +18,7 @@ import {
 import { ArrowBackIosNew } from '@mui/icons-material';
 import { AppRoutes } from '../../constants';
 import { AppIcon } from '../../components';
-import { IRequestError, ISignUpRequest } from '../../models/apiModels';
+import { IRequestError, ISignUpRequest } from '../../models';
 import { useSignUpMutation, useSignInMutation } from '../../services';
 import { isAuth } from '../../utils';
 import { apiErrorParser } from '../../utils';
@@ -61,13 +60,20 @@ function SignUpPage() {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        component={Container}
-        sx={{ height: '100vh' }}
+        sx={{ height: '100vh', bgcolor: 'primary.light' }}
       >
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500}>
-          <Typography component="h1" fontSize={60} fontWeight={500} align="center" gutterBottom>
-            <AppIcon color="secondary" sx={{ fontSize: 60, mr: 1 }} />
-            Task-app
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500} sx={{ zIndex: 2 }}>
+          <Typography
+            component="h1"
+            fontFamily="Ubuntu"
+            fontSize={60}
+            fontWeight={500}
+            align="center"
+            gutterBottom
+            sx={{ position: 'relative', right: '20px' }}
+          >
+            <AppIcon sx={{ fontSize: 60, mr: 1 }} />
+            Cream
           </Typography>
           <Paper elevation={6} sx={{ p: 3, position: 'relative' }}>
             <IconButton
@@ -127,13 +133,13 @@ function SignUpPage() {
               type="submit"
               variant="contained"
               startIcon={
-                (isSignUpLoading || isSignInLoading) && (
+                (isSignUpLoading ?? isSignInLoading) && (
                   <CircularProgress color="secondary" size={20} />
                 )
               }
               fullWidth
               sx={{ mt: 3, mb: 2 }}
-              disabled={isSignUpLoading || isSignInLoading}
+              disabled={isSignUpLoading ?? isSignInLoading}
             >
               {t('pages.signUpPage.signUpButton')}
             </Button>
@@ -148,6 +154,12 @@ function SignUpPage() {
               {t('pages.signUpPage.loginLink')}
             </Link>
           </Paper>
+        </Box>
+        <Box sx={{ position: 'fixed', bottom: 0, width: '100%' }}>
+          <Grid container justifyContent="space-between" alignItems="flex-end">
+            <img width="35%" src="Woman_In_Park.svg" alt="people working" />
+            <img width="35%" src="Woman_Talking.svg" alt="people working" />
+          </Grid>
         </Box>
       </Grid>
     </>

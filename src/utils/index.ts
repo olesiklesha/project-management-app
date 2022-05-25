@@ -26,7 +26,7 @@ export function apiErrorParser(error: IRequestError, t: (arg0: string) => string
 
 export function getCurrentUser(data: IUserData[]) {
   const { login } = getLocalAuth();
-  return data.find((user) => user.login === login) || { id: '', login, name: '' };
+  return data.find((user) => user.login === login) ?? { id: '', login, name: '' };
 }
 
 export function logOut() {
@@ -35,4 +35,11 @@ export function logOut() {
 
 export function sortBoards(x: IBoard, y: IBoard) {
   return x.title.localeCompare(y.title);
+}
+
+export function changeElOrder<T>(arr: Array<T>, from: number, to: number) {
+  const cloneArr = arr.slice();
+  const moved = cloneArr.splice(from, 1);
+  cloneArr.splice(to, 0, moved[0]);
+  return cloneArr;
 }

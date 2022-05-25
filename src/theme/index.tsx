@@ -10,6 +10,7 @@ export const theme = createTheme({
   palette: {
     primary: {
       main: '#7ac5c5',
+      light: '#f2f3f7',
     },
     secondary: {
       main: '#ffd803',
@@ -32,7 +33,7 @@ export default function ThemeLocalesProvider({ children }: { children: React.Rea
   const { i18n } = useTranslation();
 
   const themeWithLocale = useMemo(() => {
-    const lng = locales.find((locale) => locale.name === i18n.language)?.MUIname || 'enUS';
+    const lng = locales.find((locale) => locale.name === i18n.language)?.MUIname ?? 'enUS';
 
     return createTheme(theme, MUIlocales[lng as SupportedLocales]);
   }, [i18n.language]);

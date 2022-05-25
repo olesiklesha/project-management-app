@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   CircularProgress,
-  Container,
   Grid,
   Paper,
   Stack,
@@ -79,10 +78,16 @@ function Edit() {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        component={Container}
-        sx={{ height: 'calc(100vh - 128px)' }}
+        sx={{
+          height: 'calc(100vh - 128px)',
+          bgcolor: 'primary.light',
+          backgroundImage: 'url(Yellow_People.svg)',
+          backgroundSize: '100% 30%',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center bottom',
+        }}
       >
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500} sx={{ zIndex: 2 }}>
           <Paper elevation={2} sx={{ p: 3, position: 'relative' }}>
             {isGetUsersLoading ? (
               <CircularProgress />
