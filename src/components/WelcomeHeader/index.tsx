@@ -22,7 +22,14 @@ function WelcomeHeader({ goBack }: Props) {
             variant="h4"
             gutterBottom
             component="h1"
-            sx={{ mb: 0, ml: 1, fontFamily: 'Ubuntu', fontSize: '2rem', fontWeight: 'bold' }}
+            sx={{
+              mb: 0,
+              ml: 1,
+              fontFamily: 'Ubuntu',
+              fontSize: '2rem',
+              fontWeight: 'bold',
+              display: { xs: 'none', sm: 'block' },
+            }}
           >
             Cream
           </Typography>
@@ -44,7 +51,7 @@ function WelcomeHeader({ goBack }: Props) {
                 to={AppRoutes.SIGN_UP}
                 color="secondary"
                 variant="contained"
-                sx={{ fontWeight: 900 }}
+                sx={{ fontWeight: 900, fontSize: { xs: '0.75rem', sm: '1rem' } }}
                 onClick={goBack}
               >
                 {t('pages.welcomePage.signUpButton')}
