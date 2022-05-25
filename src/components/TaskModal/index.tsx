@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { useEditTaskMutation, useGetTaskQuery, useGetUserQuery } from '../../services';
-import { AppIcon } from '..';
+import { AppIcon, Modal } from '..';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import { BaseSyntheticEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -21,6 +21,8 @@ interface ITaskModalProps {
   taskId: string;
   description: string;
   title: string;
+  isEditorOpened: boolean;
+  toggleIsEditorOpened: () => void;
 }
 
 interface IFormrState {
@@ -28,7 +30,15 @@ interface IFormrState {
   title: string;
 }
 
-function TaskModal({ boardId, columnId, taskId, description, title }: ITaskModalProps) {
+function TaskModal({
+  boardId,
+  columnId,
+  taskId,
+  description,
+  title,
+  toggleIsEditorOpened,
+  isEditorOpened,
+}: ITaskModalProps) {
   const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const [editTask, {}] = useEditTaskMutation();
@@ -74,7 +84,7 @@ function TaskModal({ boardId, columnId, taskId, description, title }: ITaskModal
   };
 
   return (
-    <>
+    <Modal isOpened={isEditorOpened} onCancel={toggleIsEditorOpened}>
       {isSuccess ? (
         <>
           <Box
@@ -157,7 +167,7 @@ function TaskModal({ boardId, columnId, taskId, description, title }: ITaskModal
                 marginBottom: '0.5rem',
               }}
             />
-            {isEditing ? (
+            {isEditing && (
               <>
                 <Button
                   variant="contained"
@@ -178,13 +188,13 @@ function TaskModal({ boardId, columnId, taskId, description, title }: ITaskModal
                   Cancel
                 </Button>
               </>
-            ) : null}
+            )}
           </Box>
         </>
       ) : (
         <CircularProgress />
       )}
-    </>
+    </Modal>
   );
 }
 
