@@ -68,6 +68,11 @@ function EditableTask({
     });
   };
 
+  const onMouseover = () => setShow(true);
+  const onMouseOut = () => {
+    if (!isEditing) setShow(false);
+  };
+
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -78,12 +83,7 @@ function EditableTask({
           {...provided.draggableProps}
         >
           <ClickAwayListener onClickAway={clickAwayHandler}>
-            <Box
-              onMouseOver={() => setShow(true)}
-              onMouseOut={() => {
-                if (!isEditing) setShow(false);
-              }}
-            >
+            <Box onMouseOver={onMouseover} onMouseOut={onMouseOut}>
               {(show || isEditing) && (
                 <>
                   <TransitionsPopper

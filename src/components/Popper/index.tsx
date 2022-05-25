@@ -3,6 +3,7 @@ import { Paper, Button, Popper, Fade } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { useDeleteTaskMutation } from '../../services';
 import Modal from '../Modal';
+import { useTranslation } from 'react-i18next';
 
 interface IPopperProps {
   boardId: string;
@@ -25,6 +26,7 @@ export default function TransitionsPopper({
   setIsEditorOpened,
   isEditorOpened,
 }: IPopperProps) {
+  const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isConfirmOpened, setIsConfirmOpened] = useState(false);
 
@@ -108,7 +110,7 @@ export default function TransitionsPopper({
                 variant="contained"
                 onClick={handleEdit}
               >
-                Open card
+                {t('components.popper.open')}
               </Button>
               <Button
                 color="inherit"
@@ -117,7 +119,7 @@ export default function TransitionsPopper({
                 variant="contained"
                 onClick={handleDelete}
               >
-                Delete card
+                {t('components.popper.delete')}
               </Button>
             </Paper>
           </Fade>

@@ -32,6 +32,7 @@ function BoardEditor({ isOpened, onCancel, id, title, description }: IEditorProp
       title,
       description,
     },
+    reValidateMode: 'onChange',
   });
 
   const onSubmit = ({ title, description }: IEditorState) => {

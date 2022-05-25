@@ -56,16 +56,16 @@ function TaskModal({
     formState: { errors },
   } = useForm<IFormrState>({
     defaultValues: {
-      title: description,
-      description: title,
+      title: title,
+      description: description.trim(),
     },
   });
 
   const onSubmit = ({ description, title }: IFormrState, event?: BaseSyntheticEvent) => {
     event?.preventDefault();
     if (isSuccess) {
-      const formDescription = description ?? ' ';
-      const formTitle = title ?? ' ';
+      const formDescription = description.length > 0 ? description : ' ';
+      const formTitle = title;
       setIsEditing(false);
       editTask({
         boardId: boardId,
@@ -111,10 +111,9 @@ function TaskModal({
               onClick={() => setIsEditing(true)}
               inputProps={{
                 style: {
-                  padding: '10px 10px',
+                  padding: '10px 0',
                   fontSize: '1.25rem',
                   fontWeight: 'bold',
-                  border: 'none',
                 },
               }}
               error={!!errors.title}
@@ -145,14 +144,14 @@ function TaskModal({
           >
             <DehazeIcon color="secondary" fontSize="large" />
             <Typography sx={{ fontSize: '1.25rem', fontWeight: 'bold', width: '100%' }}>
-              Description:
+              {t('components.popper.description')}
             </Typography>
           </Box>
 
           <Box component="form" onSubmit={handleSubmit(onSubmit)}>
             <TextareaAutosize
               {...register('description')}
-              placeholder="Add a more detailed description"
+              placeholder={t('components.popper.placeholder')}
               onClick={() => setIsEditing(true)}
               minRows={4}
               autoFocus
@@ -176,7 +175,7 @@ function TaskModal({
                   sx={{ marginLeft: '3rem', marginRight: '0.5rem' }}
                   type="submit"
                 >
-                  Submit
+                  {t('components.popper.submit')}
                 </Button>
                 <Button
                   size="small"
@@ -185,7 +184,7 @@ function TaskModal({
                     reset();
                   }}
                 >
-                  Cancel
+                  {t('components.popper.cancel')}
                 </Button>
               </>
             )}

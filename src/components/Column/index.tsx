@@ -19,7 +19,6 @@ function Column({ columnInfo, index }: IColumnProps) {
   const { title, id, order, tasks } = columnInfo;
   const { id: idBoard } = useParams();
   const { t } = useTranslation();
-  console.log('render');
   const [isOpened, setIsOpened] = useState(false);
   const toggleIsOpened = useCallback(() => {
     setIsOpened((isOpened) => !isOpened);

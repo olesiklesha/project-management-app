@@ -1,5 +1,4 @@
 import { Avatar, Box, IconButton, Link, Typography } from '@mui/material';
-import { isValidElement } from 'react';
 import { ITeammateInfo } from '../../models';
 import GhIcon from '../GhIcon';
 
