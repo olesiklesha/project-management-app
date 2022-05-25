@@ -21,3 +21,4 @@ export { default as BoardEditor } from './BoardEditor';
 export { default as GhIcon } from './GhIcon';
 export { default as ErrorToast } from './ErrorToast';
 export { default as AppBreadcrumbs } from './Breadcrumbs';
+export { default as TaskModal } from './TaskModal';

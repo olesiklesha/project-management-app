@@ -5,6 +5,7 @@ import { ITask } from '../../models';
 import { useEditTaskMutation } from '../../services';
 import TransitionsPopper from '../Popper';
 import { Draggable } from 'react-beautiful-dnd';
+import TaskModal from '../TaskModal';
 
 interface IFormData {
   name: string;
@@ -12,7 +13,16 @@ interface IFormData {
 
 type IDraggableTask = ITask & { index: number };
 
-function EditableTask({ title, id, order, userId, boardId, columnId, index }: IDraggableTask) {
+function EditableTask({
+  title,
+  id,
+  order,
+  userId,
+  boardId,
+  columnId,
+  index,
+  description,
+}: IDraggableTask) {
   const [isEditing, setIsEditing] = useState(false);
   const [show, setShow] = useState(false);
   const clickAwayHandler = () => {
@@ -27,13 +37,22 @@ function EditableTask({ title, id, order, userId, boardId, columnId, index }: ID
     },
   });
 
+  const [isEditorOpened, setIsEditorOpened] = useState(false);
+  const toggleIsEditorOpened = () => {
+    setIsEditorOpened((prev) => !prev);
+    if (isEditorOpened) setIsEditing(false);
+  };
+
   const [editTask, {}] = useEditTaskMutation();
 
   const onSubmit = async (data: IFormData) => {
-    const res = data.name || title;
+    const res = data.name ?? title;
     setIsEditing(false);
     setShow(false);
     setValue('name', res);
+
+    if (title === res) return;
+
     editTask({
       boardId: boardId,
       columnId: columnId,
@@ -49,6 +68,11 @@ function EditableTask({ title, id, order, userId, boardId, columnId, index }: ID
     });
   };
 
+  const onMouseover = () => setShow(true);
+  const onMouseOut = () => {
+    if (!isEditing) setShow(false);
+  };
+
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -59,15 +83,30 @@ function EditableTask({ title, id, order, userId, boardId, columnId, index }: ID
           {...provided.draggableProps}
         >
           <ClickAwayListener onClickAway={clickAwayHandler}>
-            <Box onMouseOver={() => setShow(true)} onMouseOut={() => setShow(false)}>
+            <Box onMouseOver={onMouseover} onMouseOut={onMouseOut}>
               {(show || isEditing) && (
-                <TransitionsPopper
-                  boardId={boardId}
-                  columnId={columnId}
-                  taskId={id}
-                  isPopperOpened={isEditing}
-                  setIsPopperOpened={setIsEditing}
-                />
+                <>
+                  <TransitionsPopper
+                    boardId={boardId}
+                    columnId={columnId}
+                    taskId={id}
+                    isPopperOpened={isEditing}
+                    title={title}
+                    description={description}
+                    setIsPopperOpened={setIsEditing}
+                    isEditorOpened={isEditorOpened}
+                    setIsEditorOpened={setIsEditorOpened}
+                  />
+                  <TaskModal
+                    boardId={boardId}
+                    columnId={columnId}
+                    taskId={id}
+                    description={description}
+                    title={title}
+                    isEditorOpened={isEditorOpened}
+                    toggleIsEditorOpened={toggleIsEditorOpened}
+                  />
+                </>
               )}
               {isEditing ? (
                 <Box

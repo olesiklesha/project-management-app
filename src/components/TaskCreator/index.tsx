@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, TextField } from '@mui/material';
+import { Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Modal from '../Modal';
@@ -50,7 +50,7 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateTask) {
       columnId: id,
       body: {
         title: data.title,
-        description: data.title,
+        description: ' ',
         userId,
       },
     });
@@ -63,8 +63,17 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateTask) {
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
-        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          minWidth: '25vw',
+          rowGap: '1rem',
+        }}
       >
+        <Typography variant="h5" sx={{ fontFamily: 'Ubuntu', fontWeight: 500 }} align="center">
+          {t('pages.boardPage.addTask')}
+        </Typography>
         {isGetUsersLoading ? (
           <CircularProgress />
         ) : (
@@ -83,9 +92,18 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateTask) {
               error={!!errors.title}
               helperText={errors.title?.message}
               autoFocus
+              label={t('pages.mainPage.fieldTitle')}
+              variant="standard"
+              sx={{ mb: 2, mt: 2, flexGrow: 1 }}
             />
             <Box>
-              <Button onClick={handleSubmit(onSubmit)}>{t('actions.create')}</Button>
+              <Button
+                onClick={handleSubmit(onSubmit)}
+                variant="contained"
+                sx={{ p: '0.5rem 1.25rem', mr: '1rem' }}
+              >
+                {t('actions.create')}
+              </Button>
               <Button onClick={toggleIsOpened}>{t('actions.cancel')}</Button>
             </Box>
           </>

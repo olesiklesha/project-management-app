@@ -14,16 +14,21 @@ function Welcome() {
       <WelcomeHeader />
       <CustomizedBox color="secondary" component="section">
         <Container
-          sx={{ display: 'flex', alignItems: 'center', flexDirection: { xs: 'column', md: 'row' } }}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            p: '0 1rem',
+            flexDirection: { xs: 'column', md: 'row' },
+          }}
         >
           <Box>
             <Typography
               component="h3"
-              sx={{ fontFamily: 'Ubuntu', fontSize: '2.5rem', mt: '2rem' }}
+              sx={{ fontFamily: 'Ubuntu', fontSize: { xs: '1.5rem', sm: '2.5rem' }, mt: '2rem' }}
             >
               {t('pages.welcomePage.descriptionTitle')}
             </Typography>
-            <Typography sx={{ fontSize: '1.5rem' }} component="h4">
+            <Typography sx={{ fontSize: { xs: '1rem', sm: '1.5rem' } }} component="h4">
               {t('pages.welcomePage.description1')} &nbsp;
               <LocaleSelector />. &nbsp; {t('pages.welcomePage.description2')}
             </Typography>
@@ -47,7 +52,9 @@ function Welcome() {
       <Container
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: '3rem' }}
       >
-        <CustomizedTypography>{t('pages.welcomePage.howToUse')}</CustomizedTypography>
+        <CustomizedTypography sx={{ fontSize: { xs: '2rem', sm: '3rem' } }}>
+          {t('pages.welcomePage.howToUse')}
+        </CustomizedTypography>
         <YoutubeIframe />
       </Container>
       <Container
@@ -60,7 +67,9 @@ function Welcome() {
         component="section"
       >
         <Grid item xs={12} sm={8} md={6}>
-          <CustomizedTypography>{t('pages.welcomePage.team')}</CustomizedTypography>
+          <CustomizedTypography sx={{ fontSize: { xs: '2rem', sm: '3rem' } }}>
+            {t('pages.welcomePage.team')}
+          </CustomizedTypography>
           {TEAM_INFO.map((el, index) => (
             <Profile
               name={el.name}
