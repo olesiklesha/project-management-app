@@ -12,7 +12,16 @@ interface IFormData {
 
 type IDraggableTask = ITask & { index: number };
 
-function EditableTask({ title, id, order, userId, boardId, columnId, index }: IDraggableTask) {
+function EditableTask({
+  title,
+  id,
+  order,
+  userId,
+  boardId,
+  columnId,
+  index,
+  description,
+}: IDraggableTask) {
   const [isEditing, setIsEditing] = useState(false);
   const [show, setShow] = useState(false);
   const clickAwayHandler = () => {
@@ -71,6 +80,8 @@ function EditableTask({ title, id, order, userId, boardId, columnId, index }: ID
                   columnId={columnId}
                   taskId={id}
                   isPopperOpened={isEditing}
+                  title={title}
+                  description={description}
                   setIsPopperOpened={setIsEditing}
                 />
               )}

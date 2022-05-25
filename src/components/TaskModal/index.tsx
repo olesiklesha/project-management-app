@@ -1,54 +1,75 @@
-import { Avatar, Box, Button, CircularProgress, TextareaAutosize, Typography } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  CircularProgress,
+  TextareaAutosize,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { useEditTaskMutation, useGetTaskQuery, useGetUserQuery } from '../../services';
 import { AppIcon } from '..';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import { BaseSyntheticEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 interface ITaskModalProps {
   boardId: string;
   columnId: string;
   taskId: string;
+  description: string;
+  title: string;
 }
 
 interface IFormrState {
   description: string;
+  title: string;
 }
 
-function TaskModal({ boardId, columnId, taskId }: ITaskModalProps) {
+function TaskModal({ boardId, columnId, taskId, description, title }: ITaskModalProps) {
+  const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
+  const [editTask, {}] = useEditTaskMutation();
   const { data: columnData, isSuccess } = useGetTaskQuery({
     boardId,
     columnId,
     taskId,
   });
-
   const { data } = useGetUserQuery(isSuccess ? columnData.userId : skipToken);
 
-  const { register, handleSubmit, setValue } = useForm<IFormrState>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<IFormrState>({
+    defaultValues: {
+      title: description,
+      description: title,
+    },
+  });
 
-  const [editTask, {}] = useEditTaskMutation();
-
-  const onSubmit = ({ description }: IFormrState, event?: BaseSyntheticEvent) => {
+  const onSubmit = ({ description, title }: IFormrState, event?: BaseSyntheticEvent) => {
     event?.preventDefault();
     if (isSuccess) {
-      const res = description ?? ' ';
+      const formDescription = description ?? ' ';
+      const formTitle = title ?? ' ';
       setIsEditing(false);
-      // editTask({
-      //   boardId: boardId,
-      //   columnId: columnId,
-      //   taskId: taskId,
-      //   body: {
-      //     title: columnData.title,
-      //     order: columnData.order,
-      //     description: res,
-      //     userId: columnData.userId,
-      //     boardId: boardId,
-      //     columnId: columnId,
-      //   },
-      // });
-      setValue('description', res);
+      editTask({
+        boardId: boardId,
+        columnId: columnId,
+        taskId: taskId,
+        body: {
+          title: formTitle,
+          order: columnData.order,
+          description: formDescription,
+          userId: columnData.userId,
+          boardId: boardId,
+          columnId: columnId,
+        },
+      });
     }
   };
 
@@ -62,13 +83,33 @@ function TaskModal({ boardId, columnId, taskId }: ITaskModalProps) {
               alignItems: 'center',
               columnGap: '1rem',
               minWidth: '33vw',
+              maxWidth: { md: '50vw', lg: '35vw' },
               mb: '1.5rem',
             }}
           >
             <AppIcon fontSize="large" />
-            <Typography sx={{ fontSize: '1.5rem', fontWeight: 'bold', width: '100%' }}>
-              {columnData.title}
-            </Typography>
+            <TextField
+              {...register('title', { required: t('form.errors.noTitle') })}
+              variant="standard"
+              type="text"
+              size="small"
+              sx={{
+                '& .MuiInput-root::before': {
+                  borderBottom: `none`,
+                },
+              }}
+              onClick={() => setIsEditing(true)}
+              inputProps={{
+                style: {
+                  padding: '10px 10px',
+                  fontSize: '1.25rem',
+                  fontWeight: 'bold',
+                  border: 'none',
+                },
+              }}
+              error={!!errors.title}
+              helperText={errors.title?.message}
+            />
           </Box>
           <Box
             sx={{
@@ -98,58 +139,47 @@ function TaskModal({ boardId, columnId, taskId }: ITaskModalProps) {
             </Typography>
           </Box>
 
-          {isEditing ? (
-            <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-              <TextareaAutosize
-                {...register('description')}
-                placeholder="Add a more detailed description"
-                defaultValue={columnData.description}
-                minRows={4}
-                autoFocus
-                style={{
-                  width: '90%',
-                  fontSize: '1rem',
-                  fontFamily: 'Roboto',
-                  lineHeight: '1.5',
-                  padding: '10px',
-                  resize: 'none',
-                  marginLeft: '3rem',
-                  marginBottom: '0.5rem',
-                }}
-              />
-              <Button
-                variant="contained"
-                size="small"
-                color="secondary"
-                sx={{ marginLeft: '3rem', marginRight: '0.5rem' }}
-                type="submit"
-              >
-                Submit
-              </Button>
-              <Button size="small" onClick={() => setIsEditing(false)}>
-                Cancel
-              </Button>
-            </Box>
-          ) : (
-            <>
-              <Typography
-                onClick={() => setIsEditing(true)}
-                sx={{
-                  p: '10px',
-                  backgroundColor: 'white',
-                  overflowWrap: 'break-word',
-                  position: 'relative',
-                  boxShadow: '0px 3px 5px 0px rgba(0, 0, 0, 0.3)',
-                  marginLeft: '3rem',
-                  minHeight: '118px',
-                }}
-              >
-                {columnData.description.trim().length === 0
-                  ? 'Add a more detailed description'
-                  : columnData.description.trim()}
-              </Typography>
-            </>
-          )}
+          <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+            <TextareaAutosize
+              {...register('description')}
+              placeholder="Add a more detailed description"
+              onClick={() => setIsEditing(true)}
+              minRows={4}
+              autoFocus
+              style={{
+                width: '90%',
+                fontSize: '1rem',
+                fontFamily: 'Roboto',
+                lineHeight: '1.5',
+                padding: '10px',
+                resize: 'none',
+                marginLeft: '3rem',
+                marginBottom: '0.5rem',
+              }}
+            />
+            {isEditing ? (
+              <>
+                <Button
+                  variant="contained"
+                  size="small"
+                  color="secondary"
+                  sx={{ marginLeft: '3rem', marginRight: '0.5rem' }}
+                  type="submit"
+                >
+                  Submit
+                </Button>
+                <Button
+                  size="small"
+                  onClick={() => {
+                    setIsEditing(false);
+                    reset();
+                  }}
+                >
+                  Cancel
+                </Button>
+              </>
+            ) : null}
+          </Box>
         </>
       ) : (
         <CircularProgress />

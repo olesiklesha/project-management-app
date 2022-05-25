@@ -9,6 +9,8 @@ interface IPopperProps {
   boardId: string;
   columnId: string;
   taskId: string;
+  description: string;
+  title: string;
   isPopperOpened: boolean;
   setIsPopperOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -17,6 +19,8 @@ export default function TransitionsPopper({
   boardId,
   columnId,
   taskId,
+  description,
+  title,
   isPopperOpened,
   setIsPopperOpened,
 }: IPopperProps) {
@@ -125,7 +129,13 @@ export default function TransitionsPopper({
       </Popper>
       <Modal isOpened={isConfirmOpened} onCancel={toggleIsConfirm} onConfirm={deleteAction} />
       <Modal isOpened={isEditorOpened} onCancel={toggleIsEditorOpened}>
-        <TaskModal boardId={boardId} columnId={columnId} taskId={taskId} />
+        <TaskModal
+          boardId={boardId}
+          columnId={columnId}
+          taskId={taskId}
+          description={description}
+          title={title}
+        />
       </Modal>
     </div>
   );
