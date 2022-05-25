@@ -39,8 +39,16 @@
       "title": "Welcome page",
       "signUpButton": "Sign up",
       "logInButton": "Log in",
+      "descriptionTitle": "Manage your workflow and team cooperation",
+      "description1": "Cream is an app that will help you collaborate on your projects and reach new peaks of productivity. It also supports multiple languages, such as",
+      "description2": "Join now to organize your tasks and change the way your team works.",
       "howToUse": "How to use app",
       "team": "Team",
+      "teamDescriptions": {
+        "Alex": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam dolorum eum excepturi consectetur, molestias ut velit itaque autem aliquid minima laboriosam voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?",
+        "Artyom": "The guy responsible for all interactions with backend. Deployed server and wrote all API requests. Created login, sign up and edit profile page, set up app localization. Things he likes: beer and clean code. Things he dislikes: work.",
+        "Roma": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam dolorum eum excepturi consectetur, molestias ut velit itaque autem aliquid minima laboriosam voluptas voluptates, quas quia fugit obcaecati, culpa illo! Ab?"
+      },
       "goToMain": "Go to Main Page"
     }
   },

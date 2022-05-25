@@ -60,9 +60,17 @@ function LoginPage() {
         sx={{ height: '100vh', bgcolor: 'primary.light' }}
       >
         <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500} sx={{ zIndex: 2 }}>
-          <Typography component="h1" fontSize={60} fontWeight={500} align="center" gutterBottom>
-            <AppIcon color="secondary" sx={{ fontSize: 60, mr: 1 }} />
-            Task-app
+          <Typography
+            component="h1"
+            fontFamily="Ubuntu"
+            fontSize={60}
+            fontWeight={500}
+            align="center"
+            gutterBottom
+            sx={{ position: 'relative', right: '20px' }}
+          >
+            <AppIcon sx={{ fontSize: 60, mr: 1 }} />
+            Cream
           </Typography>
           <Paper elevation={6} sx={{ p: 3, position: 'relative' }}>
             <IconButton
@@ -132,7 +140,10 @@ function LoginPage() {
           </Paper>
         </Box>
         <Box sx={{ position: 'fixed', bottom: 0, width: '90%' }}>
-          <img width="100%" src="Yellow_People.jpg" alt="people working" />
+          <Grid container justifyContent="space-between" alignItems="flex-end">
+            <img width="35%" src="Team_Working.svg" alt="people working" />
+            <img width="35%" src="Girl_Texting.svg" alt="people working" />
+          </Grid>
         </Box>
       </Grid>
     </>

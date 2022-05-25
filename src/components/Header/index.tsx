@@ -45,7 +45,7 @@ function Header() {
         <Toolbar disableGutters sx={{ minHeight: { xs: '100%' }, display: 'flex', flexGrow: 1 }}>
           <Tooltip title={t('pages.mainPage.title')} sx={{ fontSize: '14px' }}>
             <IconButton component={RouterLink} to={AppRoutes.MAIN} aria-label="home-icon">
-              <AppIcon />
+              <AppIcon sx={{ fontSize: 45 }} />
             </IconButton>
           </Tooltip>
           <Box sx={{ flexGrow: 1 }} />

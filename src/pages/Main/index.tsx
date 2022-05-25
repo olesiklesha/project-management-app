@@ -18,7 +18,13 @@ function Main() {
   };
 
   return (
-    <Box sx={{ minHeight: 'calc(100vh - 128px)' }}>
+    <Box
+      sx={{
+        minHeight: 'calc(100vh - 128px)',
+        background: (t) => `radial-gradient(${t.palette.primary.light} 1.55px, #ffffff 1.55px)`,
+        backgroundSize: '31px 31px',
+      }}
+    >
       <Container maxWidth="xl">
         <Typography variant="h3" sx={{ fontFamily: 'Ubuntu', mb: 1 }}>
           {t('pages.mainPage.title')}

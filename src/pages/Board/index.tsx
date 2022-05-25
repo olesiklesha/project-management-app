@@ -15,7 +15,9 @@ function Board() {
   const [editColumn] = useEditColumnMutation();
   const [editTask] = useEditTaskMutation();
 
-  const { data, isLoading } = useGetBoardQuery(String(id));
+  const { data, isLoading } = useGetBoardQuery(String(id), {
+    pollingInterval: 15000,
+  });
 
   const toggleIsOpened = useCallback(() => {
     setIsOpened((isOpened) => !isOpened);
@@ -79,7 +81,12 @@ function Board() {
       />
     </Box>
   ) : (
-    <Box>
+    <Box
+      sx={{
+        background: (t) => `radial-gradient(${t.palette.primary.light} 1.55px, #ffffff 1.55px)`,
+        backgroundSize: '31px 31px',
+      }}
+    >
       {data && <AppBreadcrumbs title={data.title} />}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="app" type="column" direction="horizontal">
