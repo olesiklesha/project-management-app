@@ -3,7 +3,6 @@ import { Paper, Button, Popper, Fade } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { useDeleteTaskMutation } from '../../services';
 import Modal from '../Modal';
-import TaskModal from '../TaskModal';
 
 interface IPopperProps {
   boardId: string;
@@ -12,26 +11,22 @@ interface IPopperProps {
   description: string;
   title: string;
   isPopperOpened: boolean;
+  isEditorOpened: boolean;
   setIsPopperOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditorOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function TransitionsPopper({
   boardId,
   columnId,
   taskId,
-  description,
-  title,
   isPopperOpened,
   setIsPopperOpened,
+  setIsEditorOpened,
+  isEditorOpened,
 }: IPopperProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isConfirmOpened, setIsConfirmOpened] = useState(false);
-  const [isEditorOpened, setIsEditorOpened] = useState(false);
-
-  const toggleIsEditorOpened = () => {
-    setIsEditorOpened((prev) => !prev);
-    if (isEditorOpened) setIsPopperOpened(false);
-  };
 
   const toggleIsPopperOpened = () => {
     setIsPopperOpened(true);
@@ -53,7 +48,8 @@ export default function TransitionsPopper({
   };
 
   const handleEdit = () => {
-    toggleIsEditorOpened();
+    setIsEditorOpened((prev) => !prev);
+    if (isEditorOpened) setIsPopperOpened(false);
   };
 
   const deleteAction = async () => {
@@ -128,15 +124,6 @@ export default function TransitionsPopper({
         )}
       </Popper>
       <Modal isOpened={isConfirmOpened} onCancel={toggleIsConfirm} onConfirm={deleteAction} />
-      <Modal isOpened={isEditorOpened} onCancel={toggleIsEditorOpened}>
-        <TaskModal
-          boardId={boardId}
-          columnId={columnId}
-          taskId={taskId}
-          description={description}
-          title={title}
-        />
-      </Modal>
     </div>
   );
 }
