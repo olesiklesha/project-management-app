@@ -133,13 +133,13 @@ function SignUpPage() {
               type="submit"
               variant="contained"
               startIcon={
-                (isSignUpLoading || isSignInLoading) && (
+                (isSignUpLoading ?? isSignInLoading) && (
                   <CircularProgress color="secondary" size={20} />
                 )
               }
               fullWidth
               sx={{ mt: 3, mb: 2 }}
-              disabled={isSignUpLoading || isSignInLoading}
+              disabled={isSignUpLoading ?? isSignInLoading}
             >
               {t('pages.signUpPage.signUpButton')}
             </Button>
