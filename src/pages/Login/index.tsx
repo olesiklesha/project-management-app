@@ -59,7 +59,12 @@ function LoginPage() {
         alignItems="center"
         sx={{ height: '100vh', bgcolor: 'primary.light' }}
       >
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500} sx={{ zIndex: 2 }}>
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          maxWidth={500}
+          sx={{ zIndex: 2, m: '0 0.5rem' }}
+        >
           <Typography
             component="h1"
             fontFamily="Ubuntu"

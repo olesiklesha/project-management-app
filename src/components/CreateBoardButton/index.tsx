@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
 import { Button, Tooltip } from '@mui/material';
 import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
-import React, { useState } from 'react';
 import { BoardCreator } from '..';
 import { useTranslation } from 'react-i18next';
 
