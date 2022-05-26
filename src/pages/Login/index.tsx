@@ -142,7 +142,7 @@ function LoginPage() {
         <Box sx={{ position: 'fixed', bottom: 0, width: '90%' }}>
           <Grid container justifyContent="space-between" alignItems="flex-end">
             <img width="35%" src="Team_Working.svg" alt="people working" />
-            <img width="35%" src="Girl_Texting.svg" alt="people working" />
+            <img width="35%" src="Girl_Texting.svg" alt="woman texting" />
           </Grid>
         </Box>
       </Grid>

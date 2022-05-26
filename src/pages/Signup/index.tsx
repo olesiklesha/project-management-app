@@ -157,8 +157,8 @@ function SignUpPage() {
         </Box>
         <Box sx={{ position: 'fixed', bottom: 0, width: '100%' }}>
           <Grid container justifyContent="space-between" alignItems="flex-end">
-            <img width="35%" src="Woman_In_Park.svg" alt="people working" />
-            <img width="35%" src="Woman_Talking.svg" alt="people working" />
+            <img width="35%" src="Woman_In_Park.svg" alt="woman working" />
+            <img width="35%" src="Woman_Talking.svg" alt="woman working" />
           </Grid>
         </Box>
       </Grid>

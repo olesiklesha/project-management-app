@@ -40,7 +40,7 @@ function Welcome() {
               },
             }}
             src="./pixlr-bg-result.png"
-            alt=""
+            alt="man and woman solving a puzzle"
           />
         </Container>
       </CustomizedBox>
