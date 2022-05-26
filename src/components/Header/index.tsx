@@ -3,10 +3,8 @@ import { AppBar, IconButton, Container, Toolbar, Box, Tooltip } from '@mui/mater
 import { Link as RouterLink } from 'react-router-dom';
 import { TimeoutId } from '@reduxjs/toolkit/dist/query/core/buildMiddleware/types';
 import { AppRoutes } from '../../constants';
-import { AppIcon } from '../';
-import { LocaleSwitcher } from '../';
+import { AppIcon, LocaleSwitcher, UserMenu } from '..';
 import CreateBoardButton from '../CreateBoardButton';
-import UserMenu from '../UserMenu';
 import { useTranslation } from 'react-i18next';
 
 let timeout: TimeoutId;

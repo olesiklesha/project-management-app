@@ -1,3 +1,4 @@
+import React, { useForm } from 'react-hook-form';
 import {
   Avatar,
   Box,
@@ -12,7 +13,6 @@ import { useEditTaskMutation, useGetTaskQuery, useGetUserQuery } from '../../ser
 import { AppIcon } from '..';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import { BaseSyntheticEvent, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 interface ITaskModalProps {
@@ -32,7 +32,7 @@ interface IFormrState {
 function TaskModal({ boardId, columnId, taskId, description, title }: ITaskModalProps) {
   const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
-  const [editTask, {}] = useEditTaskMutation();
+  const [editTask] = useEditTaskMutation();
   const { data: columnData, isSuccess } = useGetTaskQuery({
     boardId,
     columnId,

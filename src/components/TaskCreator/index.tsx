@@ -1,11 +1,11 @@
+import React, { useEffect, useState } from 'react';
 import { Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import Modal from '../Modal';
+import { Modal } from '..';
 import { useParams } from 'react-router-dom';
 import { getCurrentUser } from '../../utils';
 import { useCreateTaskMutation, useGetAllUsersQuery } from '../../services';
-import { useEffect, useState } from 'react';
 
 interface IFormData {
   title: string;

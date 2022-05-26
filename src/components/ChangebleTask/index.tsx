@@ -1,11 +1,11 @@
-import { TextareaAutosize, Box, Typography, ClickAwayListener } from '@mui/material';
 import React, { useState } from 'react';
+import { TextareaAutosize, Box, Typography, ClickAwayListener } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { ITask } from '../../models';
 import { useEditTaskMutation } from '../../services';
 import TransitionsPopper from '../Popper';
 import { Draggable } from 'react-beautiful-dnd';
-import TaskModal from '../TaskModal';
+import { TaskModal } from '..';
 import { Modal } from '..';
 
 interface IFormData {

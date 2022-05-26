@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useAppSelector } from '../../hooks/redux';
 import { apiErrorParser } from '../../utils';
-import { IRequestError } from '../../models/apiModels';
+import { IRequestError } from '../../models';
 
 function ErrorToast() {
   const { t } = useTranslation();
