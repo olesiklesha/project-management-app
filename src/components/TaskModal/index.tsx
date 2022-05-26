@@ -1,3 +1,4 @@
+import React, { memo } from 'react';
 import {
   Avatar,
   Box,
@@ -104,6 +105,8 @@ function TaskModal({
               type="text"
               size="small"
               sx={{
+                width: '100%',
+                minHeight: '2rem',
                 '& .MuiInput-root::before': {
                   borderBottom: `none`,
                 },
@@ -197,4 +200,4 @@ function TaskModal({
   );
 }
 
-export default TaskModal;
+export default memo(TaskModal);

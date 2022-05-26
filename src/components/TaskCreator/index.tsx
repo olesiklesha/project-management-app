@@ -5,7 +5,7 @@ import Modal from '../Modal';
 import { useParams } from 'react-router-dom';
 import { getCurrentUser } from '../../utils';
 import { useCreateTaskMutation, useGetAllUsersQuery } from '../../services';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 
 interface IFormData {
   title: string;
@@ -113,4 +113,4 @@ function TaskCreator({ isOpened, toggleIsOpened, id }: ICreateTask) {
   );
 }
 
-export default TaskCreator;
+export default memo(TaskCreator);

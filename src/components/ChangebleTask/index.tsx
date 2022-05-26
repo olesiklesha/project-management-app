@@ -6,6 +6,7 @@ import { useEditTaskMutation } from '../../services';
 import TransitionsPopper from '../Popper';
 import { Draggable } from 'react-beautiful-dnd';
 import TaskModal from '../TaskModal';
+import { handleFocus } from '../../utils';
 
 interface IFormData {
   name: string;
@@ -118,6 +119,7 @@ function EditableTask({
                     {...register('name')}
                     defaultValue={title}
                     autoFocus
+                    onFocus={handleFocus}
                     style={{
                       width: '256px',
                       fontSize: '1rem',

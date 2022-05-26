@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, TextField, Typography, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -76,4 +76,4 @@ function BoardEditor({ isOpened, onCancel, id, title, description }: IEditorProp
   );
 }
 
-export default BoardEditor;
+export default memo(BoardEditor);

@@ -1,4 +1,5 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
+import { memo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -92,4 +93,4 @@ function ColumnCreator({ isOpened, toggleIsOpened }: ICreateColumn) {
   );
 }
 
-export default ColumnCreator;
+export default memo(ColumnCreator);
