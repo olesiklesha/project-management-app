@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as BrowserLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -20,8 +20,7 @@ import { AppRoutes } from '../../constants';
 import { AppIcon } from '../../components';
 import { IRequestError, ISignUpRequest } from '../../models';
 import { useSignUpMutation, useSignInMutation } from '../../services';
-import { isAuth } from '../../utils';
-import { apiErrorParser } from '../../utils';
+import { isAuth, apiErrorParser } from '../../utils';
 
 const signUpFormInitialState: ISignUpRequest = {
   name: '',
@@ -62,7 +61,12 @@ function SignUpPage() {
         alignItems="center"
         sx={{ height: '100vh', bgcolor: 'primary.light' }}
       >
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500} sx={{ zIndex: 2 }}>
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          maxWidth={500}
+          sx={{ zIndex: 2, m: '0 0.5rem' }}
+        >
           <Typography
             component="h1"
             fontFamily="Ubuntu"
@@ -133,13 +137,13 @@ function SignUpPage() {
               type="submit"
               variant="contained"
               startIcon={
-                (isSignUpLoading || isSignInLoading) && (
+                (isSignUpLoading ?? isSignInLoading) && (
                   <CircularProgress color="secondary" size={20} />
                 )
               }
               fullWidth
               sx={{ mt: 3, mb: 2 }}
-              disabled={isSignUpLoading || isSignInLoading}
+              disabled={isSignUpLoading ?? isSignInLoading}
             >
               {t('pages.signUpPage.signUpButton')}
             </Button>

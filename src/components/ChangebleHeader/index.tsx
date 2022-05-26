@@ -1,5 +1,5 @@
-import { TextField, Box, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import { TextField, Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { useEditColumnMutation } from '../../services';
@@ -10,7 +10,7 @@ interface IFormData {
 }
 
 function EditableHeader({ title, id, order }: IColumn) {
-  const [editColumn, {}] = useEditColumnMutation();
+  const [editColumn] = useEditColumnMutation();
   const [isEditing, setIsEditing] = useState(false);
   const { id: idBoard } = useParams();
   const { register, handleSubmit, setValue } = useForm({
@@ -58,7 +58,7 @@ function EditableHeader({ title, id, order }: IColumn) {
       ) : (
         <Typography
           onClick={() => setIsEditing(true)}
-          sx={{ p: '10px 10px', fontWeight: 'bold', fontSize: '1.25rem' }}
+          sx={{ p: '20px 10px 10px', fontWeight: 'bold', fontSize: '1.25rem', width: '100%' }}
         >
           {title}
         </Typography>

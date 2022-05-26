@@ -26,7 +26,7 @@ export function apiErrorParser(error: IRequestError, t: (arg0: string) => string
 
 export function getCurrentUser(data: IUserData[]) {
   const { login } = getLocalAuth();
-  return data.find((user) => user.login === login) || { id: '', login, name: '' };
+  return data.find((user) => user.login === login) ?? { id: '', login, name: '' };
 }
 
 export function logOut() {

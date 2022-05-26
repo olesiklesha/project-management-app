@@ -3,7 +3,6 @@ import { Box, TextField, Typography, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useCreateBoardMutation } from '../../services';
-import { Modal } from '..';
 
 interface ICreatorState {
   title: string;
@@ -11,7 +10,6 @@ interface ICreatorState {
 }
 
 interface IBoardCreator {
-  isOpened: boolean;
   onCancel: () => void;
 }
 
@@ -20,7 +18,7 @@ const initialState = {
   description: '',
 };
 
-function BoardCreator({ isOpened, onCancel }: IBoardCreator) {
+function BoardCreator({ onCancel }: IBoardCreator) {
   const [createBoard] = useCreateBoardMutation();
   const { t } = useTranslation();
   const {
@@ -43,37 +41,35 @@ function BoardCreator({ isOpened, onCancel }: IBoardCreator) {
   };
 
   return (
-    <Modal isOpened={isOpened} onCancel={onCancel}>
-      <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500}>
-        <Typography variant="h5" sx={{ fontFamily: 'Ubuntu', fontWeight: 500 }} align="center">
-          {t('pages.mainPage.createBtn')}
-        </Typography>
-        <TextField
-          label={t('pages.mainPage.fieldTitle')}
-          variant="standard"
-          sx={{ mb: 2, mt: 2, flexGrow: 1 }}
-          fullWidth
-          {...register('title', { required: t('form.errors.noTitle') })}
-          error={!!errors.title}
-          helperText={errors.title?.message}
-        />
-        <TextField
-          multiline
-          rows={4}
-          label={t('form.fields.description')}
-          fullWidth
-          sx={{ mb: 2 }}
-          {...register('description')}
-        />
-        <Button
-          type="submit"
-          variant="contained"
-          sx={{ width: '75%', display: 'flex', flexShrink: 0, m: '0 auto' }}
-        >
-          {t('actions.create')}
-        </Button>
-      </Box>
-    </Modal>
+    <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={500}>
+      <Typography variant="h5" sx={{ fontFamily: 'Ubuntu', fontWeight: 500 }} align="center">
+        {t('pages.mainPage.createBtn')}
+      </Typography>
+      <TextField
+        label={t('pages.mainPage.fieldTitle')}
+        variant="standard"
+        sx={{ mb: 2, mt: 2, flexGrow: 1 }}
+        fullWidth
+        {...register('title', { required: t('form.errors.noTitle') })}
+        error={!!errors.title}
+        helperText={errors.title?.message}
+      />
+      <TextField
+        multiline
+        rows={4}
+        label={t('form.fields.description')}
+        fullWidth
+        sx={{ mb: 2 }}
+        {...register('description')}
+      />
+      <Button
+        type="submit"
+        variant="contained"
+        sx={{ width: '75%', display: 'flex', flexShrink: 0, m: '0 auto' }}
+      >
+        {t('actions.create')}
+      </Button>
+    </Box>
   );
 }
 

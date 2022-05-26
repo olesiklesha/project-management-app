@@ -11,7 +11,12 @@ function LocaleSelector() {
 
   return (
     <FormControl size="small">
-      <Select id="locale-select" value={i18n.language} onChange={handleChange}>
+      <Select
+        id="locale-select"
+        value={i18n.language}
+        onChange={handleChange}
+        sx={{ height: { xs: '1.5rem', sm: '2rem', md: '2.5rem' } }}
+      >
         {locales.map((lng) => (
           <MenuItem key={lng.name} value={lng.name}>
             {lng.nativeName}

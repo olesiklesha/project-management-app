@@ -1,7 +1,7 @@
+import React, { useState } from 'react';
 import { Paper, Box, Button, IconButton } from '@mui/material';
 import { EditableHeader, EditableTask, Modal, TaskCreator } from '..';
 import { theme } from '../../theme';
-import { useCallback, useState } from 'react';
 import { Add, Delete } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import ColumnBox from './ColumnBox.styled';
@@ -19,18 +19,17 @@ function Column({ columnInfo, index }: IColumnProps) {
   const { title, id, order, tasks } = columnInfo;
   const { id: idBoard } = useParams();
   const { t } = useTranslation();
-
   const [isOpened, setIsOpened] = useState(false);
-  const toggleIsOpened = useCallback(() => {
+  const toggleIsOpened = () => {
     setIsOpened((isOpened) => !isOpened);
-  }, []);
+  };
 
   const [isOpenedConfirm, setIsOpenedConfirm] = useState(false);
-  const toggleIsOpenedComfirm = useCallback(() => {
+  const toggleIsOpenedConfirm = () => {
     setIsOpenedConfirm((isOpenedConfirm) => !isOpenedConfirm);
-  }, []);
+  };
 
-  const [deleteColumn, {}] = useDeleteColumnMutation();
+  const [deleteColumn] = useDeleteColumnMutation();
 
   return (
     <Draggable draggableId={id} index={index}>
@@ -43,7 +42,6 @@ function Column({ columnInfo, index }: IColumnProps) {
             display: 'flex',
             flexDirection: 'column',
             mr: '1rem',
-            // order: `${order}`,
           }}
           ref={provided.innerRef}
           {...provided.dragHandleProps}
@@ -51,7 +49,7 @@ function Column({ columnInfo, index }: IColumnProps) {
         >
           <Box sx={{ p: '0 8px 12px 8px', display: 'flex', justifyContent: 'space-between' }}>
             <EditableHeader title={title} id={id} order={order} tasks={tasks} />
-            <IconButton color="secondary" onClick={toggleIsOpenedComfirm}>
+            <IconButton color="secondary" onClick={toggleIsOpenedConfirm}>
               <Delete />
             </IconButton>
           </Box>
@@ -91,7 +89,7 @@ function Column({ columnInfo, index }: IColumnProps) {
           <TaskCreator isOpened={isOpened} toggleIsOpened={toggleIsOpened} id={id} />
           <Modal
             isOpened={isOpenedConfirm}
-            onCancel={toggleIsOpenedComfirm}
+            onCancel={toggleIsOpenedConfirm}
             onConfirm={() => deleteColumn({ boardId: String(idBoard), columnId: id })}
           />
         </Paper>
