@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as BrowserLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -20,8 +20,7 @@ import { AppRoutes } from '../../constants';
 import { AppIcon } from '../../components';
 import { IRequestError, ISignUpRequest } from '../../models';
 import { useSignUpMutation, useSignInMutation } from '../../services';
-import { isAuth } from '../../utils';
-import { apiErrorParser } from '../../utils';
+import { isAuth, apiErrorParser } from '../../utils';
 
 const signUpFormInitialState: ISignUpRequest = {
   name: '',

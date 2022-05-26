@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { memo } from 'react';
 import { useForm } from 'react-hook-form';
@@ -30,11 +31,11 @@ function ColumnCreator({ isOpened, toggleIsOpened }: ICreateColumn) {
     reValidateMode: 'onChange',
   });
 
-  const [createColumn, {}] = useCreateColumnMutation();
+  const [createColumn] = useCreateColumnMutation();
 
   const { t } = useTranslation();
 
-  const onSubmit = async ({ title }: IFormData) => {
+  const onSubmit = ({ title }: IFormData) => {
     toggleIsOpened();
     reset();
     createColumn({

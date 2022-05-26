@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Portal from '../Portal';
 import { Box, Button, CircularProgress, IconButton, Stack, Typography } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
@@ -12,9 +12,8 @@ interface IModalProps {
   isLoading?: boolean;
 }
 
-export default function Modal({ isOpened, onCancel, children, onConfirm, isLoading }: IModalProps) {
+function Modal({ isOpened, onCancel, children, onConfirm, isLoading }: IModalProps) {
   const { t } = useTranslation();
-
   const handleClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       onCancel();
@@ -33,7 +32,7 @@ export default function Modal({ isOpened, onCancel, children, onConfirm, isLoadi
       {isOpened && (
         <Portal>
           <Box
-            onClick={handleClick}
+            onMouseDown={handleClick}
             sx={{
               position: 'fixed',
               width: '100vw',
@@ -115,3 +114,5 @@ export default function Modal({ isOpened, onCancel, children, onConfirm, isLoadi
     </>
   );
 }
+
+export default memo(Modal);

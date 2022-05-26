@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Tooltip } from '@mui/material';
 import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
-import { BoardCreator } from '..';
+import { BoardCreator, Modal } from '..';
 import { useTranslation } from 'react-i18next';
 
 function CreateBoardButton() {
@@ -28,7 +28,9 @@ function CreateBoardButton() {
           {t('pages.mainPage.createBtn')}
         </Button>
       </Tooltip>
-      <BoardCreator isOpened={isOpened} onCancel={toggleIsOpened} />
+      <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
+        <BoardCreator onCancel={toggleIsOpened} />
+      </Modal>
     </>
   );
 }
