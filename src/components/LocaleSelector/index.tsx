@@ -6,7 +6,7 @@ function LocaleSelector() {
   const { i18n } = useTranslation();
 
   const handleChange = (e: SelectChangeEvent) => {
-    i18n.changeLanguage(e.target.value as string);
+    i18n.changeLanguage(e.target.value);
   };
 
   return (
