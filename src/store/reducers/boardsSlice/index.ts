@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { appApi } from '../../../services';
-import { IBoard } from '../../../models/apiModels';
+import { IBoard } from '../../../models';
 
 interface IBoardState {
   boards: IBoard[];

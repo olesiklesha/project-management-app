@@ -22,3 +22,4 @@ export { default as GhIcon } from './GhIcon';
 export { default as ErrorToast } from './ErrorToast';
 export { default as AppBreadcrumbs } from './Breadcrumbs';
 export { default as TaskModal } from './TaskModal';
+export { default as UserMenu } from './UserMenu';

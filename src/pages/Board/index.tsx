@@ -1,5 +1,5 @@
+import React, { useState } from 'react';
 import { Box, Button, CircularProgress } from '@mui/material';
-import React, { useState, useCallback } from 'react';
 import { AppBreadcrumbs, Column, ColumnCreator } from '../../components';
 import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
@@ -19,9 +19,9 @@ function Board() {
     pollingInterval: 15000,
   });
 
-  const toggleIsOpened = useCallback(() => {
+  const toggleIsOpened = () => {
     setIsOpened((isOpened) => !isOpened);
-  }, []);
+  };
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId, type } = result;

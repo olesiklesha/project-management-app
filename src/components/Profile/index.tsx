@@ -1,6 +1,7 @@
+import React from 'react';
 import { Avatar, Box, IconButton, Link, Typography } from '@mui/material';
 import { ITeammateInfo } from '../../models';
-import GhIcon from '../GhIcon';
+import { GhIcon } from '..';
 
 interface IProfileProps extends ITeammateInfo {
   index: number;
