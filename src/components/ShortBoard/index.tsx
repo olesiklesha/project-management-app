@@ -83,13 +83,10 @@ function ShortBoard({ id, title, description }: IBoard) {
           </Tooltip>
         </Stack>
       </Card>
-      <BoardEditor
-        id={id}
-        title={title}
-        description={description}
-        onCancel={toggleEditOpened}
-        isOpened={isEditOpened}
-      />
+      <Modal isOpened={isEditOpened} onCancel={toggleEditOpened}>
+        <BoardEditor id={id} title={title} description={description} onCancel={toggleEditOpened} />
+      </Modal>
+
       <Modal
         isOpened={isDeleteOpened}
         onCancel={toggleDeleteOpened}

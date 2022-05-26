@@ -12,7 +12,7 @@ import { AppRoutes } from '../../constants';
 import { useAppSelector } from '../../hooks/redux';
 import { useTranslation } from 'react-i18next';
 import LocaleSwitcher from '../LocaleSwitcher';
-import { BoardCreator } from '..';
+import { BoardCreator, Modal } from '..';
 import { logOut } from '../../utils';
 
 function UserMenu() {
@@ -128,7 +128,9 @@ function UserMenu() {
           </Grow>
         )}
       </Popper>
-      <BoardCreator isOpened={isOpened} onCancel={toggleIsOpened} />
+      <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
+        <BoardCreator onCancel={toggleIsOpened} />
+      </Modal>
     </>
   );
 }

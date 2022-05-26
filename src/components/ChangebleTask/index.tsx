@@ -6,6 +6,7 @@ import { useEditTaskMutation } from '../../services';
 import TransitionsPopper from '../Popper';
 import { Draggable } from 'react-beautiful-dnd';
 import TaskModal from '../TaskModal';
+import { Modal } from '..';
 
 interface IFormData {
   name: string;
@@ -43,7 +44,7 @@ function EditableTask({
     if (isEditorOpened) setIsEditing(false);
   };
 
-  const [editTask, {}] = useEditTaskMutation();
+  const [editTask] = useEditTaskMutation();
 
   const onSubmit = async (data: IFormData) => {
     const res = data.name ?? title;
@@ -97,15 +98,16 @@ function EditableTask({
                     isEditorOpened={isEditorOpened}
                     setIsEditorOpened={setIsEditorOpened}
                   />
-                  <TaskModal
-                    boardId={boardId}
-                    columnId={columnId}
-                    taskId={id}
-                    description={description}
-                    title={title}
-                    isEditorOpened={isEditorOpened}
-                    toggleIsEditorOpened={toggleIsEditorOpened}
-                  />
+                  <Modal isOpened={isEditorOpened} onCancel={toggleIsEditorOpened}>
+                    <TaskModal
+                      boardId={boardId}
+                      columnId={columnId}
+                      taskId={id}
+                      description={description}
+                      title={title}
+                      toggleIsEditorOpened={toggleIsEditorOpened}
+                    />
+                  </Modal>
                 </>
               )}
               {isEditing ? (
