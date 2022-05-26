@@ -50,7 +50,7 @@ function SignUpPage() {
   const onSubmit = async (request: ISignUpRequest) => {
     await signUp(request);
     await signIn({ login: request.login, password: request.password });
-    if (isAuth()) navigate(AppRoutes.MAIN);
+    if (isAuth()) navigate(AppRoutes.MAIN, { replace: true });
   };
 
   return (

@@ -47,7 +47,7 @@ function LoginPage() {
 
   const onSubmit = async (request: ISignInRequest) => {
     await signIn(request);
-    if (isAuth()) navigate(AppRoutes.MAIN);
+    if (isAuth()) navigate(AppRoutes.MAIN, { replace: true });
   };
 
   return (
