@@ -36,7 +36,7 @@ function BoardEditor({ onCancel, id, title, description }: IEditorProps) {
   const onSubmit = ({ title, description }: IEditorState) => {
     reset();
     onCancel();
-    editBoard({ title, id, description: description || ' ' });
+    editBoard({ title, id, description: description ?? ' ' });
   };
 
   return (

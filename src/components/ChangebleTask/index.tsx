@@ -5,8 +5,7 @@ import { ITask } from '../../models';
 import { useEditTaskMutation } from '../../services';
 import TransitionsPopper from '../Popper';
 import { Draggable } from 'react-beautiful-dnd';
-import { TaskModal } from '..';
-import { Modal } from '..';
+import { TaskModal, Modal } from '..';
 import { handleFocus } from '../../utils';
 
 interface IFormData {

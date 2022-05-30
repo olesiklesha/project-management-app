@@ -21,10 +21,8 @@ function Profile({ avatar, name, description, gh, index }: IProfileProps) {
           flexDirection: { xs: isEven(index) ? 'column' : 'column-reverse', md: 'row' },
         }}
       >
-        {isEven(index) ? (
+        {isEven(index) && (
           <Avatar src={avatar} alt="team member" sx={{ width: 100, height: 100 }} />
-        ) : (
-          ''
         )}
         <Box sx={{ ml: 2, width: { xs: '100%', md: '70%' } }}>
           <Typography component="h3" sx={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
@@ -37,10 +35,8 @@ function Profile({ avatar, name, description, gh, index }: IProfileProps) {
             {description}
           </Typography>
         </Box>
-        {!isEven(index) ? (
+        {!isEven(index) && (
           <Avatar src={avatar} alt="team member" sx={{ width: 100, height: 100 }} />
-        ) : (
-          ''
         )}
       </Box>
     </Box>

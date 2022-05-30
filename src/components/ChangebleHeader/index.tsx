@@ -19,7 +19,7 @@ function EditableHeader({ title, id, order }: IColumn) {
   const edit = () => setIsEditing(true);
 
   const onSubmit = async (data: IFormData) => {
-    const res = data.name || title;
+    const res = data.name ?? title;
     setIsEditing(false);
     editColumn({
       boardId: String(idBoard),
