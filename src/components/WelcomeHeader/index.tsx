@@ -6,7 +6,7 @@ import { AppIcon } from '..';
 import { isAuth } from '../../utils';
 
 interface Props {
-  goBack?: () => void | null;
+  goBack?: () => void;
 }
 
 function WelcomeHeader({ goBack }: Props) {

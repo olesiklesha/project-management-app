@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Alert, Snackbar } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-
 import { useAppSelector } from '../../hooks/redux';
 import { apiErrorParser } from '../../utils';
 import { IRequestError } from '../../models';
