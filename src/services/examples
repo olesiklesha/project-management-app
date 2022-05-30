@@ -1,0 +1,110 @@
+------------ USERS ------------
+
+const { data, isLoading } = useGetAllUsersQuery();
+
+const { data, isLoading } = useGetUserQuery('eb4d6177-dc3c-498d-b36d-ff0790478dea');
+
+const [deleteUser, { isLoading, error, isError }] = useDeleteUserMutation();
+deleteUser('3836f8bf-3248-4269-b351-750ae8faf9a9');
+
+const [editUser, { isLoading, error, isError }] = useEditUserMutation();
+const response = editUser({
+  id: '2222e422-95ce-490a-a198-ce8df7dccd5f',
+  body: { name: 'Slava', login: 'Ukraine', password: '123456' },
+});
+
+------------ BOARDS ------------
+
+const { data, isLoading } = useGetAllBoardsQuery();
+
+const [createBoard, { isLoading, error, isError }] = useCreateBoardMutation();
+const response = createBoard('Create backend');
+
+const { data, isLoading } = useGetBoardQuery('1639b95c-69a1-42bb-92a1-01d3b99f9808');
+
+const [deleteBoard, { isLoading, error, isError }] = useDeleteBoardMutation();
+deleteBoard('833c58c0-af75-4c70-8790-be115914aefb');
+
+const [editBoard, { isLoading, error, isError }] = useEditBoardMutation();
+const response = editBoard({
+  id: 'a4ffa45a-cfc9-4150-b58e-4d417aefe7ec',
+  title: 'Create frontend',
+});
+
+------------ COLUMNS ------------
+
+const { data, isLoading: boardsIsLoading } = useGetAllColumnsQuery('1639b95c-69a1-42bb-92a1-01d3b99f9808');
+
+const [createColumn, { isLoading, error, isError }] = useCreateColumnMutation();
+const response = createColumn({
+  id: '1639b95c-69a1-42bb-92a1-01d3b99f9808',
+  body: { title: 'Done', order: 1 },
+});
+
+const { data: columnData } = useGetColumnQuery({
+  boardId: '1639b95c-69a1-42bb-92a1-01d3b99f9808',
+  columnId: 'ff9c431b-7234-49ce-9b4d-0a154d59ce51',
+});
+
+const [deleteColumn, { isLoading, error, isError }] = useDeleteColumnMutation();
+deleteColumn({
+  boardId: '1639b95c-69a1-42bb-92a1-01d3b99f9808',
+  columnId: '64b4b2e6-5af0-4db7-89c7-9926a6d410dc',
+})
+
+const [editColumn, { isLoading, error, isError }] = useEditColumnMutation();
+editColumn({
+  boardId: '1639b95c-69a1-42bb-92a1-01d3b99f9808',
+  columnId: 'ff9c431b-7234-49ce-9b4d-0a154d59ce51',
+  body: {
+    title: 'Planned',
+    order: 1,
+  },
+});
+
+------------ TASKS ------------
+
+const { data, isLoading: boardsIsLoading } = useGetAllTasksQuery({
+  boardId: '1639b95c-69a1-42bb-92a1-01d3b99f9808',
+  columnId: 'ff9c431b-7234-49ce-9b4d-0a154d59ce51',
+});
+
+const [createTask, { isLoading, error, isError }] = useCreateTaskMutation();
+createTask({
+  boardId: '1639b95c-69a1-42bb-92a1-01d3b99f9808',
+  columnId: 'ff9c431b-7234-49ce-9b4d-0a154d59ce51',
+  body: {
+    title: "Task: pet the cat",
+    order: 1,
+    description: "Domestic cat needs to be stroked gently",
+    userId: "eb4d6177-dc3c-498d-b36d-ff0790478dea"
+  },
+});
+
+const { data: columnData } = useGetTaskQuery({
+  boardId: '1639b95c-69a1-42bb-92a1-01d3b99f9808',
+  columnId: 'ff9c431b-7234-49ce-9b4d-0a154d59ce51',
+  taskId: '02b9de6f-1c6c-4110-971f-ee62a1d21497'
+});
+
+const [deleteTask, { isLoading, error, isError }] = useDeleteTaskMutation();
+deleteTask({
+  boardId: '1639b95c-69a1-42bb-92a1-01d3b99f9808',
+  columnId: 'ff9c431b-7234-49ce-9b4d-0a154d59ce51',
+  taskId: '4c3210d7-db42-47fa-832c-eab0037c259d'
+})
+
+const [editTask, { isLoading, error, isError }] = useEditTaskMutation();
+editTask({
+  boardId: '1639b95c-69a1-42bb-92a1-01d3b99f9808',
+  columnId: 'ff9c431b-7234-49ce-9b4d-0a154d59ce51',
+  taskId: '63a7c9b3-6d55-4b23-98bc-84d29800b28c',
+  body: {
+    title: "Task: Do no pet the cat!",
+    order: 2,
+    description: "Domestic cat",
+    userId: "eb4d6177-dc3c-498d-b36d-ff0790478dea",
+    boardId: '1639b95c-69a1-42bb-92a1-01d3b99f9808',
+    columnId: 'ff9c431b-7234-49ce-9b4d-0a154d59ce51',
+  }
+})

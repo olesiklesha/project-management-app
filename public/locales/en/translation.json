@@ -1,0 +1,114 @@
+{
+  "pages": {
+    "page404": {
+      "message": "Malformed URL",
+      "text": "The link you entered does not look like a valid Cream link. If someone gave you this link, you may need to ask them to check that it's correct.",
+      "boundary": "Sorry.. there was an error"
+    },
+    "boardPage": {
+      "title": "Board page",
+      "addColumn": "Add column",
+      "addTask": "Add task",
+      "taskCreatorPlaceholder": "Enter new task",
+      "columnCreatorPlaceholder": "Enter title for new column"
+    },
+    "editPage": {
+      "action": "Edit your account",
+      "submitButton": "Save changes",
+      "deleteButton": "Delete account"
+    },
+    "loginPage": {
+      "action": "Log in to your account",
+      "or": "or",
+      "loginButton": "Log in",
+      "signUpLink": "Don't have an account? Sign Up"
+    },
+    "signUpPage": {
+      "action": "Sign up for your account",
+      "signUpButton": "Sign in",
+      "or": "or",
+      "loginLink": "Already have an account? Log In"
+    },
+    "mainPage": {
+      "title": "Boards",
+      "createBtn": "Create board",
+      "editBoardTitle": "Edit board title",
+      "fieldTitle": "Title"
+    },
+    "welcomePage": {
+      "title": "Welcome page",
+      "signUpButton": "Sign up",
+      "logInButton": "Log in",
+      "descriptionTitle": "Manage your workflow and team cooperation",
+      "description1": "Cream is an app that will help you collaborate on your projects and reach new peaks of productivity. It also supports multiple languages, such as",
+      "description2": "Join now to organize your tasks and change the way your team works.",
+      "howToUse": "How to use app",
+      "team": "Team",
+      "teamDescriptions": {
+        "Alex": "Team leader. Things he was responsible for: organizing teamwork, building the basic structure of the application, private and public routes, the main page, drag and drop on the board page and the sticky header with user menu. Things he likes: coding, football and beer. Things he dislikes: factory.",
+        "Artyom": "The guy responsible for all interactions with backend. Deployed server and wrote all API requests. Created login, sign up and edit profile page, set up app localization. Things he likes: beer and clean code. Things he dislikes: work.",
+        "Roma": "The guy responsible for the welcome page, error pages, application error handling, whiteboard page and interaction with columns and tasks. Thing he likes: cooking, bicycles and computers.  Things he dislikes: beer ;)"
+      },
+      "goToMain": "Go to Main Page"
+    }
+  },
+  "components": {
+    "header": {
+      "board": "Board",
+      "editProfile": "Edit profile",
+      "logOut": "Log out"
+    },
+    "footer": {
+      "title": "Footer"
+    },
+    "confirmModal": {
+      "text": "Do you really want to delete?"
+    },
+    "popper": {
+      "submit": "Submit",
+      "cancel": "Cancel",
+      "placeholder": "Add a more detailed description",
+      "description": "Description:",
+      "open": "Open card",
+      "delete": "Delete card"
+    }
+  },
+  "form": {
+    "fields": {
+      "name": "Name",
+      "login": "Login",
+      "password": "Password",
+      "newPassword": "New password",
+      "description": "Description"
+    },
+    "errors": {
+      "noName": "⚠Name is required",
+      "noLogin": "⚠Login is required",
+      "noPassword": "⚠Password is required",
+      "minLengthLogin": "⚠Login is too short",
+      "minLengthPassword": "⚠Password is too short",
+      "noTitle": "⚠Title is required",
+      "noDescription": "⚠Description is required"
+    },
+    "messages" : {
+      "successEdit": "Successfully updated"
+    }
+  },
+  "api": {
+    "errors": {
+      "message": "The following error has occurred",
+      "status": "An error has occurred with the following status",
+      "default": "Something went wrong, please retry your request"
+    }
+  },
+  "answers": {
+    "yes": "Yes",
+    "no": "No"
+  },
+  "actions": {
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel"
+  }
+}
