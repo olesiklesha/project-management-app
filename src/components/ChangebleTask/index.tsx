@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextareaAutosize, Box, Typography, ClickAwayListener } from '@mui/material';
+import { Box, Typography, ClickAwayListener } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { ITask } from '../../models';
 import { useEditTaskMutation } from '../../services';
@@ -7,6 +7,7 @@ import TransitionsPopper from '../Popper';
 import { Draggable } from 'react-beautiful-dnd';
 import { TaskModal, Modal } from '..';
 import { handleFocus } from '../../utils';
+import { CustomizedTextareaAutosize } from './TextArea.styled';
 
 interface IFormData {
   name: string;
@@ -116,19 +117,11 @@ function EditableTask({
                   onSubmit={handleSubmit(onSubmit)}
                   sx={{ position: 'relative' }}
                 >
-                  <TextareaAutosize
+                  <CustomizedTextareaAutosize
                     {...register('name')}
                     defaultValue={title}
                     autoFocus
                     onFocus={handleFocus}
-                    style={{
-                      width: '256px',
-                      fontSize: '1rem',
-                      fontFamily: 'Roboto',
-                      lineHeight: '1.4',
-                      padding: '10px',
-                      resize: 'vertical',
-                    }}
                   />
                 </Box>
               ) : (

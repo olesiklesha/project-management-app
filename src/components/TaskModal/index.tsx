@@ -14,6 +14,7 @@ import { AppIcon } from '..';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import { BaseSyntheticEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CustomizedTextareaAutosize } from './TextArea.styled';
 
 interface ITaskModalProps {
   boardId: string;
@@ -140,22 +141,12 @@ function TaskModal({ boardId, columnId, taskId, description, title }: ITaskModal
       </Box>
 
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-        <TextareaAutosize
+        <CustomizedTextareaAutosize
           {...register('description')}
           placeholder={t('components.popper.placeholder')}
           onClick={() => setIsEditing(true)}
           minRows={4}
           autoFocus
-          style={{
-            width: '90%',
-            fontSize: '1rem',
-            fontFamily: 'Roboto',
-            lineHeight: '1.5',
-            padding: '10px',
-            resize: 'none',
-            marginLeft: '3rem',
-            marginBottom: '0.5rem',
-          }}
         />
         {isEditing && (
           <>
