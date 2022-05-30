@@ -86,7 +86,9 @@ function Column({ columnInfo, index }: IColumnProps) {
           >
             {t('pages.boardPage.addTask')}
           </Button>
-          <TaskCreator isOpened={isOpened} toggleIsOpened={toggleIsOpened} id={id} />
+          <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
+            <TaskCreator toggleIsOpened={toggleIsOpened} id={id} />
+          </Modal>
           <Modal
             isOpened={isOpenedConfirm}
             onCancel={toggleIsOpenedConfirm}

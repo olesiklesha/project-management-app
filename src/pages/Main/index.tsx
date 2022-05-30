@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Button, CircularProgress, Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { BoardCreator, Modal, ShortBoard } from '../../components';
@@ -8,14 +8,12 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 function Main() {
   const { t } = useTranslation();
   const { data, isLoading } = useGetAllBoardsQuery(undefined, {
-    pollingInterval: 30000,
+    refetchOnFocus: true,
   });
 
   const [isOpened, setOpened] = useState(false);
 
-  const toggleIsOpened = useCallback(() => {
-    setOpened((prev) => !prev);
-  }, []);
+  const toggleIsOpened = () => setOpened((prev) => !prev);
 
   return (
     <Box

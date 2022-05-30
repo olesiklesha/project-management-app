@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import Portal from '../Portal';
 import { Box, Button, CircularProgress, IconButton, Stack, Typography } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
@@ -115,4 +115,4 @@ function Modal({ isOpened, onCancel, children, onConfirm, isLoading }: IModalPro
   );
 }
 
-export default memo(Modal);
+export default Modal;

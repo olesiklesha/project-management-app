@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Button, CircularProgress } from '@mui/material';
-import { AppBreadcrumbs, Column, ColumnCreator } from '../../components';
+import { AppBreadcrumbs, Column, ColumnCreator, Modal } from '../../components';
 import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
 import BoardBox from './BoardBox.styled';
@@ -16,7 +16,7 @@ function Board() {
   const [editTask] = useEditTaskMutation();
 
   const { data, isLoading } = useGetBoardQuery(String(id), {
-    pollingInterval: 15000,
+    refetchOnFocus: true,
   });
 
   const toggleIsOpened = () => {
@@ -113,7 +113,9 @@ function Board() {
                 {t('pages.boardPage.addColumn')}
               </Button>
               {provided.placeholder}
-              <ColumnCreator isOpened={isOpened} toggleIsOpened={toggleIsOpened} />
+              <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
+                <ColumnCreator toggleIsOpened={toggleIsOpened} />
+              </Modal>
             </BoardBox>
           )}
         </Droppable>

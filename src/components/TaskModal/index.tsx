@@ -12,7 +12,7 @@ import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { useEditTaskMutation, useGetTaskQuery, useGetUserQuery } from '../../services';
 import { AppIcon } from '..';
 import DehazeIcon from '@mui/icons-material/Dehaze';
-import { BaseSyntheticEvent, memo, useState } from 'react';
+import { BaseSyntheticEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface ITaskModalProps {
@@ -186,4 +186,4 @@ function TaskModal({ boardId, columnId, taskId, description, title }: ITaskModal
   );
 }
 
-export default memo(TaskModal);
+export default TaskModal;

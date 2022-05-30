@@ -62,7 +62,7 @@ function EditableTask({
       body: {
         title: res,
         order: order,
-        description: res,
+        description: description,
         userId: userId,
         boardId: boardId,
         columnId: columnId,
