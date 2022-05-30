@@ -1,13 +1,5 @@
 import { useForm } from 'react-hook-form';
-import {
-  Avatar,
-  Box,
-  Button,
-  CircularProgress,
-  TextareaAutosize,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Avatar, Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { useEditTaskMutation, useGetTaskQuery, useGetUserQuery } from '../../services';
 import { AppIcon } from '..';
