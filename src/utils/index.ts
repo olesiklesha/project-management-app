@@ -1,3 +1,4 @@
+import { BaseSyntheticEvent } from 'react';
 import { AUTH, TOKEN_LIFETIME } from '../constants';
 import { IBoard, IRequestError, IUserData } from '../models';
 
@@ -43,3 +44,5 @@ export function changeElOrder<T>(arr: Array<T>, from: number, to: number) {
   cloneArr.splice(to, 0, moved[0]);
   return cloneArr;
 }
+
+export const handleFocus = (event: BaseSyntheticEvent) => event.target.select();

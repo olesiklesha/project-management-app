@@ -12,7 +12,7 @@ interface IModalProps {
   isLoading?: boolean;
 }
 
-export default function Modal({ isOpened, onCancel, children, onConfirm, isLoading }: IModalProps) {
+function Modal({ isOpened, onCancel, children, onConfirm, isLoading }: IModalProps) {
   const { t } = useTranslation();
   const handleClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
@@ -114,3 +114,5 @@ export default function Modal({ isOpened, onCancel, children, onConfirm, isLoadi
     </>
   );
 }
+
+export default Modal;

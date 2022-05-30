@@ -7,7 +7,7 @@ function YoutubeIframe() {
       <ReactPlayer
         width="100%"
         height="100%"
-        url="https://www.youtube.com/watch?v=AGD_-XT0dDo&t=2875s"
+        url="https://www.youtube.com/watch?v=f3Wei8Oyga8"
         style={{ position: 'absolute', top: 0 }}
       />
     </div>

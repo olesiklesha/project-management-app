@@ -16,6 +16,7 @@ function EditableHeader({ title, id, order }: IColumn) {
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: { name: title },
   });
+  const edit = () => setIsEditing(true);
 
   const onSubmit = async (data: IFormData) => {
     const res = data.name ?? title;
@@ -57,7 +58,7 @@ function EditableHeader({ title, id, order }: IColumn) {
         </Box>
       ) : (
         <Typography
-          onClick={() => setIsEditing(true)}
+          onClick={edit}
           sx={{ p: '20px 10px 10px', fontWeight: 'bold', fontSize: '1.25rem', width: '100%' }}
         >
           {title}
