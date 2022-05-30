@@ -12,7 +12,7 @@ import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { useEditTaskMutation, useGetTaskQuery, useGetUserQuery } from '../../services';
 import { AppIcon } from '..';
 import DehazeIcon from '@mui/icons-material/Dehaze';
-import { BaseSyntheticEvent, memo, useState } from 'react';
+import { BaseSyntheticEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface ITaskModalProps {
@@ -55,20 +55,20 @@ function TaskModal({ boardId, columnId, taskId, description, title }: ITaskModal
   const onSubmit = ({ description, title }: IFormrState, event?: BaseSyntheticEvent) => {
     event?.preventDefault();
     if (isSuccess) {
-      const formDescription = description.length > 0 ? description : ' ';
+      const formDescription = description ?? ' ';
       const formTitle = title;
       setIsEditing(false);
       editTask({
-        boardId: boardId,
-        columnId: columnId,
-        taskId: taskId,
+        boardId,
+        columnId,
+        taskId,
         body: {
           title: formTitle,
           order: columnData.order,
           description: formDescription,
           userId: columnData.userId,
-          boardId: boardId,
-          columnId: columnId,
+          boardId,
+          columnId,
         },
       });
     }

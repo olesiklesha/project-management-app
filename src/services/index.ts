@@ -139,7 +139,7 @@ const appApi = createApi({
       async onQueryStarted({ id, title, description }, { dispatch, queryFulfilled }) {
         const editResult = dispatch(
           appApi.util.updateQueryData('getAllBoards', undefined, (draft) =>
-            draft.map((el) => (el.id === id ? { id, title, description } : el))
+            draft.map((el) => (el.id === id ? { id, title, description } : el)).sort(sortBoards)
           )
         );
         queryFulfilled.catch(editResult.undo);

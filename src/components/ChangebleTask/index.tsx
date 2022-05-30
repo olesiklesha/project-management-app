@@ -55,16 +55,16 @@ function EditableTask({
     if (title === res) return;
 
     editTask({
-      boardId: boardId,
-      columnId: columnId,
+      boardId,
+      columnId,
       taskId: id,
       body: {
         title: res,
-        order: order,
-        description: description,
-        userId: userId,
-        boardId: boardId,
-        columnId: columnId,
+        order,
+        description,
+        userId,
+        boardId,
+        columnId,
       },
     });
   };
