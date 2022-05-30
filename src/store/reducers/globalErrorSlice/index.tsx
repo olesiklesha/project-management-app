@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IRequestError } from '../../../models/apiModels';
+import { IRequestError } from '../../../models';
 
 interface IGlobalErrorState {
   globalError: IRequestError;

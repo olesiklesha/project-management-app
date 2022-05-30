@@ -2,11 +2,11 @@ import { AppBar, BottomNavigation, Box, Typography, Button } from '@mui/material
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from '../../constants';
-import { AppIcon } from '../';
+import { AppIcon } from '..';
 import { isAuth } from '../../utils';
 
 interface Props {
-  goBack?: () => void | null;
+  goBack?: () => void;
 }
 
 function WelcomeHeader({ goBack }: Props) {

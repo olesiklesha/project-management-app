@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as BrowserLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -20,8 +20,7 @@ import { AppRoutes } from '../../constants';
 import { AppIcon } from '../../components';
 import { ISignInRequest, IRequestError } from '../../models';
 import { useSignInMutation } from '../../services';
-import { isAuth } from '../../utils';
-import { apiErrorParser } from '../../utils';
+import { isAuth, apiErrorParser } from '../../utils';
 
 const signInFormInitialState: ISignInRequest = {
   login: '',
@@ -47,7 +46,7 @@ function LoginPage() {
 
   const onSubmit = async (request: ISignInRequest) => {
     await signIn(request);
-    if (isAuth()) navigate(AppRoutes.MAIN);
+    if (isAuth()) navigate(AppRoutes.MAIN, { replace: true });
   };
 
   return (
@@ -147,7 +146,7 @@ function LoginPage() {
         <Box sx={{ position: 'fixed', bottom: 0, width: '90%' }}>
           <Grid container justifyContent="space-between" alignItems="flex-end">
             <img width="35%" src="Team_Working.svg" alt="people working" />
-            <img width="35%" src="Girl_Texting.svg" alt="people working" />
+            <img width="35%" src="Girl_Texting.svg" alt="woman texting" />
           </Grid>
         </Box>
       </Grid>

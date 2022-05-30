@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper, Button, Popper, Fade } from '@mui/material';
+import { Paper, Button, Popper, Fade, Box } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { useDeleteTaskMutation } from '../../services';
 import Modal from '../Modal';
@@ -54,8 +54,8 @@ export default function TransitionsPopper({
     if (isEditorOpened) setIsPopperOpened(false);
   };
 
-  const deleteAction = async () => {
-    await deleteTask({
+  const deleteAction = () => {
+    deleteTask({
       boardId,
       columnId,
       taskId,
@@ -65,10 +65,10 @@ export default function TransitionsPopper({
   const canBeOpen = isPopperOpened && Boolean(anchorEl);
   const idPopper = canBeOpen ? 'transition-popper' : undefined;
 
-  const [deleteTask, {}] = useDeleteTaskMutation();
+  const [deleteTask] = useDeleteTaskMutation();
 
   return (
-    <div style={{ position: 'absolute', top: 0, right: 0, zIndex: 100 }}>
+    <Box sx={{ position: 'absolute', top: 0, right: 0, zIndex: 100 }}>
       <Button
         aria-describedby={idPopper}
         type="button"
@@ -126,6 +126,6 @@ export default function TransitionsPopper({
         )}
       </Popper>
       <Modal isOpened={isConfirmOpened} onCancel={toggleIsConfirm} onConfirm={deleteAction} />
-    </div>
+    </Box>
   );
 }

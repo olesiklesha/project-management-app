@@ -4,7 +4,7 @@ import { AppRoutes } from '../../constants';
 import { Card, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { BoardEditor, Modal } from '../index';
+import { BoardEditor, Modal } from '..';
 import { useDeleteBoardMutation } from '../../services';
 import { IBoard } from '../../models';
 
@@ -83,13 +83,9 @@ function ShortBoard({ id, title, description }: IBoard) {
           </Tooltip>
         </Stack>
       </Card>
-      <BoardEditor
-        id={id}
-        title={title}
-        description={description}
-        onCancel={toggleEditOpened}
-        isOpened={isEditOpened}
-      />
+      <Modal isOpened={isEditOpened} onCancel={toggleEditOpened}>
+        <BoardEditor id={id} title={title} description={description} onCancel={toggleEditOpened} />
+      </Modal>
       <Modal
         isOpened={isDeleteOpened}
         onCancel={toggleDeleteOpened}

@@ -1,11 +1,13 @@
-import { TextareaAutosize, Box, Typography, ClickAwayListener } from '@mui/material';
 import React, { useState } from 'react';
+import { Box, Typography, ClickAwayListener } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { ITask } from '../../models';
 import { useEditTaskMutation } from '../../services';
 import TransitionsPopper from '../Popper';
 import { Draggable } from 'react-beautiful-dnd';
-import TaskModal from '../TaskModal';
+import { TaskModal, Modal } from '..';
+import { handleFocus } from '../../utils';
+import { CustomizedTextareaAutosize } from './TextArea.styled';
 
 interface IFormData {
   name: string;
@@ -43,7 +45,7 @@ function EditableTask({
     if (isEditorOpened) setIsEditing(false);
   };
 
-  const [editTask, {}] = useEditTaskMutation();
+  const [editTask] = useEditTaskMutation();
 
   const onSubmit = async (data: IFormData) => {
     const res = data.name ?? title;
@@ -54,16 +56,16 @@ function EditableTask({
     if (title === res) return;
 
     editTask({
-      boardId: boardId,
-      columnId: columnId,
+      boardId,
+      columnId,
       taskId: id,
       body: {
         title: res,
-        order: order,
-        description: res,
-        userId: userId,
-        boardId: boardId,
-        columnId: columnId,
+        order,
+        description,
+        userId,
+        boardId,
+        columnId,
       },
     });
   };
@@ -97,15 +99,16 @@ function EditableTask({
                     isEditorOpened={isEditorOpened}
                     setIsEditorOpened={setIsEditorOpened}
                   />
-                  <TaskModal
-                    boardId={boardId}
-                    columnId={columnId}
-                    taskId={id}
-                    description={description}
-                    title={title}
-                    isEditorOpened={isEditorOpened}
-                    toggleIsEditorOpened={toggleIsEditorOpened}
-                  />
+                  <Modal isOpened={isEditorOpened} onCancel={toggleIsEditorOpened}>
+                    <TaskModal
+                      boardId={boardId}
+                      columnId={columnId}
+                      taskId={id}
+                      description={description}
+                      title={title}
+                      toggleIsEditorOpened={toggleIsEditorOpened}
+                    />
+                  </Modal>
                 </>
               )}
               {isEditing ? (
@@ -114,18 +117,11 @@ function EditableTask({
                   onSubmit={handleSubmit(onSubmit)}
                   sx={{ position: 'relative' }}
                 >
-                  <TextareaAutosize
+                  <CustomizedTextareaAutosize
                     {...register('name')}
                     defaultValue={title}
                     autoFocus
-                    style={{
-                      width: '256px',
-                      fontSize: '1rem',
-                      fontFamily: 'Roboto',
-                      lineHeight: '1.4',
-                      padding: '10px',
-                      resize: 'vertical',
-                    }}
+                    onFocus={handleFocus}
                   />
                 </Box>
               ) : (

@@ -35,11 +35,7 @@ class ErrorBoundary extends Component<Props, State> {
 
   public render() {
     if (this.state.hasError) {
-      return (
-        <>
-          <ErrorPage error={this.state.error} goBack={this.goBack.bind(this)} />
-        </>
-      );
+      return <ErrorPage error={this.state.error} goBack={this.goBack.bind(this)} />;
     }
 
     return this.props.children;

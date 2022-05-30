@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as BrowserLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -20,8 +20,7 @@ import { AppRoutes } from '../../constants';
 import { AppIcon } from '../../components';
 import { IRequestError, ISignUpRequest } from '../../models';
 import { useSignUpMutation, useSignInMutation } from '../../services';
-import { isAuth } from '../../utils';
-import { apiErrorParser } from '../../utils';
+import { isAuth, apiErrorParser } from '../../utils';
 
 const signUpFormInitialState: ISignUpRequest = {
   name: '',
@@ -50,7 +49,7 @@ function SignUpPage() {
   const onSubmit = async (request: ISignUpRequest) => {
     await signUp(request);
     await signIn({ login: request.login, password: request.password });
-    if (isAuth()) navigate(AppRoutes.MAIN);
+    if (isAuth()) navigate(AppRoutes.MAIN, { replace: true });
   };
 
   return (
@@ -162,8 +161,8 @@ function SignUpPage() {
         </Box>
         <Box sx={{ position: 'fixed', bottom: 0, width: '100%' }}>
           <Grid container justifyContent="space-between" alignItems="flex-end">
-            <img width="35%" src="Woman_In_Park.svg" alt="people working" />
-            <img width="35%" src="Woman_Talking.svg" alt="people working" />
+            <img width="35%" src="Woman_In_Park.svg" alt="woman working" />
+            <img width="35%" src="Woman_Talking.svg" alt="woman working" />
           </Grid>
         </Box>
       </Grid>

@@ -1,7 +1,7 @@
+import React, { useState } from 'react';
 import { Paper, Box, Button, IconButton } from '@mui/material';
 import { EditableHeader, EditableTask, Modal, TaskCreator } from '..';
 import { theme } from '../../theme';
-import { useCallback, useState } from 'react';
 import { Add, Delete } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import ColumnBox from './ColumnBox.styled';
@@ -20,16 +20,16 @@ function Column({ columnInfo, index }: IColumnProps) {
   const { id: idBoard } = useParams();
   const { t } = useTranslation();
   const [isOpened, setIsOpened] = useState(false);
-  const toggleIsOpened = useCallback(() => {
+  const toggleIsOpened = () => {
     setIsOpened((isOpened) => !isOpened);
-  }, []);
+  };
 
   const [isOpenedConfirm, setIsOpenedConfirm] = useState(false);
-  const toggleIsOpenedConfirm = useCallback(() => {
+  const toggleIsOpenedConfirm = () => {
     setIsOpenedConfirm((isOpenedConfirm) => !isOpenedConfirm);
-  }, []);
+  };
 
-  const [deleteColumn, {}] = useDeleteColumnMutation();
+  const [deleteColumn] = useDeleteColumnMutation();
 
   return (
     <Draggable draggableId={id} index={index}>
@@ -42,7 +42,6 @@ function Column({ columnInfo, index }: IColumnProps) {
             display: 'flex',
             flexDirection: 'column',
             mr: '1rem',
-            // order: `${order}`,
           }}
           ref={provided.innerRef}
           {...provided.dragHandleProps}
@@ -87,7 +86,9 @@ function Column({ columnInfo, index }: IColumnProps) {
           >
             {t('pages.boardPage.addTask')}
           </Button>
-          <TaskCreator isOpened={isOpened} toggleIsOpened={toggleIsOpened} id={id} />
+          <Modal isOpened={isOpened} onCancel={toggleIsOpened}>
+            <TaskCreator toggleIsOpened={toggleIsOpened} id={id} />
+          </Modal>
           <Modal
             isOpened={isOpenedConfirm}
             onCancel={toggleIsOpenedConfirm}

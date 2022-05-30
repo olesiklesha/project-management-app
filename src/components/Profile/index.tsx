@@ -1,6 +1,7 @@
+import React from 'react';
 import { Avatar, Box, IconButton, Link, Typography } from '@mui/material';
 import { ITeammateInfo } from '../../models';
-import GhIcon from '../GhIcon';
+import { GhIcon } from '..';
 
 interface IProfileProps extends ITeammateInfo {
   index: number;
@@ -20,7 +21,9 @@ function Profile({ avatar, name, description, gh, index }: IProfileProps) {
           flexDirection: { xs: isEven(index) ? 'column' : 'column-reverse', md: 'row' },
         }}
       >
-        {isEven(index) ? <Avatar src={avatar} alt="" sx={{ width: 100, height: 100 }} /> : ''}
+        {isEven(index) && (
+          <Avatar src={avatar} alt="team member" sx={{ width: 100, height: 100 }} />
+        )}
         <Box sx={{ ml: 2, width: { xs: '100%', md: '70%' } }}>
           <Typography component="h3" sx={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
             {name}
@@ -32,7 +35,9 @@ function Profile({ avatar, name, description, gh, index }: IProfileProps) {
             {description}
           </Typography>
         </Box>
-        {!isEven(index) ? <Avatar src={avatar} alt="" sx={{ width: 100, height: 100 }} /> : ''}
+        {!isEven(index) && (
+          <Avatar src={avatar} alt="team member" sx={{ width: 100, height: 100 }} />
+        )}
       </Box>
     </Box>
   );
